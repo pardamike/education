@@ -33,13 +33,13 @@ Each one tells the player three things about itself before its lesson: its name,
 | --- | --- | --- | --- | --- | --- | --- |
 | Quetzalcoatlus | KET-sul-koh-AT-lus | meat | Flying reptile, as tall as a giraffe | Cliffs and sky | Converted from a public-domain pterosaur, reshaped: long neck and beak | To build |
 | Pterodactyl | TAIR-uh-DAK-til | fish | Flying reptile. Its full name is Pterodactylus | Cliffs and sky | Converted from a public-domain pterosaur | To build |
-| Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | Waits for the player in the sea off the beach | Built in code | To build |
+| Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | Waits for the player in the sea off the beach | Built in code (`src/renderer/src/world/Mosasaur.ts`) | In the game |
 
 ## Places
 
 - **Meadow and forest**: in the game. The round meadow where the player starts.
 - **Beach with a rocky inlet**: in the game, along the north side of the meadow. The Spinosaurus stands in a pool in the inlet.
-- **Shallow sea**: in the game. The T. rex can run down the beach and along the sea floor until the water is over his head, then the game stops him going further. Still to come: swimming, and the Mosasaurus waiting out there.
+- **Shallow sea**: in the game. The T. rex can run down the beach and along the sea floor, and once the water is over his head he swims with his head out. The game stops him before it gets deep. The Mosasaurus floats out there waiting.
 - **Volcanoes**: in the game. They rise out of the sea all along the horizon, some smoking, some running with lava, some erupting.
 - **Cliffs and sky**: still to come. Somewhere for the fliers to perch and circle.
 

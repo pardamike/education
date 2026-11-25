@@ -29,6 +29,8 @@ type BoneScale = number | [number, number, number]
 export interface DinoLook {
   /** Standing height in world units. */
   height: number
+  /** Nose-to-tail length in world units. Only animals built in code use this; models take theirs from `height`. */
+  length?: number
   /** Model colour slot name -> CSS colour, or "hidden" to leave that part out. Unlisted slots keep the model's colour. */
   colors?: Record<string, string>
   /** Bone name -> scale. A bigger "Head" and shorter "Tail1" give a youngster's proportions. */
@@ -44,6 +46,15 @@ export interface DinoLook {
 
 export type DinoAnimation = 'idle' | 'walk' | 'run' | 'jump' | 'attack' | 'death'
 
+/** Anything that lives in the world: a dinosaur loaded from a model, or an animal built in code. */
+export interface Creature {
+  /** Move and turn this. */
+  readonly root: THREE.Group
+  /** Half its length, nose to tail, in world units. */
+  readonly radius: number
+  update(deltaSeconds: number): void
+}
+
 const loader = new GLTFLoader()
 
 const eyeWhite = new THREE.MeshLambertMaterial({ color: '#ffffff', emissive: '#555555' })
@@ -51,7 +62,7 @@ const eyePupil = new THREE.MeshLambertMaterial({ color: '#1d1d1d' })
 const eyeShine = new THREE.MeshBasicMaterial({ color: '#ffffff' })
 const eyeSphere = new THREE.SphereGeometry(1, 16, 12)
 
-function makeEye(radius: number, pupilSize: number): THREE.Group {
+export function makeEye(radius: number, pupilSize: number): THREE.Group {
   const eye = new THREE.Group()
   const white = new THREE.Mesh(eyeSphere, eyeWhite)
   white.scale.setScalar(radius)
@@ -69,7 +80,7 @@ function makeEye(radius: number, pupilSize: number): THREE.Group {
 /** How many times each model's triangles are split and relaxed on load. More is rounder (and blunter). */
 const ROUNDING_PASSES = 1
 
-export class Dino {
+export class Dino implements Creature {
   /** Move and turn this. The model inside is already scaled and standing on y = 0, facing +Z. */
   readonly root = new THREE.Group()
   /** Half the dinosaur's length, nose to tail, in world units. */

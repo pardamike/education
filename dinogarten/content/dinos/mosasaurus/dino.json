@@ -1,0 +1,17 @@
+{
+  "name": "Mosasaurus",
+  "sayIt": "MOH-zuh-SORE-us",
+  "eats": "fish",
+  "position": [-8, -57],
+  "facing": 20,
+  "madeInCode": "mosasaurus",
+  "floats": 0.3,
+  "look": {
+    "height": 1.9,
+    "length": 10,
+    "colors": {
+      "Back": "#3d6fa3",
+      "Belly": "#dfeef5"
+    }
+  }
+}

@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import playerModelUrl from '@content/player/model.glb?url'
 import playerLook from '@content/player/player.json'
-import { Dino, type DinoLook } from './Dino'
+import { Dino, type Creature, type DinoLook } from './Dino'
+import { Mosasaur } from './Mosasaur'
 import { groundHeight, keepInWorld, waterLevel } from './coast'
 import { Navigator } from './navigation'
 import { Ripples } from './ripples'
@@ -20,6 +21,10 @@ export interface DinoDefinition {
   turnsToPlayer?: boolean
   /** How close the player can get to its middle, in world units. Left out, the two stop nose to nose. */
   personalSpace?: number
+  /** For an animal built in code, which one. It then needs no model.glb. */
+  madeInCode?: 'mosasaurus'
+  /** For a swimmer: how far below the surface of the sea its middle floats. Left out, it stands on the ground. */
+  floats?: number
   look: DinoLook
 }
 
@@ -44,12 +49,14 @@ const PLAYER_RADIUS = 0.7
 /** In water deeper than this the player slows down, as if wading. */
 const WADING_DEPTH = 0.5
 const WADING_SPEED = 0.7
+/** Once the water is deeper than this, the player's feet leave the bottom and he swims with his head out. */
+const SWIMMING_DEPTH = 1.25
 const SUN_OFFSET = new THREE.Vector3(-10, 24, 14)
 /** A waiting dinosaur turns to watch the player inside this distance. */
 const NOTICE_DISTANCE = 9
 
 interface Neighbour {
-  dino: Dino
+  dino: Creature
   homeYaw: number
   turns: boolean
   /** The player counts as standing with this dinosaur when their centres are closer than this. */
@@ -84,7 +91,8 @@ export class World {
 
   private player: Dino | null = null
   /** Ripples for the player and for each dinosaur that stands in water. */
-  private readonly ripples: Array<{ dino: Dino; rings: Ripples }> = []
+  private readonly ripples: Array<{ dino: Creature; rings: Ripples }> = []
+  private timeSeconds = 0
   /** Where the player has been told to walk to, or null when standing still or steered by keys. */
   private target: THREE.Vector3 | null = null
   /** The points still to walk through on the way there. The last one is the target itself. */
@@ -164,13 +172,15 @@ export class World {
   async load(): Promise<void> {
     const entries = Object.entries(definitions).map(([path, definition]) => {
       const modelUrl = modelUrls[path.replace(/dino\.json$/, 'model.glb')]
-      if (!modelUrl) throw new Error(`${path} has no model.glb beside it`)
+      if (!modelUrl && !definition.madeInCode) throw new Error(`${path} has no model.glb beside it`)
       return { definition, modelUrl }
     })
 
     const [player, ...others] = await Promise.all([
       Dino.load(playerModelUrl, playerLook),
-      ...entries.map(({ definition, modelUrl }) => Dino.load(modelUrl, definition.look))
+      ...entries.map(({ definition, modelUrl }): Promise<Creature> | Creature =>
+        modelUrl ? Dino.load(modelUrl, definition.look) : new Mosasaur(definition.look)
+      )
     ])
     if (this.disposed) return
 
@@ -178,7 +188,8 @@ export class World {
       const { definition } = entries[index]!
       const [x, z] = definition.position
       const homeYaw = THREE.MathUtils.degToRad(definition.facing)
-      dino.root.position.set(x, groundHeight(x, z), z)
+      const y = definition.floats === undefined ? groundHeight(x, z) : waterLevel(0) - definition.floats
+      dino.root.position.set(x, y, z)
       dino.root.rotation.y = homeYaw
       this.scene.add(dino.root)
       // By default, big enough that the two stop nose to nose with a little gap, not overlapping.
@@ -284,6 +295,7 @@ export class World {
   private readonly frame = (timeMs: number): void => {
     const deltaSeconds = Math.min((timeMs - this.lastFrameMs) / 1000, 0.05)
     this.lastFrameMs = timeMs
+    this.timeSeconds = timeMs / 1000
     this.movePlayer(deltaSeconds)
     this.updateNeighbours(deltaSeconds)
     this.updateScenery(timeMs / 1000, deltaSeconds)
@@ -327,8 +339,13 @@ export class World {
     const player = this.player
     if (!player) return
     const position = player.root.position
-    const wading = -position.y > WADING_DEPTH
+    const wading = -groundHeight(position.x, position.z) > WADING_DEPTH
     const step = this.wantedStep(position, PLAYER_SPEED * (wading ? WADING_SPEED : 1) * deltaSeconds)
+
+    // In deep water he floats at the surface, bobbing, instead of following the sea floor down.
+    const floor = groundHeight(position.x, position.z)
+    const afloat = waterLevel(this.timeSeconds) - SWIMMING_DEPTH + Math.sin(this.timeSeconds * 3) * 0.05
+    position.y = Math.max(floor, afloat)
 
     if (!step) {
       // Standing next to a dinosaur: turn to look at it.
@@ -372,7 +389,6 @@ export class World {
       position.z = obstacle.z + (dz / distance) * minimum
     }
     keepInWorld(position)
-    position.y = groundHeight(position.x, position.z)
 
     player.root.rotation.y = turnToward(player.root.rotation.y, Math.atan2(x, z), 10 * deltaSeconds)
     player.play('run', 0.2, PLAYER_RUN_RATE)
