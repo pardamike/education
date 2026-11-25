@@ -2,7 +2,7 @@
 
 A free, offline dinosaur learning game for kindergarteners. You are a little T. rex. Walk around, meet other dinosaurs, and learn letters and numbers from them.
 
-**Status:** early. You can walk around a meadow, down a beach and into a deep underwater world, and meet seven other animals, including a cranky old Spinosaurus in his rocky inlet and a Mosasaurus that patrols the sea floor, under a skyline of volcanoes. Lessons, voices, player names and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
+**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet twelve other animals, including a towering Brachiosaurus, a cranky old Spinosaurus in his rocky inlet and a Mosasaurus that patrols the sea floor, under a skyline of volcanoes. Lessons, voices, player names and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Run it
 
@@ -33,15 +33,17 @@ The `look` section of `dino.json` is where a model is made friendly:
 - `colors`: a colour for each of the model's colour slots, or `"hidden"` to leave a part out (the T. rex's teeth, for example).
 - `eyes`: where the cartoon eyes sit, measured from the base of the head as fractions of the dinosaur's height. Every head is a different shape, so expect to nudge these while looking at the game. Add `lid`, `frown`, `brow` and a smaller `pupil` for a grumpy or angry face.
 - `boneScales`: resize parts of the skeleton. A bigger `Head` and a shorter `Tail1` make a youngster. Three numbers instead of one stretch a bone along its own axes, which is how a head becomes a long snout.
-- `lengthen`: makes every separate piece in a colour slot longer, such as a row of teeth.
+- `pose`: turns a bone on top of every animation, to change how the animal stands. The Brachiosaurus is the Apatosaurus with its body tipped back and its neck raised.
+- `stretch`: makes the whole animal wider or longer for its height. The Ankylosaurus is a Stegosaurus stretched wide and low.
+- `lengthen`: makes every separate piece in a colour slot longer, such as a row of teeth, or shorter with a number below 1.
 - `slim`: pulls the body's surface in around the bones you list, for a leaner animal.
-- `parts`: extra body parts built in code and pinned to the skeleton, such as a `sail`.
+- `parts`: extra body parts built in code and pinned to the skeleton. A `sail` runs along the back, `studs` are rows of bumps or spikes that wrap round the body, and a `cone` or a `ball` makes a horn, a crest or a tail club.
 
 An animal built in code has no `model.glb`; its `dino.json` names it with `madeInCode`, and `swims` gives the stretch of water it patrols. The Mosasaurus is the only one so far.
 
 Outside `look`, two settings help with giants: `"turnsToPlayer": false` makes an animal stand still instead of swinging round to watch the player, and `personalSpace` sets how close the player can get.
 
-A new animal does not need a new model. The Spinosaurus is the T. rex model with different colours, a stretched head, bigger arms and a sail; see [DINOSAURS.md](DINOSAURS.md).
+A new animal does not need a new model. The Spinosaurus is the T. rex model with different colours, a stretched head, bigger arms and a sail. Six of the animals are made this way; see [DINOSAURS.md](DINOSAURS.md).
 
 The player's own settings are in `content/player/player.json`.
 

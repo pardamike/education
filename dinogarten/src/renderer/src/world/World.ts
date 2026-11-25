@@ -7,6 +7,7 @@ import { groundHeight, keepInWorld, waterLevel } from './coast'
 import { Navigator } from './navigation'
 import { Ripples } from './ripples'
 import { buildScenery, SKY_COLOR, type Obstacle } from './scenery'
+import { SeeThrough } from './seeThrough'
 
 /** One dinosaur you can meet. This is the shape of content/dinos/<id>/dino.json. */
 export interface DinoDefinition {
@@ -103,6 +104,7 @@ export class World {
   private readonly blowBubble: (from: THREE.Vector3) => void
   private secondsToNextBubble = 0
   private readonly neighbours: Neighbour[] = []
+  private readonly seeThrough = new SeeThrough()
 
   private player: Dino | null = null
   /** Ripples for the player and for each dinosaur that stands in water. */
@@ -146,6 +148,7 @@ export class World {
     this.scene.add(scenery.group)
     this.obstacles = scenery.obstacles
     this.updateScenery = scenery.update
+    for (const tree of scenery.trees) this.seeThrough.add(tree.object, tree.radius, tree.height)
     this.blowBubble = scenery.blowBubble
 
     this.marker = new THREE.Mesh(
@@ -219,6 +222,7 @@ export class World {
       // By default, big enough that the two stop nose to nose with a little gap, not overlapping.
       const r = definition.personalSpace ?? dino.radius + player.radius + 0.2
       this.obstacles.push({ x, z, r })
+      this.seeThrough.add(dino.root, dino.radius * 0.55, dino.height)
       this.neighbours.push({
         dino,
         homeYaw,
@@ -339,6 +343,7 @@ export class World {
       rings.update(timeMs / 1000, x, z, level, breaksSurface ? level - y : 0)
     }
     this.placeCamera(1 - Math.exp(-6 * deltaSeconds))
+    if (this.player) this.seeThrough.update(this.camera.position, this.player.root.position, deltaSeconds)
     this.tintForDepth(level, deltaSeconds)
     if (this.marker.visible) this.marker.scale.setScalar(1 + Math.sin(timeMs / 160) * 0.15)
     this.renderer.render(this.scene, this.camera)

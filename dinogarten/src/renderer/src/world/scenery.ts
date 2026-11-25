@@ -137,6 +137,8 @@ function mountain(radius: number, height: number, color: string): THREE.Mesh {
 export function buildScenery(keepClear: Obstacle[]): {
   group: THREE.Group
   obstacles: Obstacle[]
+  /** Every tree, with half its width and its height. Trees are tall enough to hide the player from the camera. */
+  trees: Array<{ object: THREE.Object3D; radius: number; height: number }>
   /** Lets the player blow a bubble underwater. */
   blowBubble: (from: THREE.Vector3) => void
   /** Call once a frame to keep the moving scenery (lava, smoke, waves, ferns, sea plants, fish) going. */
@@ -196,9 +198,12 @@ export function buildScenery(keepClear: Obstacle[]): {
     }
   }
 
+  const trees: THREE.Group[] = []
   const anyTree = (): THREE.Group => {
     const pick = random()
-    return pick < 0.4 ? cycad(random) : pick < 0.7 ? leafyTree(random) : conifer(random)
+    const tree = pick < 0.4 ? cycad(random) : pick < 0.7 ? leafyTree(random) : conifer(random)
+    trees.push(tree)
+    return tree
   }
 
   // Scattered trees and rocks inside the play area, never crowding each other.
@@ -322,9 +327,15 @@ export function buildScenery(keepClear: Obstacle[]): {
   group.add(seabed.group)
   obstacles.push(...seabed.obstacles)
 
+  const box = new THREE.Box3()
+  const size = new THREE.Vector3()
   return {
     group,
     obstacles,
+    trees: trees.map((tree) => {
+      box.setFromObject(tree).getSize(size)
+      return { object: tree, radius: Math.max(size.x, size.z) / 2, height: box.max.y }
+    }),
     blowBubble: seabed.blowBubble,
     update(timeSeconds, deltaSeconds) {
       breeze.value = timeSeconds

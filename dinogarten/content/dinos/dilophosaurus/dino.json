@@ -1,0 +1,50 @@
+{
+  "name": "Dilophosaurus",
+  "sayIt": "dy-LOH-fuh-SORE-us",
+  "eats": "meat",
+  "position": [
+    -4,
+    24
+  ],
+  "facing": 20,
+  "look": {
+    "height": 2.3,
+    "colors": {
+      "LightBrown": "#f3dcf0",
+      "Brown": "#b0509e",
+      "Black": "#4a3550"
+    },
+    "eyes": {
+      "forward": 0.09,
+      "up": 0.028,
+      "apart": 0.062,
+      "size": 0.037
+    },
+    "parts": [
+      {
+        "type": "ball",
+        "bone": "Head",
+        "pair": true,
+        "at": [
+          0.026,
+          0.04,
+          0.075
+        ],
+        "size": [
+          0.012,
+          0.13,
+          0.17
+        ],
+        "tilt": [
+          8,
+          0,
+          16
+        ],
+        "color": "#ffb347"
+      }
+    ],
+    "boneScales": {
+      "Head": 1.2
+    }
+  }
+}

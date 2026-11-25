@@ -1,0 +1,68 @@
+{
+  "name": "Allosaurus",
+  "sayIt": "AL-uh-SORE-us",
+  "eats": "meat",
+  "position": [
+    -22,
+    14
+  ],
+  "facing": 70,
+  "look": {
+    "height": 3.1,
+    "colors": {
+      "Green": "#9a6a43",
+      "LightGreen": "#f3dcb4",
+      "LightYellow": "#fffbea",
+      "Black": "#4a3a2c",
+      "Red": "#f08a8a"
+    },
+    "boneScales": {
+      "Head": [
+        0.88,
+        1.12,
+        0.9
+      ],
+      "FrontLegR": 1.6,
+      "FrontLegL": 1.6
+    },
+    "slim": {
+      "amount": 0.03,
+      "bones": [
+        "Body",
+        "Hips",
+        "Torso",
+        "Shoulders",
+        "Back"
+      ]
+    },
+    "eyes": {
+      "forward": 0.14,
+      "up": 0.058,
+      "apart": 0.082,
+      "size": 0.042
+    },
+    "parts": [
+      {
+        "type": "cone",
+        "bone": "Head",
+        "pair": true,
+        "at": [
+          0.07,
+          0.085,
+          0.16
+        ],
+        "size": [
+          0.03,
+          0.055,
+          0.04
+        ],
+        "tilt": [
+          -12,
+          0,
+          14
+        ],
+        "color": "#e2553f"
+      }
+    ]
+  }
+}

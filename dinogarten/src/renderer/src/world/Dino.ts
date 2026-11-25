@@ -35,6 +35,14 @@ export interface DinoLook {
   colors?: Record<string, string>
   /** Bone name -> scale. A bigger "Head" and shorter "Tail1" give a youngster's proportions. */
   boneScales?: Record<string, BoneScale>
+  /**
+   * Bone name -> a turn in degrees added on top of every animation: [tip back, turn to its left, lean to its left].
+   * Tipping back raises whatever points forward, like a neck, and lowers whatever points backward, like a tail.
+   * For an animal that stands differently from the model it is made from.
+   */
+  pose?: Record<string, [number, number, number]>
+  /** Makes the whole animal wider or longer for its height: [width, length]. [1.4, 1.1] is broad and squat. */
+  stretch?: [number, number]
   /** Colour slot name -> how many times longer to make each separate piece in it: teeth, claws, spikes. */
   lengthen?: Record<string, number>
   /** Slims the body down around the listed bones. */
@@ -94,6 +102,15 @@ export class Dino implements Creature {
   private readonly actions = new Map<string, THREE.AnimationAction>()
   private current: THREE.AnimationAction | null = null
   private readonly scaledBones: Array<[THREE.Object3D, THREE.Vector3]> = []
+  /** What the eyes hang from. It undoes any stretching of the head, so the eyes stay round. */
+  private eyeHolder: THREE.Group | null = null
+  /** `turn` is the extra turn; `base` is the last pose the animation gave the bone; `written` is what was set last. */
+  private readonly posedBones: Array<{
+    bone: THREE.Object3D
+    turn: THREE.Quaternion
+    base: THREE.Quaternion
+    written: THREE.Quaternion
+  }> = []
 
   static async load(url: string, look: DinoLook): Promise<Dino> {
     const gltf = await loader.loadAsync(url)
@@ -126,11 +143,13 @@ export class Dino implements Creature {
       smoothShading(meshes)
     }
 
-    // Scale to the requested height and stand the model on the ground, centred.
-    const box = new THREE.Box3().setFromObject(model)
+    // Scale to the requested height and stand the model on the ground, centred. Hidden parts do not count.
+    const box = new THREE.Box3()
+    for (const mesh of meshes) box.expandByObject(mesh)
     const scale = look.height / (box.max.y - box.min.y)
     const centre = box.getCenter(new THREE.Vector3())
-    this.radius = (Math.max(box.max.x - box.min.x, box.max.z - box.min.z) * scale) / 2
+    const [wider, longer] = look.stretch ?? [1, 1]
+    this.radius = (Math.max((box.max.x - box.min.x) * wider, (box.max.z - box.min.z) * longer) * scale) / 2
     model.scale.multiplyScalar(scale)
     model.position.set(-centre.x * scale, -box.min.y * scale, -centre.z * scale)
     this.root.add(model)
@@ -143,6 +162,8 @@ export class Dino implements Creature {
       this.scaledBones.push([bone, amount])
     }
 
+    for (const [boneName, degrees] of Object.entries(look.pose ?? {})) this.setPose(boneName, degrees)
+
     // Eyes and extra parts go on while the skeleton is still in its resting pose, before any bone is rescaled.
     const head = model.getObjectByName('Head')
     const headEnd = model.getObjectByName('Head_end')
@@ -150,6 +171,7 @@ export class Dino implements Creature {
       this.addEyes(head, headEnd, look.eyes, look.height)
     }
     addParts(this.root, meshes, look.parts ?? [], look.height)
+    if (look.stretch) this.stretch(model, head, wider, longer)
 
     this.mixer = new THREE.AnimationMixer(model)
     for (const clip of clips) {
@@ -195,7 +217,7 @@ export class Dino implements Creature {
     let lowest = Infinity
     for (let sample = 0; sample < 6; sample++) {
       this.mixer.setTime((duration * sample) / 6)
-      for (const [bone, scale] of this.scaledBones) bone.scale.copy(scale)
+      this.applyLook()
       this.root.updateMatrixWorld(true)
       for (const { mesh, corners } of soles) {
         if (hasFeet) {
@@ -213,6 +235,50 @@ export class Dino implements Creature {
     if (Number.isFinite(lowest)) model.position.y -= lowest
   }
 
+  /** Adds a turn to one bone on top of whatever the animation does. The three angles are described at `DinoLook.pose`. */
+  setPose(boneName: string, [tipBack, turnLeft, leanLeft]: [number, number, number]): void {
+    const bone = this.root.getObjectByName(boneName)
+    if (!bone) return
+    // The turn is given in the animal's own frame. Work out what the same turn is in the bone's frame.
+    this.root.updateMatrixWorld(true)
+    const rootFacing = this.root.getWorldQuaternion(new THREE.Quaternion())
+    const boneFacing = bone.getWorldQuaternion(new THREE.Quaternion()).premultiply(rootFacing.invert())
+    const radians = THREE.MathUtils.degToRad
+    const wanted = new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(-radians(tipBack), radians(turnLeft), -radians(leanLeft), 'YXZ')
+    )
+    const turn = boneFacing.clone().invert().multiply(wanted).multiply(boneFacing)
+    const posed = this.posedBones.find((entry) => entry.bone === bone)
+    if (posed) posed.turn.copy(turn)
+    else this.posedBones.push({ bone, turn, base: bone.quaternion.clone(), written: bone.quaternion.clone() })
+  }
+
+  /** Widens and lengthens the whole model, parts and all, then undoes that for each eye so the eyes stay round. */
+  private stretch(model: THREE.Object3D, head: THREE.Object3D | undefined, wider: number, longer: number): void {
+    this.root.updateMatrixWorld(true)
+    const before = head ? new THREE.Matrix3().setFromMatrix4(head.matrixWorld) : null
+    model.scale.x *= wider
+    model.scale.z *= longer
+    model.position.x *= wider
+    model.position.z *= longer
+    this.root.updateMatrixWorld(true)
+    if (!this.eyeHolder || !head || !before) return
+    // Each eye moves outward with the widened head, but keeps the shape it had before the stretch.
+    const holder = new THREE.Matrix3().setFromMatrix4(this.eyeHolder.matrix)
+    const undo = holder
+      .clone()
+      .invert()
+      .multiply(new THREE.Matrix3().setFromMatrix4(head.matrixWorld).invert())
+      .multiply(before)
+      .multiply(holder)
+    for (const eye of this.eyeHolder.children) {
+      eye.updateMatrix()
+      const shape = undo.clone().multiply(new THREE.Matrix3().setFromMatrix4(eye.matrix))
+      eye.matrix.setFromMatrix3(shape).setPosition(eye.position)
+      eye.matrixAutoUpdate = false
+    }
+  }
+
   /** Places two cartoon eyes on the head while it is in its resting pose, then pins them to the head bone. */
   private addEyes(head: THREE.Object3D, headEnd: THREE.Object3D, eyes: EyeLook, length: number): void {
     const base = head.getWorldPosition(new THREE.Vector3())
@@ -224,6 +290,7 @@ export class Dino implements Creature {
     // The eyes hang off a holder, not the head bone itself. If the head is stretched into a long
     // snout, the holder is squashed by the same amounts, so the eyes stay round.
     const holder = new THREE.Group()
+    this.eyeHolder = holder
     head.add(holder)
     holder.updateMatrixWorld(true)
 
@@ -287,7 +354,18 @@ export class Dino implements Creature {
 
   update(deltaSeconds: number): void {
     this.mixer.update(deltaSeconds)
-    // Applied after the animation so a clip that animates the same bone cannot undo it.
+    this.applyLook()
+  }
+
+  /** Re-applies the bone scales and the pose. Done after the animation so a clip that moves the same bone cannot undo them. */
+  private applyLook(): void {
     for (const [bone, scale] of this.scaledBones) bone.scale.copy(scale)
+    for (const posed of this.posedBones) {
+      // The animation only writes to a bone when its value changes. If the bone still holds
+      // what was put there last time, the animation has not moved it, so turn the same base again.
+      if (!posed.bone.quaternion.equals(posed.written)) posed.base.copy(posed.bone.quaternion)
+      posed.bone.quaternion.copy(posed.base).multiply(posed.turn)
+      posed.written.copy(posed.bone.quaternion)
+    }
   }
 }

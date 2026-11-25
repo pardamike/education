@@ -19,12 +19,12 @@ Each one tells the player three things about itself before its lesson: its name,
 | Apatosaurus | uh-PAT-uh-SORE-us | plants | By the pond. Too big to turn round, so it stands still | Quaternius Apatosaurus | In the game |
 | Parasaurolophus | pair-uh-sore-OL-uh-fus | plants | Meadow, east side | Quaternius Parasaurolophus | In the game |
 | Velociraptor | veh-LOSS-ih-RAP-tor | meat | Meadow, west side. About the size of a turkey | Quaternius Velociraptor | In the game |
-| Brachiosaurus | BRAK-ee-uh-SORE-us | plants | Among the tallest trees | Apatosaurus, reshaped: longer front legs, neck held high | To build |
-| Giganotosaurus | jig-uh-NOT-uh-SORE-us | meat | Volcano country | T-Rex, reshaped: longer head and arms | To build |
-| Allosaurus | AL-uh-SORE-us | meat | Forest edge | T-Rex, reshaped, with small brow horns added | To build |
+| Brachiosaurus | BRAK-ee-uh-SORE-us | plants | The tallest animal in the meadow, at its west edge. Too big to turn round, so it stands still | Apatosaurus, reshaped: body tipped back, longer front legs, neck held high | In the game |
+| Giganotosaurus | jig-uh-NOT-uh-SORE-us | meat | The biggest meat-eater. East side of the meadow | T-Rex, reshaped: longer head and arms, with a ridge of spines added down the neck and back | In the game |
+| Allosaurus | AL-uh-SORE-us | meat | West side of the meadow, by the trees | T-Rex, reshaped: slimmer, longer arms, with brow horns added | In the game |
 | Spinosaurus | SPY-nuh-SORE-us | fish | Old and cranky. Lives in a rocky inlet on the beach | T-Rex, reshaped: long snout, bigger arms, longer teeth, slimmed body, angry brows, with a sail added along the back | In the game |
-| Dilophosaurus | dy-LOH-fuh-SORE-us | meat | Forest | Velociraptor, with twin head crests added | To build |
-| Ankylosaurus | an-KY-luh-SORE-us | plants | Meadow | Stegosaurus without its plates, with armour and a tail club added | To build |
+| Dilophosaurus | dy-LOH-fuh-SORE-us | meat | South side of the meadow | Velociraptor, with a bigger head and twin head crests added | In the game |
+| Ankylosaurus | an-KY-luh-SORE-us | plants | Middle of the meadow | Stegosaurus, stretched wide and low, its plates shrunk to flat armour, with studs, side spikes, head horns and a tail club added | In the game |
 | Microraptor | MY-kroh-RAP-tor | meat | A whole flock of them, in the trees. Crow-sized, with four wings | Velociraptor, tiny, with wing feathers added | To build |
 
 ## Not dinosaurs (and the game says so)
@@ -79,7 +79,7 @@ A search in November 2026 found no free set that matches them for the other ten.
 
 So the rest are built from what we have, which also keeps the whole cast in one style:
 
-- **Reshape**: start from the closest model in the set and change it when it loads: new colours, different proportions, longer teeth or spikes, a slimmer or stockier body, and extra parts made in code (a sail, crests, armour, a tail club, feathers) pinned to its skeleton so they move with it. The animal keeps the walk and idle animations of the model it started from.
+- **Reshape**: start from the closest model in the set and change it when it loads: new colours, different proportions, a different stance, longer teeth or spikes, a slimmer or broader body, and extra parts made in code (a sail, horns, crests, armour, a tail club, feathers) pinned to its skeleton so they move with it. The animal keeps the walk and idle animations of the model it started from.
 - **Convert**: the two fliers start from a public-domain animated pterosaur on OpenGameArt ([Low Spec Pterosaur](https://opengameart.org/content/low-spec-pterosaur)). It ships as a Blender file, so it has to be converted first.
 - **Build in code**: the Mosasaurus has nothing to start from. A swimming body is the simplest shape to build and animate in code.
 

@@ -13,8 +13,13 @@ The dinosaur models and their animations are by [Quaternius](https://quaternius.
 | `content/dinos/parasaurolophus/model.glb` | Parasaurolophus | https://poly.pizza/m/KeeQrrouRK |
 | `content/dinos/velociraptor/model.glb` | Velociraptor | https://poly.pizza/m/cnlGH2UcDd |
 | `content/dinos/spinosaurus/model.glb` | T-Rex (the same file as the player; the game reshapes it) | https://poly.pizza/m/UYtneO5FpF |
+| `content/dinos/giganotosaurus/model.glb` | T-Rex (the same file again) | https://poly.pizza/m/UYtneO5FpF |
+| `content/dinos/allosaurus/model.glb` | T-Rex (the same file again) | https://poly.pizza/m/UYtneO5FpF |
+| `content/dinos/dilophosaurus/model.glb` | Velociraptor (the same file as the Velociraptor's) | https://poly.pizza/m/cnlGH2UcDd |
+| `content/dinos/brachiosaurus/model.glb` | Apatosaurus (the same file as the Apatosaurus's) | https://poly.pizza/m/fvo0x8Zk3z |
+| `content/dinos/ankylosaurus/model.glb` | Stegosaurus (the same file as the Stegosaurus's) | https://poly.pizza/m/eFcNbOlpvl |
 
-The model files are used unchanged. Their colours, cartoon eyes, proportions, rounded shapes and smooth shading are applied by the game when it loads them.
+The model files are used unchanged. Their colours, cartoon eyes, proportions, stance, rounded shapes, smooth shading and any extra horns, crests, sails and armour are applied by the game when it loads them.
 
 That is the whole set. The animals still to come are built from these; the full planned cast is in [DINOSAURS.md](DINOSAURS.md).
 

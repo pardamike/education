@@ -1,0 +1,99 @@
+{
+  "name": "Ankylosaurus",
+  "sayIt": "an-KY-luh-SORE-us",
+  "eats": "plants",
+  "position": [
+    8,
+    10
+  ],
+  "facing": 300,
+  "look": {
+    "height": 1.55,
+    "stretch": [
+      2.0,
+      1.35
+    ],
+    "colors": {
+      "DarkBrown": "#7d8790",
+      "LightBrown": "#e9e4d6",
+      "Brown": "#e6c98a"
+    },
+    "eyes": {
+      "forward": 0.069,
+      "up": 0.034,
+      "apart": 0.061,
+      "size": 0.052
+    },
+    "parts": [
+      {
+        "type": "studs",
+        "bone": "Torso",
+        "shape": "ball",
+        "start": 0.22,
+        "end": 0.6,
+        "rows": 6,
+        "perRow": 7,
+        "spread": 0.62,
+        "size": [
+          0.085,
+          0.07
+        ],
+        "color": "#e6c98a"
+      },
+      {
+        "type": "studs",
+        "bone": "Torso",
+        "shape": "cone",
+        "start": 0.27,
+        "end": 0.56,
+        "rows": 2,
+        "perRow": 5,
+        "spread": 0.95,
+        "size": [
+          0.075,
+          0.075
+        ],
+        "color": "#f3e3b8"
+      },
+      {
+        "type": "cone",
+        "bone": "Head",
+        "pair": true,
+        "at": [
+          0.035,
+          0.03,
+          -0.01
+        ],
+        "size": [
+          0.05,
+          0.08,
+          0.05
+        ],
+        "tilt": [
+          -55,
+          0,
+          40
+        ],
+        "color": "#f3e3b8"
+      },
+      {
+        "type": "ball",
+        "bone": "Tail5",
+        "at": [
+          0,
+          0,
+          -0.14
+        ],
+        "size": [
+          0.26,
+          0.19,
+          0.3
+        ],
+        "color": "#e6c98a"
+      }
+    ],
+    "lengthen": {
+      "Brown": 0.2
+    }
+  }
+}

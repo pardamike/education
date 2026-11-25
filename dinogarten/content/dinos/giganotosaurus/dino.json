@@ -1,0 +1,52 @@
+{
+  "name": "Giganotosaurus",
+  "sayIt": "jig-uh-NOT-uh-SORE-us",
+  "eats": "meat",
+  "position": [
+    22,
+    16
+  ],
+  "facing": 290,
+  "look": {
+    "height": 4.3,
+    "colors": {
+      "Green": "#c4533e",
+      "LightGreen": "#f5dcb5",
+      "LightYellow": "#fffbea",
+      "Black": "#4b4038",
+      "Red": "#f08a8a"
+    },
+    "boneScales": {
+      "Head": [
+        0.9,
+        1.22,
+        0.92
+      ],
+      "FrontLegR": 1.35,
+      "FrontLegL": 1.35
+    },
+    "eyes": {
+      "forward": 0.14,
+      "up": 0.058,
+      "apart": 0.082,
+      "size": 0.04
+    },
+    "parts": [
+      {
+        "type": "studs",
+        "bone": "Torso",
+        "shape": "cone",
+        "start": 0.2,
+        "end": 0.56,
+        "rows": 1,
+        "perRow": 9,
+        "spread": 0,
+        "size": [
+          0.035,
+          0.05
+        ],
+        "color": "#8f3327"
+      }
+    ]
+  }
+}
