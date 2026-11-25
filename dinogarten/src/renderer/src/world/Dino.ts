@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { roundOff, smoothShading } from './rounding'
 
 /** Cartoon eye placement, measured from the base of the head. Every value is a fraction of the dinosaur's height. */
 export interface EyeLook {
@@ -43,60 +44,8 @@ function makeEye(radius: number): THREE.Group {
   return eye
 }
 
-/** Faces meeting at a sharper angle than this keep a hard edge: claws, horn tips, the rim of a frill. */
-const CREASE_DEGREES = 80
-
-/**
- * The models are built from flat facets. This re-lights them as smooth, rounded surfaces by
- * giving every corner the average direction of the faces around it, across all colour slots.
- */
-function smoothShading(meshes: THREE.Mesh[]): void {
-  const minimumDot = Math.cos(THREE.MathUtils.degToRad(CREASE_DEGREES))
-  const facesAtPoint = new Map<string, THREE.Vector3[]>()
-  const key = (point: THREE.Vector3): string =>
-    `${Math.round(point.x * 1e5)},${Math.round(point.y * 1e5)},${Math.round(point.z * 1e5)}`
-  const a = new THREE.Vector3()
-  const b = new THREE.Vector3()
-  const c = new THREE.Vector3()
-
-  const prepared = meshes.map((mesh) => {
-    if (mesh.geometry.index) mesh.geometry = mesh.geometry.toNonIndexed()
-    const positions = mesh.geometry.getAttribute('position')
-    const faceNormals: THREE.Vector3[] = []
-    for (let i = 0; i < positions.count; i += 3) {
-      a.fromBufferAttribute(positions, i)
-      b.fromBufferAttribute(positions, i + 1)
-      c.fromBufferAttribute(positions, i + 2)
-      // Left un-normalised on purpose: its length is the face's area, so big faces count for more.
-      const faceNormal = new THREE.Vector3().crossVectors(b.clone().sub(a), c.clone().sub(a))
-      faceNormals.push(faceNormal)
-      for (const corner of [a, b, c]) {
-        const cornerKey = key(corner)
-        const faces = facesAtPoint.get(cornerKey)
-        if (faces) faces.push(faceNormal)
-        else facesAtPoint.set(cornerKey, [faceNormal])
-      }
-    }
-    return { geometry: mesh.geometry, positions, faceNormals }
-  })
-
-  const own = new THREE.Vector3()
-  const other = new THREE.Vector3()
-  const sum = new THREE.Vector3()
-  for (const { geometry, positions, faceNormals } of prepared) {
-    const normals = new Float32Array(positions.count * 3)
-    for (let i = 0; i < positions.count; i++) {
-      own.copy(faceNormals[Math.floor(i / 3)]!).normalize()
-      sum.set(0, 0, 0)
-      a.fromBufferAttribute(positions, i)
-      for (const faceNormal of facesAtPoint.get(key(a))!) {
-        if (other.copy(faceNormal).normalize().dot(own) >= minimumDot) sum.add(faceNormal)
-      }
-      sum.normalize().toArray(normals, i * 3)
-    }
-    geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3))
-  }
-}
+/** How many times each model's triangles are split and relaxed on load. More is rounder (and blunter). */
+const ROUNDING_PASSES = 1
 
 export class Dino {
   /** Move and turn this. The model inside is already scaled and standing on y = 0, facing +Z. */
@@ -133,6 +82,7 @@ export class Dino {
       node.frustumCulled = false
       meshes.push(node)
     })
+    roundOff(meshes, ROUNDING_PASSES)
     smoothShading(meshes)
 
     // Scale to the requested height and stand the model on the ground, centred.

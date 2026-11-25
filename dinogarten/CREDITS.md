@@ -9,7 +9,7 @@ The dinosaur models and their animations are by [Quaternius](https://quaternius.
 | `content/player/model.glb` | T-Rex | https://poly.pizza/m/UYtneO5FpF |
 | `content/dinos/triceratops/model.glb` | Triceratops | https://poly.pizza/m/IGvrUqGrRM |
 
-The models are used unchanged. Their colours, cartoon eyes, proportions and smooth shading are applied by the game when it loads them.
+The model files are used unchanged. Their colours, cartoon eyes, proportions, rounded shapes and smooth shading are applied by the game when it loads them.
 
 More from the same set, ready to add: [Stegosaurus](https://poly.pizza/m/eFcNbOlpvl), [Apatosaurus](https://poly.pizza/m/fvo0x8Zk3z), [Parasaurolophus](https://poly.pizza/m/KeeQrrouRK), [Velociraptor](https://poly.pizza/m/cnlGH2UcDd).
 
