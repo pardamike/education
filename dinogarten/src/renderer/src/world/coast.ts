@@ -182,6 +182,8 @@ function rock(random: () => number, x: number, z: number, size: number): THREE.M
 export function buildCoast(random: () => number): {
   group: THREE.Group
   obstacles: Obstacle[]
+  /** How misty the surface of the sea looks: 0 is clear glass, 1 hides everything on the other side. */
+  setWaterOpacity: (opacity: number) => void
   update: (timeSeconds: number) => void
 } {
   const group = new THREE.Group()
@@ -264,6 +266,9 @@ export function buildCoast(random: () => number): {
   return {
     group,
     obstacles,
+    setWaterOpacity(opacity) {
+      water.material.opacity = opacity
+    },
     update(timeSeconds) {
       const level = waterLevel(timeSeconds)
       water.position.y = level

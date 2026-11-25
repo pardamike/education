@@ -30,9 +30,9 @@ The Pterodactyl and the Quetzalcoatlus are both made from [Low Spec Pterosaur](h
 
 That model ships as a Blender file. `content/dinos/pterodactyl/model.glb` and `content/dinos/quetzalcoatlus/model.glb` are the same conversion of it, made with Blender, keeping the model, its skeleton and its two flying animations and leaving out its texture. The game paints and reshapes it when it loads.
 
-## Mosasaurus
+## Sea reptiles
 
-The Mosasaurus has no model file. Its body, flippers and tail are built by the game's own code.
+The Mosasaurus and the Plesiosaurus have no model files. Their bodies, heads, flippers and tails are built by the game's own code.
 
 ## Scenery
 

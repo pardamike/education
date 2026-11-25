@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
+import { mergeGeometries, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js'
 import { groundHeight, SEA, shoreline, waterLevel } from './coast'
 import { bladeShape, scatter, swayingMaterial, type Placement } from './plants'
 import { Puffs } from './puffs'
@@ -12,6 +12,9 @@ import type { Obstacle } from './scenery'
 // sea urchins, ammonites with coiled and straight shells, and shoals of bony fish. There is no
 // kelp on purpose: kelp forests only appeared tens of millions of years after the dinosaurs.
 // See DINOSAURS.md for the sources.
+//
+// The shapes are all rounded and smoothly shaded, unlike the faceted trees and rocks on land:
+// things worn by water look right soft.
 
 /** The stretch of sea that gets scenery: between these x values, and this far out from the shoreline. */
 const ZONE = { west: -42, east: 42, slope: SEA.dropStart + 2, deep: SEA.dropEnd - 6, far: SEA.reach + 12 }
@@ -40,7 +43,7 @@ function coiledShell(): THREE.BufferGeometry {
   for (let i = 0; i < 18; i++) {
     const angle = i * 0.5
     const shrink = 0.9 ** i
-    const chamber = new THREE.SphereGeometry(0.27 * shrink, 9, 7)
+    const chamber = new THREE.SphereGeometry(0.27 * shrink, 14, 10)
     chamber.scale(1, 1, 0.75)
     chamber.translate(Math.cos(angle) * 0.6 * shrink, Math.sin(angle) * 0.6 * shrink, 0)
     chambers.push(tinted(chamber, i % 2 === 0 ? '#f4e3c1' : '#d9a878'))
@@ -53,7 +56,7 @@ function arms(at: THREE.Vector3, pointing: THREE.Vector3): THREE.BufferGeometry[
   const parts: THREE.BufferGeometry[] = []
   const turn = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), pointing.clone().normalize())
   for (let i = 0; i < 7; i++) {
-    const arm = new THREE.ConeGeometry(0.045, 0.5, 5).translate(0, 0.25, 0)
+    const arm = new THREE.ConeGeometry(0.045, 0.5, 7).translate(0, 0.25, 0)
     arm.rotateZ((i - 3) * 0.16)
     arm.rotateX(((i % 3) - 1) * 0.22)
     arm.applyQuaternion(turn)
@@ -61,7 +64,7 @@ function arms(at: THREE.Vector3, pointing: THREE.Vector3): THREE.BufferGeometry[
     parts.push(tinted(arm, '#f2a8a0'))
   }
   for (const side of [-1, 1]) {
-    const eye = new THREE.SphereGeometry(0.055, 7, 5).translate(at.x, at.y + 0.02, at.z + side * 0.14)
+    const eye = new THREE.SphereGeometry(0.055, 10, 8).translate(at.x, at.y + 0.02, at.z + side * 0.14)
     parts.push(tinted(eye, '#2b2b33'))
   }
   return parts
@@ -74,15 +77,43 @@ function swimmingAmmonite(): THREE.BufferGeometry {
 
 /** A straight-shelled ammonite (a baculite): a long cone with the animal at the wide end. */
 function straightAmmonite(): THREE.BufferGeometry {
-  const shell = new THREE.ConeGeometry(0.15, 1.7, 8).rotateZ(-Math.PI / 2)
+  const shell = new THREE.ConeGeometry(0.15, 1.7, 16).rotateZ(-Math.PI / 2)
   return mergeGeometries([tinted(shell, '#ead9b8'), ...arms(new THREE.Vector3(-0.85, 0, 0), new THREE.Vector3(-1, 0, 0))])
 }
 
-/** A rudist: a clam shaped like an ice-cream cone standing on its point, with a flat lid. */
+/** A rudist: a clam shaped like an ice-cream cone standing on its point, with a domed lid. */
 function rudistShape(): THREE.BufferGeometry {
-  const horn = new THREE.CylinderGeometry(0.3, 0.08, 1, 7).translate(0, 0.5, 0)
-  const lid = new THREE.CylinderGeometry(0.32, 0.3, 0.08, 7).translate(0, 1.03, 0)
+  const horn = new THREE.CylinderGeometry(0.3, 0.08, 1, 14).translate(0, 0.5, 0)
+  const lid = new THREE.SphereGeometry(0.33, 14, 6).scale(1, 0.32, 1).translate(0, 1, 0)
   return mergeGeometries([horn, lid])
+}
+
+/** A boulder worn smooth by the sea: a ball pushed in and out into soft lumps. */
+function boulderShape(): THREE.BufferGeometry {
+  const ball = mergeVertices(new THREE.IcosahedronGeometry(1, 3).deleteAttribute('uv').deleteAttribute('normal'))
+  const position = ball.getAttribute('position')
+  const point = new THREE.Vector3()
+  for (let i = 0; i < position.count; i++) {
+    point.fromBufferAttribute(position, i)
+    const lumps =
+      0.13 * Math.sin(point.x * 2.3 + 1.1) * Math.cos(point.z * 2.7) +
+      0.09 * Math.sin(point.y * 3.1 + point.x * 1.7) +
+      0.06 * Math.cos(point.z * 4.3 - point.y * 2.2)
+    point.multiplyScalar(1 + lumps)
+    position.setXYZ(i, point.x, point.y, point.z)
+  }
+  ball.computeVertexNormals()
+  return ball
+}
+
+/** A coral head: a mound with a few smaller mounds growing out of it. */
+function coralShape(): THREE.BufferGeometry {
+  const mounds = [new THREE.SphereGeometry(1, 16, 10)]
+  for (let i = 0; i < 4; i++) {
+    const angle = i * 1.7
+    mounds.push(new THREE.SphereGeometry(0.5, 12, 8).translate(Math.cos(angle) * 0.75, 0.25 + (i % 2) * 0.3, Math.sin(angle) * 0.75))
+  }
+  return mergeGeometries(mounds)
 }
 
 /** A giant platter clam (an inoceramid), lying on the sand with its two shells a little open. */
@@ -95,24 +126,24 @@ function platterClam(): THREE.BufferGeometry {
 
 /** A sea urchin: a dark ball bristling with spines. */
 function urchinShape(): THREE.BufferGeometry {
-  const parts: THREE.BufferGeometry[] = [new THREE.IcosahedronGeometry(0.2, 1)]
+  const parts: THREE.BufferGeometry[] = [new THREE.SphereGeometry(0.2, 14, 10)]
   const ball = new THREE.IcosahedronGeometry(1, 0).getAttribute('position')
   const up = new THREE.Vector3(0, 1, 0)
   const outward = new THREE.Vector3()
   for (let i = 0; i < ball.count; i += 2) {
     outward.fromBufferAttribute(ball, i).normalize()
     if (outward.y < -0.3) continue
-    const spine = new THREE.ConeGeometry(0.02, 0.34, 4).translate(0, 0.3, 0)
+    const spine = new THREE.ConeGeometry(0.02, 0.34, 6).translate(0, 0.3, 0)
     spine.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(up, outward))
     parts.push(spine)
   }
   return mergeGeometries(parts.map((part) => (part.index ? part.toNonIndexed() : part)))
 }
 
-/** A little fish: a stretched diamond for the body with a flat tail behind. It points along +z. */
+/** A little fish: a smooth, slim body with a flat fan of a tail behind. It points along +z. */
 function fishShape(): THREE.BufferGeometry {
-  const body = new THREE.OctahedronGeometry(1).scale(0.09, 0.17, 0.36)
-  const tail = new THREE.OctahedronGeometry(1).scale(0.02, 0.15, 0.12).translate(0, 0, -0.42)
+  const body = new THREE.SphereGeometry(1, 12, 9).scale(0.09, 0.17, 0.36)
+  const tail = new THREE.ConeGeometry(0.17, 0.26, 10).rotateX(Math.PI / 2).scale(0.14, 1, 1).translate(0, 0, -0.45)
   return mergeGeometries([body, tail])
 }
 
@@ -146,17 +177,15 @@ export function buildSeabed(
     findSpot(index < onSlope ? ZONE.slope : ZONE.deep, ZONE.far, margin)
 
   // Boulders first, since they are the only things here the player has to walk round.
-  const rockGeometry = new THREE.DodecahedronGeometry(1, 0)
-  const rockMaterials = ['#8f9a9c', '#7c8a8e', '#a3a89b'].map(
-    (shade) => new THREE.MeshLambertMaterial({ color: shade, flatShading: true })
-  )
+  const rockGeometry = boulderShape()
+  const rockMaterials = ['#8f9a9c', '#7c8a8e', '#a3a89b'].map((shade) => new THREE.MeshLambertMaterial({ color: shade }))
   for (let i = 0; i < 20; i++) {
     const spot = anywhere(i, 5, 3)
     if (!spot) continue
     const size = 1.3 + random() * 2.4
     const rock = new THREE.Mesh(rockGeometry, rockMaterials[i % rockMaterials.length]!)
     rock.scale.set(size * (0.8 + random() * 0.5), size * (0.6 + random() * 0.7), size * (0.8 + random() * 0.5))
-    rock.rotation.set(random() * 0.5, random() * Math.PI, random() * 0.5)
+    rock.rotation.set(random() * 6, random() * 6, random() * 6)
     rock.position.set(spot.x, floor(spot.x, spot.z) + size * 0.25, spot.z)
     rock.castShadow = rock.receiveShadow = true
     group.add(rock)
@@ -221,7 +250,7 @@ export function buildSeabed(
     }
   }
   group.add(scatter(new THREE.CylinderGeometry(0.035, 0.055, 1, 5).translate(0, 0.5, 0), solid, stalks))
-  group.add(scatter(new THREE.IcosahedronGeometry(1, 1), solid, cups))
+  group.add(scatter(new THREE.SphereGeometry(1, 12, 9), solid, cups))
   group.add(scatter(bladeShape(0.12, 4), swaying, crowns))
 
   // Rudist reefs: clusters of cone-shaped clams standing on their points. They built the reefs of this era.
@@ -262,7 +291,7 @@ export function buildSeabed(
       shade: pick(CORAL_COLORS)
     })
   }
-  const coralMesh = scatter(new THREE.IcosahedronGeometry(1, 1), solid, corals)
+  const coralMesh = scatter(coralShape(), solid, corals)
   coralMesh.castShadow = true
   group.add(coralMesh)
 
@@ -362,7 +391,7 @@ export function buildSeabed(
 
   // Bubbles: streams rising from vents in the sea floor, plus any the player blows.
   const bubbles = new Puffs(
-    new THREE.IcosahedronGeometry(1, 1),
+    new THREE.SphereGeometry(1, 12, 9),
     new THREE.MeshBasicMaterial({ color: '#e8f7ff', transparent: true, opacity: 0.55 }),
     140,
     { gravity: 0, drift: new THREE.Vector3(), sizeAt: (life) => 0.7 + 0.6 * life }

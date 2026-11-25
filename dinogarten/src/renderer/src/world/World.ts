@@ -3,7 +3,7 @@ import playerModelUrl from '@content/player/model.glb?url'
 import playerLook from '@content/player/player.json'
 import { Dino, type Creature, type DinoLook } from './Dino'
 import { Flier, type FlySpec } from './Flier'
-import { Mosasaur, type SwimSpec } from './Mosasaur'
+import { SeaReptile, type SeaReptileKind, type SwimSpec } from './SeaReptile'
 import { groundHeight, keepInWorld, waterLevel } from './coast'
 import { Navigator } from './navigation'
 import { Ripples } from './ripples'
@@ -24,7 +24,7 @@ export interface DinoDefinition {
   /** How close the player can get to its middle, in world units. Left out, the two stop nose to nose. */
   personalSpace?: number
   /** For an animal built in code, which one. It then needs no model.glb. */
-  madeInCode?: 'mosasaurus'
+  madeInCode?: SeaReptileKind
   /** For an animal that swims about on its own: where it patrols. It then ignores `position` and `facing`. */
   swims?: SwimSpec
   /** For an animal that flies about on its own: the patch of sky it patrols. It then ignores `position` and `facing`. */
@@ -107,6 +107,7 @@ export class World {
   private readonly obstacles: Obstacle[]
   private readonly updateScenery: (timeSeconds: number, deltaSeconds: number) => void
   private readonly blowBubble: (from: THREE.Vector3) => void
+  private readonly setWaterOpacity: (opacity: number) => void
   private secondsToNextBubble = 0
   private readonly neighbours: Neighbour[] = []
   private readonly seeThrough = new SeeThrough()
@@ -156,6 +157,7 @@ export class World {
     this.updateScenery = scenery.update
     for (const tree of scenery.trees) this.seeThrough.add(tree.object, tree.radius, tree.height)
     this.blowBubble = scenery.blowBubble
+    this.setWaterOpacity = scenery.setWaterOpacity
 
     this.marker = new THREE.Mesh(
       new THREE.RingGeometry(0.45, 0.68, 32),
@@ -227,7 +229,11 @@ export class World {
           ? definition.flies
             ? Flier.load(modelUrl, definition.look, definition.flies)
             : Dino.load(modelUrl, definition.look)
-          : new Mosasaur(definition.look, definition.swims ?? { around: definition.position, width: 20, length: 8, depth: 6 })
+          : new SeaReptile(
+              definition.madeInCode ?? 'mosasaurus',
+              definition.look,
+              definition.swims ?? { around: definition.position, width: 20, length: 8, depth: 6 }
+            )
       )
     ])
     if (this.disposed) return
@@ -507,10 +513,17 @@ export class World {
    * everything turns blue and fades out a short way off, the way it does for a diver.
    */
   private tintForDepth(level: number, deltaSeconds: number): void {
-    // Start turning blue while the camera is still well above the water, and finish well below it,
-    // then ease toward that over a second or so. Crossing the surface is no longer a sudden switch.
-    const wanted = THREE.MathUtils.smoothstep(level - this.camera.position.y, -3, 2)
-    this.underwater += (wanted - this.underwater) * Math.min(1, 1.6 * deltaSeconds)
+    // How far the camera is above the surface of the sea; negative once it is under.
+    const height = this.camera.position.y - level
+    // The surface is misty from a distance and clears as the camera comes down to it, from above
+    // or from below. At the moment the camera passes through there is almost nothing to pass through,
+    // so going under is a gradual change, not a sudden switch from one look to another.
+    const fromAbove = THREE.MathUtils.smoothstep(height, 0.2, 4)
+    const fromBelow = THREE.MathUtils.smoothstep(-height, 0.2, 3)
+    this.setWaterOpacity(0.14 + 0.46 * fromAbove + 0.16 * fromBelow)
+    // The blue haze of the deep comes in only once the camera is under, and thickens as it sinks.
+    const wanted = THREE.MathUtils.smoothstep(-height, 0, 3.5)
+    this.underwater += (wanted - this.underwater) * Math.min(1, 4 * deltaSeconds)
     const under = this.underwater
     this.background.lerpColors(SKY, DEEP_COLOR, under)
     this.fog.color.copy(this.background)

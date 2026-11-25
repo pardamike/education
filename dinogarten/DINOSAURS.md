@@ -7,7 +7,7 @@ Each one tells the player three things about itself before its lesson: its name,
 ## Status
 
 - **In the game**: walking around the world today.
-- **To build**: no free model matches the style, so it will be made from one we have (see [Where the models come from](#where-the-models-come-from)).
+- **To build**: no free model matches the style, so it will be made from one we have (see [Where the models come from](#where-the-models-come-from)). Nothing is waiting at the moment: every animal on the list is in the game.
 
 ## Land dinosaurs
 
@@ -33,14 +33,14 @@ Each one tells the player three things about itself before its lesson: its name,
 | --- | --- | --- | --- | --- | --- | --- |
 | Quetzalcoatlus | KET-sul-koh-AT-lus | meat | Flying reptile, as tall as a giraffe | Glides over the sea. Comes down to circle the player when he wades out underneath | Converted from a public-domain pterosaur, with a longer neck | In the game |
 | Pterodactyl | TAIR-uh-DAK-til | fish | Flying reptile. Its full name is Pterodactylus | Circles over the beach. Comes down to circle the player when he walks underneath | Converted from a public-domain pterosaur | In the game |
-| Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | A little scary: long jaws full of teeth. Patrols the deep water and swims over to look at the player | Built in code (`src/renderer/src/world/Mosasaur.ts`) | In the game |
-| Plesiosaurus | PLEE-zee-uh-SORE-us | fish | Sea reptile with a long neck and four flippers | The deep water, sharing it with the Mosasaurus | Built in code, like the Mosasaurus | To build, last of all. The whole underwater world gets another pass at the same time |
+| Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | A little scary: long jaws full of teeth. Patrols the east side of the deep water and swims over to look at the player | Built in code (`src/renderer/src/world/SeaReptile.ts`) | In the game |
+| Plesiosaurus | PLEE-zee-uh-SORE-us | fish | Sea reptile with a long neck and four flippers | Gentle and curious. Patrols the west side of the deep water and swims up close to the player | Built in code, in the same file | In the game |
 
 ## Places
 
 - **Meadow and forest**: in the game. The round meadow where the player starts, covered in ferns, with horsetails round the pond. See [Land plants](#land-plants).
 - **Beach with a rocky inlet**: in the game, along the north side of the meadow. The Spinosaurus stands in a pool in the inlet.
-- **The sea**: in the game. The T. rex wades down the beach, then the sea floor drops away to a deep underwater world where he swims along just above the bottom, blowing bubbles. The Mosasaurus lives down there. See [Sea life](#sea-life) for what grows and swims around them.
+- **The sea**: in the game. The T. rex wades down the beach, then the sea floor drops away to a deep underwater world where he swims along just above the bottom, blowing bubbles. The Mosasaurus and the Plesiosaurus live down there. See [Sea life](#sea-life) for what grows and swims around them.
 - **Volcanoes**: in the game. They rise out of the sea all along the horizon, some smoking, some running with lava, some erupting.
 - **The sky**: in the game. The two fliers circle over the beach and the sea, flapping and gliding. They never land: the model they are made from only has flying animations.
 
@@ -61,9 +61,11 @@ Everything in the underwater scenery lived in the seas of the dinosaurs' time, a
 
 There is no kelp, on purpose. Kelp forests look right to us but the earliest secure kelp fossils are about 32 million years old, more than 30 million years after the last dinosaurs.
 
+The Plesiosaurus is the one animal down here from a different time: it lived in the Early Jurassic, long before the Mosasaurus. Its long-necked relatives were still around in the Late Cretaceous, Elasmosaurus among them, so the shape belongs in this sea even though the name is older. The land cast mixes Jurassic and Cretaceous animals in the same way.
+
 Animals from the same seas that would make good additions: the giant turtle Archelon, the big predatory fish Xiphactinus, and the toothed diving bird Hesperornis.
 
-Sources: [Berkeley News on the age of kelp](https://news.berkeley.edu/2024/01/15/pacific-kelp-forests-are-far-older-than-we-thought/), [Utrecht University on Late Cretaceous seagrass](https://research-portal.uu.nl/en/publications/seagrass-stems-with-attached-roots-from-the-type-area-of-the-maas/), [Kansas Geological Survey on the Niobrara Chalk's inoceramids, crinoids and rudists](https://www.kgs.ku.edu/Publications/Bulletins/225/05_bios.html), [American Museum of Natural History on the Western Interior Seaway](https://www.amnh.org/research/paleontology/invertebrate-paleontology/western-interior-seaway), [Britannica on Cretaceous ammonites](https://www.britannica.com/science/Cretaceous-Period/Paleoclimate).
+Sources: [Berkeley News on the age of kelp](https://news.berkeley.edu/2024/01/15/pacific-kelp-forests-are-far-older-than-we-thought/), [Utrecht University on Late Cretaceous seagrass](https://research-portal.uu.nl/en/publications/seagrass-stems-with-attached-roots-from-the-type-area-of-the-maas/), [Kansas Geological Survey on the Niobrara Chalk's inoceramids, crinoids and rudists](https://www.kgs.ku.edu/Publications/Bulletins/225/05_bios.html), [American Museum of Natural History on the Western Interior Seaway](https://www.amnh.org/research/paleontology/invertebrate-paleontology/western-interior-seaway), [Britannica on Cretaceous ammonites](https://www.britannica.com/science/Cretaceous-Period/Paleoclimate), Wikipedia on [Plesiosaurus](https://www.wikipedia.org/wiki/Plesiosaurus) and [Elasmosaurus](https://www.wikipedia.org/wiki/Elasmosaurus).
 
 ## Land plants
 
@@ -81,7 +83,7 @@ So the rest are built from what we have, which also keeps the whole cast in one 
 
 - **Reshape**: start from the closest model in the set and change it when it loads: new colours, different proportions, a different stance, longer teeth or spikes, a slimmer or broader body, and extra parts made in code (a sail, horns, crests, armour, a tail club, feathers) pinned to its skeleton so they move with it. The animal keeps the walk and idle animations of the model it started from.
 - **Convert**: the two fliers start from a public-domain animated pterosaur on OpenGameArt ([Low Spec Pterosaur](https://opengameart.org/content/low-spec-pterosaur)). It ships as a Blender file, so it was converted with Blender to the format the game loads, keeping its two flying animations and leaving out its texture. The game paints its body, wings, crest and beak itself (`src/renderer/src/world/Flier.ts`).
-- **Build in code**: the Mosasaurus has nothing to start from. A swimming body is the simplest shape to build and animate in code.
+- **Build in code**: the Mosasaurus and the Plesiosaurus have nothing to start from. A swimming body is the simplest shape to build and animate in code: one smooth skin stretched over a row of cross-sections from tail to snout, bent by a chain of bones, with flippers growing out of its sides.
 
 The Spinosaurus was the first one made this way, and its settings file (`content/dinos/spinosaurus/dino.json`) is the example to copy.
 

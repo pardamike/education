@@ -3,18 +3,18 @@
   "sayIt": "MOH-zuh-SORE-us",
   "eats": "fish",
   "position": [
-    0,
-    -92
+    16,
+    -94
   ],
   "facing": 0,
   "madeInCode": "mosasaurus",
   "swims": {
     "around": [
-      0,
-      -92
+      16,
+      -94
     ],
-    "width": 26,
-    "length": 10,
+    "width": 22,
+    "length": 9,
     "depth": 6
   },
   "look": {

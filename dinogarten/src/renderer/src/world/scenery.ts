@@ -141,6 +141,8 @@ export function buildScenery(keepClear: Obstacle[]): {
   trees: Array<{ object: THREE.Object3D; radius: number; height: number }>
   /** Lets the player blow a bubble underwater. */
   blowBubble: (from: THREE.Vector3) => void
+  /** How misty the surface of the sea looks: 0 is clear glass, 1 hides everything on the other side. */
+  setWaterOpacity: (opacity: number) => void
   /** Call once a frame to keep the moving scenery (lava, smoke, waves, ferns, sea plants, fish) going. */
   update: (timeSeconds: number, deltaSeconds: number) => void
 } {
@@ -337,6 +339,7 @@ export function buildScenery(keepClear: Obstacle[]): {
       return { object: tree, radius: Math.max(size.x, size.z) / 2, height: box.max.y }
     }),
     blowBubble: seabed.blowBubble,
+    setWaterOpacity: coast.setWaterOpacity,
     update(timeSeconds, deltaSeconds) {
       breeze.value = timeSeconds
       volcanoes.update(timeSeconds, deltaSeconds)
