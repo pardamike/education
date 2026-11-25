@@ -1,0 +1,87 @@
+{
+  "name": "Microraptor",
+  "sayIt": "MY-kroh-RAP-tor",
+  "eats": "meat",
+  "position": [
+    27,
+    -13
+  ],
+  "facing": 250,
+  "flock": {
+    "count": 7,
+    "spread": 3
+  },
+  "look": {
+    "height": 0.7,
+    "colors": {
+      "LightBrown": "#6f7fc4",
+      "Brown": "#2b3350",
+      "Black": "#16192a"
+    },
+    "eyes": {
+      "forward": 0.09,
+      "up": 0.028,
+      "apart": 0.062,
+      "size": 0.044
+    },
+    "parts": [
+      {
+        "type": "ball",
+        "bone": "FrontLowLeg",
+        "pair": true,
+        "at": [
+          0.2,
+          0.02,
+          -0.07
+        ],
+        "size": [
+          0.52,
+          0.02,
+          0.2
+        ],
+        "tilt": [
+          0,
+          35,
+          14
+        ],
+        "color": "#3f58c9"
+      },
+      {
+        "type": "ball",
+        "bone": "BackLowLeg",
+        "pair": true,
+        "at": [
+          0.1,
+          0.02,
+          -0.1
+        ],
+        "size": [
+          0.3,
+          0.02,
+          0.13
+        ],
+        "tilt": [
+          0,
+          55,
+          16
+        ],
+        "color": "#3f58c9"
+      },
+      {
+        "type": "ball",
+        "bone": "Tail5",
+        "at": [
+          0,
+          0,
+          -0.12
+        ],
+        "size": [
+          0.16,
+          0.02,
+          0.3
+        ],
+        "color": "#3f58c9"
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Pterodactyl",
+  "sayIt": "TAIR-uh-DAK-til",
+  "eats": "fish",
+  "position": [
+    -6,
+    -30
+  ],
+  "facing": 0,
+  "flies": {
+    "around": [
+      -6,
+      -30
+    ],
+    "width": 24,
+    "length": 8,
+    "height": 7
+  },
+  "look": {
+    "height": 0.62,
+    "colors": {
+      "Body": "#e8743b",
+      "Wings": "#f6c28b",
+      "Crest": "#d93f3f",
+      "Beak": "#ffd45c"
+    },
+    "eyes": {
+      "forward": 0.11,
+      "up": 0.1,
+      "apart": 0.06,
+      "size": 0.045
+    }
+  }
+}

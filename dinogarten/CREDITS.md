@@ -18,10 +18,17 @@ The dinosaur models and their animations are by [Quaternius](https://quaternius.
 | `content/dinos/dilophosaurus/model.glb` | Velociraptor (the same file as the Velociraptor's) | https://poly.pizza/m/cnlGH2UcDd |
 | `content/dinos/brachiosaurus/model.glb` | Apatosaurus (the same file as the Apatosaurus's) | https://poly.pizza/m/fvo0x8Zk3z |
 | `content/dinos/ankylosaurus/model.glb` | Stegosaurus (the same file as the Stegosaurus's) | https://poly.pizza/m/eFcNbOlpvl |
+| `content/dinos/microraptor/model.glb` | Velociraptor (the same file as the Velociraptor's) | https://poly.pizza/m/cnlGH2UcDd |
 
 The model files are used unchanged. Their colours, cartoon eyes, proportions, stance, rounded shapes, smooth shading and any extra horns, crests, sails and armour are applied by the game when it loads them.
 
 That is the whole set. The animals still to come are built from these; the full planned cast is in [DINOSAURS.md](DINOSAURS.md).
+
+## Flying reptiles
+
+The Pterodactyl and the Quetzalcoatlus are both made from [Low Spec Pterosaur](https://opengameart.org/content/low-spec-pterosaur) by pistachio on OpenGameArt, released into the public domain under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). Thank you!
+
+That model ships as a Blender file. `content/dinos/pterodactyl/model.glb` and `content/dinos/quetzalcoatlus/model.glb` are the same conversion of it, made with Blender, keeping the model, its skeleton and its two flying animations and leaving out its texture. The game paints and reshapes it when it loads.
 
 ## Mosasaurus
 

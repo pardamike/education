@@ -1,0 +1,41 @@
+{
+  "name": "Quetzalcoatlus",
+  "sayIt": "KET-sul-koh-AT-lus",
+  "eats": "meat",
+  "position": [
+    0,
+    -52
+  ],
+  "facing": 0,
+  "flies": {
+    "around": [
+      0,
+      -52
+    ],
+    "width": 40,
+    "length": 10,
+    "height": 11
+  },
+  "look": {
+    "height": 2.0,
+    "colors": {
+      "Body": "#f1e8d5",
+      "Wings": "#bfa98a",
+      "Crest": "#e4572e",
+      "Beak": "#ffcf4a"
+    },
+    "boneScales": {
+      "neck1": [
+        1,
+        2.0,
+        1
+      ]
+    },
+    "eyes": {
+      "forward": 0.11,
+      "up": 0.1,
+      "apart": 0.06,
+      "size": 0.04
+    }
+  }
+}

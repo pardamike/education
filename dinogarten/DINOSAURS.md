@@ -25,14 +25,14 @@ Each one tells the player three things about itself before its lesson: its name,
 | Spinosaurus | SPY-nuh-SORE-us | fish | Old and cranky. Lives in a rocky inlet on the beach | T-Rex, reshaped: long snout, bigger arms, longer teeth, slimmed body, angry brows, with a sail added along the back | In the game |
 | Dilophosaurus | dy-LOH-fuh-SORE-us | meat | South side of the meadow | Velociraptor, with a bigger head and twin head crests added | In the game |
 | Ankylosaurus | an-KY-luh-SORE-us | plants | Middle of the meadow | Stegosaurus, stretched wide and low, its plates shrunk to flat armour, with studs, side spikes, head horns and a tail club added | In the game |
-| Microraptor | MY-kroh-RAP-tor | meat | A whole flock of them, in the trees. Crow-sized, with four wings | Velociraptor, tiny, with wing feathers added | To build |
+| Microraptor | MY-kroh-RAP-tor | meat | A flock of seven by the trees on the east side. Crow-sized, with four wings and blue-black feathers | Velociraptor, tiny, with wing feathers and a tail fan added | In the game |
 
 ## Not dinosaurs (and the game says so)
 
 | Animal | Say it | Eats | What it is | Character and home | Model | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Quetzalcoatlus | KET-sul-koh-AT-lus | meat | Flying reptile, as tall as a giraffe | Cliffs and sky | Converted from a public-domain pterosaur, reshaped: long neck and beak | To build |
-| Pterodactyl | TAIR-uh-DAK-til | fish | Flying reptile. Its full name is Pterodactylus | Cliffs and sky | Converted from a public-domain pterosaur | To build |
+| Quetzalcoatlus | KET-sul-koh-AT-lus | meat | Flying reptile, as tall as a giraffe | Glides over the sea. Comes down to circle the player when he wades out underneath | Converted from a public-domain pterosaur, with a longer neck | In the game |
+| Pterodactyl | TAIR-uh-DAK-til | fish | Flying reptile. Its full name is Pterodactylus | Circles over the beach. Comes down to circle the player when he walks underneath | Converted from a public-domain pterosaur | In the game |
 | Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | A little scary: long jaws full of teeth. Patrols the deep water and swims over to look at the player | Built in code (`src/renderer/src/world/Mosasaur.ts`) | In the game |
 | Plesiosaurus | PLEE-zee-uh-SORE-us | fish | Sea reptile with a long neck and four flippers | The deep water, sharing it with the Mosasaurus | Built in code, like the Mosasaurus | To build, last of all. The whole underwater world gets another pass at the same time |
 
@@ -42,7 +42,7 @@ Each one tells the player three things about itself before its lesson: its name,
 - **Beach with a rocky inlet**: in the game, along the north side of the meadow. The Spinosaurus stands in a pool in the inlet.
 - **The sea**: in the game. The T. rex wades down the beach, then the sea floor drops away to a deep underwater world where he swims along just above the bottom, blowing bubbles. The Mosasaurus lives down there. See [Sea life](#sea-life) for what grows and swims around them.
 - **Volcanoes**: in the game. They rise out of the sea all along the horizon, some smoking, some running with lava, some erupting.
-- **Cliffs and sky**: still to come. Somewhere for the fliers to perch and circle.
+- **The sky**: in the game. The two fliers circle over the beach and the sea, flapping and gliding. They never land: the model they are made from only has flying animations.
 
 ## Sea life
 
@@ -80,7 +80,7 @@ A search in November 2026 found no free set that matches them for the other ten.
 So the rest are built from what we have, which also keeps the whole cast in one style:
 
 - **Reshape**: start from the closest model in the set and change it when it loads: new colours, different proportions, a different stance, longer teeth or spikes, a slimmer or broader body, and extra parts made in code (a sail, horns, crests, armour, a tail club, feathers) pinned to its skeleton so they move with it. The animal keeps the walk and idle animations of the model it started from.
-- **Convert**: the two fliers start from a public-domain animated pterosaur on OpenGameArt ([Low Spec Pterosaur](https://opengameart.org/content/low-spec-pterosaur)). It ships as a Blender file, so it has to be converted first.
+- **Convert**: the two fliers start from a public-domain animated pterosaur on OpenGameArt ([Low Spec Pterosaur](https://opengameart.org/content/low-spec-pterosaur)). It ships as a Blender file, so it was converted with Blender to the format the game loads, keeping its two flying animations and leaving out its texture. The game paints its body, wings, crest and beak itself (`src/renderer/src/world/Flier.ts`).
 - **Build in code**: the Mosasaurus has nothing to start from. A swimming body is the simplest shape to build and animate in code.
 
 The Spinosaurus was the first one made this way, and its settings file (`content/dinos/spinosaurus/dino.json`) is the example to copy.

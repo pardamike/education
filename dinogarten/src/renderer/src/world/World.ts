@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import playerModelUrl from '@content/player/model.glb?url'
 import playerLook from '@content/player/player.json'
 import { Dino, type Creature, type DinoLook } from './Dino'
+import { Flier, type FlySpec } from './Flier'
 import { Mosasaur, type SwimSpec } from './Mosasaur'
 import { groundHeight, keepInWorld, waterLevel } from './coast'
 import { Navigator } from './navigation'
@@ -26,6 +27,10 @@ export interface DinoDefinition {
   madeInCode?: 'mosasaurus'
   /** For an animal that swims about on its own: where it patrols. It then ignores `position` and `facing`. */
   swims?: SwimSpec
+  /** For an animal that flies about on its own: the patch of sky it patrols. It then ignores `position` and `facing`. */
+  flies?: FlySpec
+  /** Makes a whole group of this animal instead of one, scattered up to `spread` away from `position`. */
+  flock?: { count: number; spread: number }
   look: DinoLook
 }
 
@@ -139,10 +144,11 @@ export class World {
     this.sun.shadow.normalBias = 0.04
     this.scene.add(this.sun, this.sun.target)
 
-    const dinoSpots = Object.values(definitions).map((definition) => ({
+    const onTheGround = Object.values(definitions).filter((definition) => !definition.flies)
+    const dinoSpots = onTheGround.map((definition) => ({
       x: definition.position[0],
       z: definition.position[1],
-      r: definition.look.height * 2
+      r: definition.flock ? definition.flock.spread + 1.5 : definition.look.height * 2
     }))
     const scenery = buildScenery([{ x: 0, z: 0, r: 5 }, ...dinoSpots])
     this.scene.add(scenery.group)
@@ -191,17 +197,36 @@ export class World {
 
   /** Loads the player and every dinosaur in content/dinos, then puts them in the world. */
   async load(): Promise<void> {
-    const entries = Object.entries(definitions).map(([path, definition]) => {
+    const entries = Object.entries(definitions).flatMap(([path, definition]) => {
       const modelUrl = modelUrls[path.replace(/dino\.json$/, 'model.glb')]
       if (!modelUrl && !definition.madeInCode) throw new Error(`${path} has no model.glb beside it`)
-      return { definition, modelUrl }
+      if (!definition.flock) return [{ definition, modelUrl }]
+      // A flock is the same animal several times over, each a little different in size and facing,
+      // spread out in a spiral so that no two stand on the same spot.
+      const { count, spread } = definition.flock
+      return Array.from({ length: count }, (_, i) => {
+        const distance = spread * Math.sqrt((i + 0.5) / count)
+        const angle = i * 2.4
+        const member: DinoDefinition = {
+          ...definition,
+          position: [
+            definition.position[0] + Math.cos(angle) * distance,
+            definition.position[1] + Math.sin(angle) * distance
+          ],
+          facing: definition.facing + ((i * 47) % 90) - 45,
+          look: { ...definition.look, height: definition.look.height * (0.85 + ((i * 0.618) % 1) * 0.3) }
+        }
+        return { definition: member, modelUrl }
+      })
     })
 
     const [player, ...others] = await Promise.all([
       Dino.load(playerModelUrl, playerLook),
       ...entries.map(({ definition, modelUrl }): Promise<Creature> | Creature =>
         modelUrl
-          ? Dino.load(modelUrl, definition.look)
+          ? definition.flies
+            ? Flier.load(modelUrl, definition.look, definition.flies)
+            : Dino.load(modelUrl, definition.look)
           : new Mosasaur(definition.look, definition.swims ?? { around: definition.position, width: 20, length: 8, depth: 6 })
       )
     ])
@@ -210,8 +235,8 @@ export class World {
     others.forEach((dino, index) => {
       const { definition } = entries[index]!
       this.scene.add(dino.root)
-      if (definition.swims) {
-        // A swimmer places and steers itself, and is never in the way.
+      if (definition.swims || definition.flies) {
+        // A swimmer or a flier places and steers itself, and is never in the way.
         this.neighbours.push({ dino, homeYaw: 0, turns: false, roams: true, reach: 0 })
         return
       }

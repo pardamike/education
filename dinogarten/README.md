@@ -2,7 +2,7 @@
 
 A free, offline dinosaur learning game for kindergarteners. You are a little T. rex. Walk around, meet other dinosaurs, and learn letters and numbers from them.
 
-**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet twelve other animals, including a towering Brachiosaurus, a cranky old Spinosaurus in his rocky inlet and a Mosasaurus that patrols the sea floor, under a skyline of volcanoes. Lessons, voices, player names and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
+**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet fifteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a Mosasaurus that patrols the sea floor and two flying reptiles overhead, under a skyline of volcanoes. Lessons, voices, player names and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Run it
 
@@ -41,9 +41,13 @@ The `look` section of `dino.json` is where a model is made friendly:
 
 An animal built in code has no `model.glb`; its `dino.json` names it with `madeInCode`, and `swims` gives the stretch of water it patrols. The Mosasaurus is the only one so far.
 
+A flier has `flies` in its `dino.json`: the patch of sky it circles. The fliers all use the pterosaur model, whose colours are `Body`, `Wings`, `Crest` and `Beak`, and whose wingspan comes out at about four and a half times its `height`.
+
+`flock` makes a whole group of one animal, scattered around its position, each a little different in size.
+
 Outside `look`, two settings help with giants: `"turnsToPlayer": false` makes an animal stand still instead of swinging round to watch the player, and `personalSpace` sets how close the player can get.
 
-A new animal does not need a new model. The Spinosaurus is the T. rex model with different colours, a stretched head, bigger arms and a sail. Six of the animals are made this way; see [DINOSAURS.md](DINOSAURS.md).
+A new animal does not need a new model. The Spinosaurus is the T. rex model with different colours, a stretched head, bigger arms and a sail. Seven of the animals are made this way; see [DINOSAURS.md](DINOSAURS.md).
 
 The player's own settings are in `content/player/player.json`.
 
