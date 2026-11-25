@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { buildCoast, isCoast, WORLD_RADIUS } from './coast'
+import { fernFrond, scatter, swayingMaterial, type Placement } from './plants'
 import { buildSeabed } from './seabed'
 import { buildVolcanoes } from './volcanoes'
 
@@ -138,25 +139,26 @@ export function buildScenery(keepClear: Obstacle[]): {
   obstacles: Obstacle[]
   /** Lets the player blow a bubble underwater. */
   blowBubble: (from: THREE.Vector3) => void
-  /** Call once a frame to keep the moving scenery (lava, smoke, waves, kelp, fish) going. */
+  /** Call once a frame to keep the moving scenery (lava, smoke, waves, ferns, sea plants, fish) going. */
   update: (timeSeconds: number, deltaSeconds: number) => void
 } {
   const random = seededRandom(20261125)
   const group = new THREE.Group()
   const obstacles: Obstacle[] = []
 
-  // Grass covers everything south of the coast. The beach and sea take over to the north.
-  const grass = new THREE.Mesh(new THREE.PlaneGeometry(1200, 630), paint('#8ccf63'))
-  grass.rotation.x = -Math.PI / 2
-  grass.position.z = 285
-  grass.receiveShadow = true
-  group.add(grass)
+  // Mossy ground covers everything south of the coast. The beach and sea take over to the north.
+  // There was no grass in the dinosaurs' time; ferns grow over this further down.
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1200, 630), paint('#8ccf63'))
+  ground.rotation.x = -Math.PI / 2
+  ground.position.z = 285
+  ground.receiveShadow = true
+  group.add(ground)
 
   const coast = buildCoast(random)
   group.add(coast.group)
   obstacles.push(...coast.obstacles)
 
-  // Lighter and sandier patches so the ground is not one flat colour.
+  // Patches of lighter moss and bare earth so the ground is not one flat colour.
   for (let i = 0; i < 26; i++) {
     const angle = random() * Math.PI * 2
     const distance = Math.sqrt(random()) * (WORLD_RADIUS + 10)
@@ -227,25 +229,77 @@ export function buildScenery(keepClear: Obstacle[]): {
     }
   }
 
-  // Little ferns and flowers; you can walk straight through these.
+  // The ground cover of the dinosaurs' world: ferns everywhere, horsetails where it is damp, and
+  // small flowers, which had only just appeared. You can walk straight through all of it.
+  const breeze = { value: 0 }
+  const rustling = swayingMaterial(breeze, 0.35)
+  const FERN_GREENS = ['#3f9a4a', '#4fae56', '#2f8a4c', '#63b85a']
+  const fronds: Placement[] = []
+  for (let i = 0; i < 1050; i++) {
+    const angle = random() * Math.PI * 2
+    const distance = Math.sqrt(random()) * (WORLD_RADIUS + 6)
+    const x = Math.cos(angle) * distance
+    const z = Math.sin(angle) * distance
+    // Leave the pond, the beach and the spot where the player starts clear.
+    if (isCoast(z, 3) || Math.hypot(x - pond.x, z - pond.z) < pond.r + 1.2 || Math.hypot(x, z) < 2.5) continue
+    const shade = FERN_GREENS[i % FERN_GREENS.length]!
+    const size = 0.55 + random() * 0.75
+    const count = 6 + Math.floor(random() * 3)
+    const twist = random() * Math.PI * 2
+    for (let frond = 0; frond < count; frond++) {
+      fronds.push({
+        x,
+        y: 0.02,
+        z,
+        scale: [size, size * (0.85 + random() * 0.3), size],
+        rotation: [0.75 + random() * 0.35, twist + (frond / count) * Math.PI * 2, 0],
+        shade
+      })
+    }
+  }
+  group.add(scatter(fernFrond(), rustling, fronds))
+
+  const stalks: Placement[] = []
+  for (let clump = 0; clump < 12; clump++) {
+    const angle = (clump / 12) * Math.PI * 2 + random() * 0.4
+    const distance = pond.r + 1.3 + random() * 2.2
+    const centreX = pond.x + Math.cos(angle) * distance
+    const centreZ = pond.z + Math.sin(angle) * distance
+    for (let i = 0; i < 10; i++) {
+      stalks.push({
+        x: centreX + (random() - 0.5) * 1.4,
+        y: 0,
+        z: centreZ + (random() - 0.5) * 1.4,
+        scale: [1, 0.6 + random() * 0.9, 1],
+        rotation: [(random() - 0.5) * 0.12, random() * 3, (random() - 0.5) * 0.12],
+        shade: random() < 0.5 ? '#7fbf5f' : '#69ab52'
+      })
+    }
+  }
+  // A horsetail is a thin, jointed stalk. The joints are rings a little wider than the stalk.
+  const horsetail = new THREE.CylinderGeometry(0.02, 0.03, 1, 6, 1).translate(0, 0.5, 0)
+  group.add(scatter(horsetail, rustling, stalks))
+  const joints: Placement[] = stalks.flatMap((stalk) =>
+    [0.25, 0.5, 0.75].map((up) => ({
+      ...stalk,
+      y: up * stalk.scale[1],
+      scale: [1, 1, 1] as [number, number, number],
+      shade: '#4f8f45'
+    }))
+  )
+  group.add(scatter(new THREE.CylinderGeometry(0.042, 0.042, 0.04, 6), paint('#ffffff'), joints))
+
   const flowerColors = ['#ff8fb1', '#ffd447', '#ffffff', '#c59bff']
-  for (let i = 0; i < 150; i++) {
+  for (let i = 0; i < 90; i++) {
     const angle = random() * Math.PI * 2
     const distance = Math.sqrt(random()) * (WORLD_RADIUS + 4)
     const x = Math.cos(angle) * distance
     const z = Math.sin(angle) * distance
     if (!isFree(x, z, 0.3) || isCoast(z)) continue
-    if (random() < 0.5) {
-      const fern = part(coneGeometry, LEAF_GREENS[i % LEAF_GREENS.length]!, false)
-      fern.scale.set(0.35, 0.5, 0.35)
-      fern.position.set(x, 0.25, z)
-      group.add(fern)
-    } else {
-      const flower = part(blobGeometry, flowerColors[i % flowerColors.length]!, false)
-      flower.scale.setScalar(0.14)
-      flower.position.set(x, 0.14, z)
-      group.add(flower)
-    }
+    const flower = part(blobGeometry, flowerColors[i % flowerColors.length]!, false)
+    flower.scale.setScalar(0.14)
+    flower.position.set(x, 0.14, z)
+    group.add(flower)
   }
 
   // Hazy mountains ring the whole world, far behind the volcanoes.
@@ -273,6 +327,7 @@ export function buildScenery(keepClear: Obstacle[]): {
     obstacles,
     blowBubble: seabed.blowBubble,
     update(timeSeconds, deltaSeconds) {
+      breeze.value = timeSeconds
       volcanoes.update(timeSeconds, deltaSeconds)
       coast.update(timeSeconds)
       seabed.update(timeSeconds, deltaSeconds)

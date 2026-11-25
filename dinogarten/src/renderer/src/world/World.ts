@@ -150,8 +150,10 @@ export class World {
 
     this.marker = new THREE.Mesh(
       new THREE.RingGeometry(0.45, 0.68, 32),
-      new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.9, depthWrite: false })
+      // Drawn on top of everything, so ferns and seagrass never hide where he is heading.
+      new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.9, depthWrite: false, depthTest: false })
     )
+    this.marker.renderOrder = 10
     this.marker.rotation.x = -Math.PI / 2
     this.marker.position.y = 0.08
     this.marker.visible = false

@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { groundHeight, SEA, shoreline, waterLevel } from './coast'
+import { bladeShape, scatter, swayingMaterial, type Placement } from './plants'
 import { Puffs } from './puffs'
 import type { Obstacle } from './scenery'
 
@@ -22,40 +23,6 @@ const RUDIST_COLORS = ['#efe2c4', '#e8cdb6', '#d9c7a8', '#eab8b0']
 const FISH_COLORS = ['#ffd166', '#ff9f5a', '#e8f1f5', '#8fd3ff']
 
 const BUBBLE_SPEED = 2.4
-
-/** A blade one unit tall that tapers to a point, split into segments so it can bend. */
-function bladeShape(width: number, segments: number): THREE.BufferGeometry {
-  const blade = new THREE.PlaneGeometry(width, 1, 1, segments).translate(0, 0.5, 0)
-  const position = blade.getAttribute('position')
-  for (let i = 0; i < position.count; i++) {
-    position.setX(i, position.getX(i) * (1 - 0.7 * position.getY(i)))
-  }
-  blade.computeVertexNormals()
-  return blade
-}
-
-/** Plants sway because this material pushes each point sideways, more the nearer it is to the tip. */
-function swayingMaterial(time: { value: number }): THREE.MeshLambertMaterial {
-  const material = new THREE.MeshLambertMaterial({ side: THREE.DoubleSide })
-  material.onBeforeCompile = (shader) => {
-    shader.uniforms['swayTime'] = time
-    shader.vertexShader =
-      'uniform float swayTime;\n' +
-      shader.vertexShader.replace(
-        '#include <begin_vertex>',
-        /* glsl */ `#include <begin_vertex>
-        #ifdef USE_INSTANCING
-          float swayPhase = instanceMatrix[3].x * 0.37 + instanceMatrix[3].z * 0.53;
-        #else
-          float swayPhase = 0.0;
-        #endif
-        float swayBend = position.y * position.y;
-        transformed.x += sin(swayTime * 1.3 + swayPhase + position.y * 2.5) * 0.3 * swayBend;
-        transformed.z += cos(swayTime * 0.9 + swayPhase * 1.3 + position.y * 2.0) * 0.2 * swayBend;`
-      )
-  }
-  return material
-}
 
 /** Paints every point of a shape one colour, so shapes of different colours can be merged into one. */
 function tinted(geometry: THREE.BufferGeometry, shade: string): THREE.BufferGeometry {
@@ -147,35 +114,6 @@ function fishShape(): THREE.BufferGeometry {
   const body = new THREE.OctahedronGeometry(1).scale(0.09, 0.17, 0.36)
   const tail = new THREE.OctahedronGeometry(1).scale(0.02, 0.15, 0.12).translate(0, 0, -0.42)
   return mergeGeometries([body, tail])
-}
-
-interface Placement {
-  x: number
-  y: number
-  z: number
-  /** Width, height, depth. */
-  scale: [number, number, number]
-  /** Tilt forward, turn, tilt sideways: in that order of importance, turn is applied first. */
-  rotation: [number, number, number]
-  shade?: string
-}
-
-/** Draws many copies of one shape in a single mesh. */
-function scatter(geometry: THREE.BufferGeometry, material: THREE.Material, items: Placement[]): THREE.InstancedMesh {
-  const mesh = new THREE.InstancedMesh(geometry, material, items.length)
-  const placer = new THREE.Object3D()
-  placer.rotation.order = 'YXZ'
-  const color = new THREE.Color()
-  items.forEach((item, i) => {
-    placer.position.set(item.x, item.y, item.z)
-    placer.rotation.set(...item.rotation)
-    placer.scale.set(...item.scale)
-    placer.updateMatrix()
-    mesh.setMatrixAt(i, placer.matrix)
-    if (item.shade) mesh.setColorAt(i, color.set(item.shade))
-  })
-  mesh.frustumCulled = false
-  return mesh
 }
 
 export function buildSeabed(

@@ -34,10 +34,11 @@ Each one tells the player three things about itself before its lesson: its name,
 | Quetzalcoatlus | KET-sul-koh-AT-lus | meat | Flying reptile, as tall as a giraffe | Cliffs and sky | Converted from a public-domain pterosaur, reshaped: long neck and beak | To build |
 | Pterodactyl | TAIR-uh-DAK-til | fish | Flying reptile. Its full name is Pterodactylus | Cliffs and sky | Converted from a public-domain pterosaur | To build |
 | Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | A little scary: long jaws full of teeth. Patrols the deep water and swims over to look at the player | Built in code (`src/renderer/src/world/Mosasaur.ts`) | In the game |
+| Plesiosaurus | PLEE-zee-uh-SORE-us | fish | Sea reptile with a long neck and four flippers | The deep water, sharing it with the Mosasaurus | Built in code, like the Mosasaurus | To build, last of all. The whole underwater world gets another pass at the same time |
 
 ## Places
 
-- **Meadow and forest**: in the game. The round meadow where the player starts.
+- **Meadow and forest**: in the game. The round meadow where the player starts, covered in ferns, with horsetails round the pond. See [Land plants](#land-plants).
 - **Beach with a rocky inlet**: in the game, along the north side of the meadow. The Spinosaurus stands in a pool in the inlet.
 - **The sea**: in the game. The T. rex wades down the beach, then the sea floor drops away to a deep underwater world where he swims along just above the bottom, blowing bubbles. The Mosasaurus lives down there. See [Sea life](#sea-life) for what grows and swims around them.
 - **Volcanoes**: in the game. They rise out of the sea all along the horizon, some smoking, some running with lava, some erupting.
@@ -64,7 +65,11 @@ Animals from the same seas that would make good additions: the giant turtle Arch
 
 Sources: [Berkeley News on the age of kelp](https://news.berkeley.edu/2024/01/15/pacific-kelp-forests-are-far-older-than-we-thought/), [Utrecht University on Late Cretaceous seagrass](https://research-portal.uu.nl/en/publications/seagrass-stems-with-attached-roots-from-the-type-area-of-the-maas/), [Kansas Geological Survey on the Niobrara Chalk's inoceramids, crinoids and rudists](https://www.kgs.ku.edu/Publications/Bulletins/225/05_bios.html), [American Museum of Natural History on the Western Interior Seaway](https://www.amnh.org/research/paleontology/invertebrate-paleontology/western-interior-seaway), [Britannica on Cretaceous ammonites](https://www.britannica.com/science/Cretaceous-Period/Paleoclimate).
 
-One thing on land is not yet true to the era: the green ground reads as grass, and grasslands did not exist then. Ferns and horsetails covered the ground instead.
+## Land plants
+
+There is no grass, on purpose. Grasses were rare in the dinosaurs' time and did not form grasslands until long afterwards; ferns were the ground cover instead. So the meadow is mossy ground covered in ferns, with horsetails in the damp ground round the pond. The trees are conifers and cycads, the main trees of the era, with some broad-leaved ones. Flowering plants, small flowers and broad-leaved trees alike, only arrived in the Cretaceous. It is all built in code (`src/renderer/src/world/scenery.ts`).
+
+Sources: [University of Maryland, GEOL 104, on Mesozoic ground cover](https://www.geol.umd.edu/~tholtz/G104/lectures/104angio.html), [Smithsonian Magazine on how the dinosaurs' world looked](https://www.smithsonianmag.com/science-nature/five-ways-the-world-of-the-dinosaurs-looked-different-from-ours-beyond-the-presence-of-the-terrible-lizards-180989521/), [Enchanted Learning on the plants dinosaurs ate](https://www.enchantedlearning.com/subjects/dinosaurs/plants/).
 
 ## Where the models come from
 
