@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { buildVolcanoes } from './volcanoes'
 
 /** A circle on the ground the player cannot walk through. */
 export interface Obstacle {
@@ -129,38 +130,21 @@ function mountain(radius: number, height: number, color: string): THREE.Mesh {
   return mesh
 }
 
-function volcano(): THREE.Group {
-  const group = new THREE.Group()
-  const height = 36
-  const cone = part(new THREE.CylinderGeometry(6, 28, height, 8), '#8f7b6f', false)
-  cone.position.y = height / 2 - 1
-  const lava = part(new THREE.CylinderGeometry(5.4, 6.4, 2.5, 8), '#ff7a3c', false)
-  lava.position.y = height - 0.6
-  group.add(cone, lava)
-  const smoke: Array<[number, number, number, number]> = [
-    [0, height + 4, 0, 3.5],
-    [2.5, height + 9, 0, 4.5],
-    [5.5, height + 15, 0, 5.5]
-  ]
-  for (const [x, y, z, size] of smoke) {
-    const puff = new THREE.Mesh(blobGeometry, new THREE.MeshBasicMaterial({ color: '#f4f1ec' }))
-    puff.scale.setScalar(size)
-    puff.position.set(x, y, z)
-    group.add(puff)
-  }
-  return group
-}
-
 /**
  * Builds the ground, plants, pond and far-off mountains.
  * `keepClear` lists spots (the player's start, each dinosaur) where nothing may grow.
  */
-export function buildScenery(keepClear: Obstacle[]): { group: THREE.Group; obstacles: Obstacle[] } {
+export function buildScenery(keepClear: Obstacle[]): {
+  group: THREE.Group
+  obstacles: Obstacle[]
+  /** Call once a frame to keep the moving scenery (lava, smoke) going. */
+  update: (timeSeconds: number, deltaSeconds: number) => void
+} {
   const random = seededRandom(20261125)
   const group = new THREE.Group()
   const obstacles: Obstacle[] = []
 
-  group.add(flatDisc(400, '#8ccf63', 0))
+  group.add(flatDisc(600, '#8ccf63', 0))
 
   // Lighter and sandier patches so the ground is not one flat colour.
   for (let i = 0; i < 26; i++) {
@@ -242,19 +226,19 @@ export function buildScenery(keepClear: Obstacle[]): { group: THREE.Group; obsta
     }
   }
 
-  // Far-off mountains all the way round, with a volcano straight ahead.
+  // Hazy mountains ring the whole world, far behind the volcanoes.
   const mountainColors = ['#9fb7c9', '#a9c4b1', '#b3bfd6']
-  for (let i = 0; i < 22; i++) {
-    const angle = (i / 22) * Math.PI * 2 + random() * 0.2
-    const distance = 95 + random() * 30
-    const peak = mountain(14 + random() * 10, 18 + random() * 20, mountainColors[i % mountainColors.length]!)
+  for (let i = 0; i < 30; i++) {
+    const angle = (i / 30) * Math.PI * 2 + random() * 0.15
+    const distance = 250 + random() * 60
+    const peak = mountain(32 + random() * 22, 30 + random() * 34, mountainColors[i % mountainColors.length]!)
     peak.position.x = Math.cos(angle) * distance
     peak.position.z = Math.sin(angle) * distance
     group.add(peak)
   }
-  const fireMountain = volcano()
-  fireMountain.position.set(14, 0, -92)
-  group.add(fireMountain)
 
-  return { group, obstacles }
+  const volcanoes = buildVolcanoes()
+  group.add(volcanoes.group)
+
+  return { group, obstacles, update: volcanoes.update }
 }

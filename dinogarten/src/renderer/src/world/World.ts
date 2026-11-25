@@ -54,19 +54,21 @@ function turnToward(current: number, wanted: number, amount: number): number {
 export class World {
   private readonly renderer: THREE.WebGLRenderer
   private readonly scene = new THREE.Scene()
-  private readonly camera = new THREE.PerspectiveCamera(50, 1, 0.1, 600)
+  private readonly camera = new THREE.PerspectiveCamera(50, 1, 0.1, 900)
   private readonly sun = new THREE.DirectionalLight('#fff3d6', 2.4)
   private readonly raycaster = new THREE.Raycaster()
   private readonly groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)
   private readonly marker: THREE.Mesh
   private readonly cameraFocus = new THREE.Vector3()
   /** Where the camera sits relative to the player, and how high above the ground it aims. */
-  private readonly cameraOffset = new THREE.Vector3(0, 4, 7.5)
-  private readonly cameraLookHeight = 1.5
+  private readonly cameraOffset = new THREE.Vector3(0, 4.2, 8)
+  /** Aiming a little above the player leaves a band of sky for the volcanoes. */
+  private readonly cameraLookHeight = 2.3
   private readonly listeners = new AbortController()
   private readonly resizeObserver: ResizeObserver
   private readonly keysDown = new Set<string>()
   private readonly obstacles: Obstacle[]
+  private readonly updateScenery: (timeSeconds: number, deltaSeconds: number) => void
   private readonly neighbours: Neighbour[] = []
 
   private player: Dino | null = null
@@ -82,7 +84,7 @@ export class World {
     this.renderer.shadowMap.enabled = true
 
     this.scene.background = new THREE.Color(SKY_COLOR)
-    this.scene.fog = new THREE.Fog(SKY_COLOR, 70, 190)
+    this.scene.fog = new THREE.Fog(SKY_COLOR, 90, 430)
 
     this.scene.add(new THREE.HemisphereLight('#ffffff', '#9ccf7a', 1.5))
     this.sun.castShadow = true
@@ -102,6 +104,7 @@ export class World {
     const scenery = buildScenery([{ x: 0, z: 0, r: 5 }, ...dinoSpots])
     this.scene.add(scenery.group)
     this.obstacles = scenery.obstacles
+    this.updateScenery = scenery.update
 
     this.marker = new THREE.Mesh(
       new THREE.RingGeometry(0.45, 0.68, 32),
@@ -246,6 +249,7 @@ export class World {
     this.lastFrameMs = timeMs
     this.movePlayer(deltaSeconds)
     this.updateNeighbours(deltaSeconds)
+    this.updateScenery(timeMs / 1000, deltaSeconds)
     this.placeCamera(1 - Math.exp(-6 * deltaSeconds))
     if (this.marker.visible) this.marker.scale.setScalar(1 + Math.sin(timeMs / 160) * 0.15)
     this.renderer.render(this.scene, this.camera)
