@@ -1,0 +1,12 @@
+{
+  "height": 1.7,
+  "boneScales": { "Head": 1.3, "Tail1": 0.85 },
+  "colors": {
+    "Green": "#57b84a",
+    "LightGreen": "#c9ea8f",
+    "LightYellow": "hidden",
+    "Black": "#4b4f45",
+    "Red": "#ff8c8c"
+  },
+  "eyes": { "forward": 0.15, "up": 0.06, "apart": 0.095, "size": 0.055 }
+}

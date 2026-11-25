@@ -1,0 +1,21 @@
+{
+  "name": "Triceratops",
+  "sayIt": "try-SAIR-uh-tops",
+  "eats": "plants",
+  "position": [7, -6],
+  "facing": 320,
+  "look": {
+    "height": 3.2,
+    "colors": {
+      "Purple": "#f2994a",
+      "LightBrown": "#ffe1b0",
+      "Brown": "#fff6e0"
+    },
+    "eyes": {
+      "forward": 0.02,
+      "up": 0.03,
+      "apart": 0.065,
+      "size": 0.03
+    }
+  }
+}
