@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import playerModelUrl from '@content/player/model.glb?url'
 import playerLook from '@content/player/player.json'
+import type { Lesson } from '../lessons/types'
 import { Dino, type Creature, type DinoLook } from './Dino'
 import { Flier, type FlySpec } from './Flier'
 import { SeaReptile, type SeaReptileKind, type SwimSpec } from './SeaReptile'
@@ -31,7 +32,23 @@ export interface DinoDefinition {
   flies?: FlySpec
   /** Makes a whole group of this animal instead of one, scattered up to `spread` away from `position`. */
   flock?: { count: number; spread: number }
+  /** The lesson it gives once it has introduced itself. Left out, it only says hello. */
+  lesson?: Lesson
+  /** Which voice speaks its lines. Only the voice tool in tools/voices reads this. */
+  voice?: { name: string; speed?: number }
   look: DinoLook
+}
+
+/** A dinosaur the player has walked up to: what the screen needs in order to introduce it. */
+export interface Meeting {
+  /** The dinosaur's folder name in content/dinos. Its spoken lines are filed under this. */
+  id: string
+  name: string
+  sayIt: string
+  eats: string
+  lesson?: Lesson
+  /** Goes up by one each time a meeting starts, so meeting the same dinosaur twice counts as two meetings. */
+  visit: number
 }
 
 // Every folder in content/dinos is picked up automatically: add a folder, get a dinosaur.
@@ -66,7 +83,14 @@ const SUN_OFFSET = new THREE.Vector3(-10, 24, 14)
 const NOTICE_DISTANCE = 9
 
 interface Neighbour {
+  /** The dinosaur's folder name in content/dinos. */
+  id: string
+  definition: DinoDefinition
   dino: Creature
+  /** Its head, which is what the camera frames in a meeting. */
+  head: THREE.Object3D | null
+  /** True once it has met the player, until he walks well away. Stops a finished meeting starting again at once. */
+  greeted: boolean
   homeYaw: number
   turns: boolean
   /** True for an animal that moves itself around; the world then leaves its position and heading alone. */
@@ -111,6 +135,25 @@ export class World {
   private secondsToNextBubble = 0
   private readonly neighbours: Neighbour[] = []
   private readonly seeThrough = new SeeThrough()
+
+  /** Called when the player starts standing with a dinosaur, and with null when he walks off again. */
+  onMeeting: (meeting: Meeting | null) => void = () => {}
+  /** The dinosaur the player is standing with, if any. */
+  private meeting: Neighbour | null = null
+  private visits = 0
+  private secondsStanding = 0
+  /** While this is in the future the player is jumping for joy, and is left to finish. */
+  private cheeringUntil = 0
+  /** 0 while the camera follows the player, 1 while it frames a meeting. It eases between the two. */
+  private meetingView = 0
+  private readonly meetingSpot = new THREE.Vector3()
+  private readonly meetingLook = new THREE.Vector3()
+  /** Where the dinosaur's face is, measured from the dinosaur, so the camera holds steady while the animal shifts about. */
+  private readonly faceInDino = new THREE.Vector3()
+  /** Which side of the pair the camera sits on: 1, -1, or 0 before it has been chosen. */
+  private meetingSide = 0
+  private readonly cameraSpot = new THREE.Vector3()
+  private readonly cameraLook = new THREE.Vector3()
 
   private player: Dino | null = null
   /** Ripples for the player and for each dinosaur that stands in water. */
@@ -192,7 +235,8 @@ export class World {
         loaded: this.player !== null,
         walking: this.target !== null,
         x: this.player?.root.position.x ?? 0,
-        z: this.player?.root.position.z ?? 0
+        z: this.player?.root.position.z ?? 0,
+        meeting: this.meeting?.id ?? null
       })
     }
   }
@@ -202,7 +246,8 @@ export class World {
     const entries = Object.entries(definitions).flatMap(([path, definition]) => {
       const modelUrl = modelUrls[path.replace(/dino\.json$/, 'model.glb')]
       if (!modelUrl && !definition.madeInCode) throw new Error(`${path} has no model.glb beside it`)
-      if (!definition.flock) return [{ definition, modelUrl }]
+      const id = path.split('/').at(-2)!
+      if (!definition.flock) return [{ id, definition, modelUrl }]
       // A flock is the same animal several times over, each a little different in size and facing,
       // spread out in a spiral so that no two stand on the same spot.
       const { count, spread } = definition.flock
@@ -218,7 +263,7 @@ export class World {
           facing: definition.facing + ((i * 47) % 90) - 45,
           look: { ...definition.look, height: definition.look.height * (0.85 + ((i * 0.618) % 1) * 0.3) }
         }
-        return { definition: member, modelUrl }
+        return { id, definition: member, modelUrl }
       })
     })
 
@@ -239,11 +284,12 @@ export class World {
     if (this.disposed) return
 
     others.forEach((dino, index) => {
-      const { definition } = entries[index]!
+      const { id, definition } = entries[index]!
       this.scene.add(dino.root)
+      const head = dino.root.getObjectByName('Head') ?? null
       if (definition.swims || definition.flies) {
         // A swimmer or a flier places and steers itself, and is never in the way.
-        this.neighbours.push({ dino, homeYaw: 0, turns: false, roams: true, reach: 0 })
+        this.neighbours.push({ id, definition, dino, head, greeted: false, homeYaw: 0, turns: false, roams: true, reach: 0 })
         return
       }
       const [x, z] = definition.position
@@ -255,7 +301,11 @@ export class World {
       this.obstacles.push({ x, z, r })
       this.seeThrough.add(dino.root, dino.radius * 0.55, dino.height)
       this.neighbours.push({
+        id,
+        definition,
         dino,
+        head,
+        greeted: false,
         homeYaw,
         turns: definition.turnsToPlayer ?? true,
         roams: false,
@@ -338,7 +388,40 @@ export class World {
       if (!this.raycaster.ray.intersectPlane(this.groundPlane, spot)) return
       this.groundPlane.constant = -groundHeight(spot.x, spot.z)
     }
+    // During a meeting, a click on the dinosaur or right beside the player is not a request to walk off.
+    if (this.meeting && this.player) {
+      const dino = this.meeting.dino.root.position
+      const player = this.player.root.position
+      if (Math.hypot(spot.x - dino.x, spot.z - dino.z) < this.meeting.reach) return
+      if (Math.hypot(spot.x - player.x, spot.z - player.z) < 1.5) return
+    }
     this.walkTo(spot.x, spot.z)
+  }
+
+  /** A little celebration for a right answer: the dinosaur and the player both jump for joy. */
+  cheer(): void {
+    const dino = this.meeting?.dino
+    if (dino instanceof Dino) dino.playOnce('jump')
+    if (this.player) this.cheeringUntil = this.timeSeconds + this.player.playOnce('jump')
+  }
+
+  private startMeeting(neighbour: Neighbour): void {
+    this.meeting = neighbour
+    neighbour.greeted = true
+    const dino = neighbour.dino.root
+    dino.updateMatrixWorld(true)
+    const face = neighbour.head
+      ? neighbour.head.getWorldPosition(new THREE.Vector3())
+      : dino.position.clone().setY(dino.position.y + neighbour.dino.height)
+    this.faceInDino.copy(dino.worldToLocal(face))
+    this.meetingSide = 0
+    const { name, sayIt, eats, lesson } = neighbour.definition
+    this.onMeeting({ id: neighbour.id, name, sayIt, eats, visit: ++this.visits, ...(lesson ? { lesson } : {}) })
+  }
+
+  private endMeeting(): void {
+    this.meeting = null
+    this.onMeeting(null)
   }
 
   private readonly onKeyDown = (event: KeyboardEvent): void => {
@@ -373,8 +456,10 @@ export class World {
       const breaksSurface = y < level && y + dino.height > level
       rings.update(timeMs / 1000, x, z, level, breaksSurface ? level - y : 0)
     }
-    this.placeCamera(1 - Math.exp(-6 * deltaSeconds))
-    if (this.player) this.seeThrough.update(this.camera.position, this.player.root.position, deltaSeconds)
+    this.placeCamera(1 - Math.exp(-6 * deltaSeconds), deltaSeconds)
+    if (this.player) {
+      this.seeThrough.update(this.camera.position, this.player.root.position, deltaSeconds, this.meeting?.dino.root)
+    }
     this.tintForDepth(level, deltaSeconds)
     if (this.marker.visible) this.marker.scale.setScalar(1 + Math.sin(timeMs / 160) * 0.15)
     this.renderer.render(this.scene, this.camera)
@@ -430,17 +515,29 @@ export class World {
     }
 
     if (!step) {
-      // Standing next to a dinosaur: turn to look at it.
-      for (const { dino, reach } of this.neighbours) {
-        const dx = dino.root.position.x - position.x
-        const dz = dino.root.position.z - position.z
-        if (Math.hypot(dx, dz) > reach) continue
-        player.root.rotation.y = turnToward(player.root.rotation.y, Math.atan2(dx, dz), 6 * deltaSeconds)
+      // Standing next to a dinosaur: turn to look at it, and after a moment the two of them meet.
+      let beside: Neighbour | null = null
+      let nearest = Infinity
+      for (const neighbour of this.neighbours) {
+        const away = Math.hypot(neighbour.dino.root.position.x - position.x, neighbour.dino.root.position.z - position.z)
+        if (away > neighbour.reach || away >= nearest) continue
+        beside = neighbour
+        nearest = away
       }
-      player.play('idle')
+      if (beside) {
+        const dx = beside.dino.root.position.x - position.x
+        const dz = beside.dino.root.position.z - position.z
+        player.root.rotation.y = turnToward(player.root.rotation.y, Math.atan2(dx, dz), 6 * deltaSeconds)
+        this.secondsStanding += deltaSeconds
+        if (!this.meeting && !beside.greeted && this.secondsStanding > 0.35) this.startMeeting(beside)
+      }
+      if (this.timeSeconds > this.cheeringUntil) player.play('idle')
       player.update(deltaSeconds)
       return
     }
+    // He is on the move, so any meeting is over.
+    this.secondsStanding = 0
+    if (this.meeting) this.endMeeting()
 
     // If something is in the way, walk around its edge instead of pushing into it.
     let { x, z } = step
@@ -492,16 +589,20 @@ export class World {
 
   private updateNeighbours(deltaSeconds: number): void {
     const playerPosition = this.player?.root.position
-    for (const { dino, homeYaw, turns, roams } of this.neighbours) {
+    for (const neighbour of this.neighbours) {
+      const { dino, homeYaw, turns, roams } = neighbour
       if (roams) {
         dino.update(deltaSeconds, playerPosition ?? null)
         continue
       }
       let wantedYaw = homeYaw
-      if (playerPosition && turns) {
+      if (playerPosition) {
         const dx = playerPosition.x - dino.root.position.x
         const dz = playerPosition.z - dino.root.position.z
-        if (Math.hypot(dx, dz) < NOTICE_DISTANCE) wantedYaw = Math.atan2(dx, dz)
+        const away = Math.hypot(dx, dz)
+        if (turns && away < NOTICE_DISTANCE) wantedYaw = Math.atan2(dx, dz)
+        // Once the player has walked well away, it is ready to meet him again.
+        if (away > neighbour.reach + 2.5) neighbour.greeted = false
       }
       dino.root.rotation.y = turnToward(dino.root.rotation.y, wantedYaw, 3 * deltaSeconds)
       dino.update(deltaSeconds, playerPosition ?? null)
@@ -534,13 +635,63 @@ export class World {
     this.sun.intensity = THREE.MathUtils.lerp(2.4, 1.2, under)
   }
 
-  /** The camera never turns; it glides after the player so arrow keys always mean the same thing. */
-  private placeCamera(amount: number): void {
+  /**
+   * The camera never turns while the player is walking; it glides after him, so arrow keys always
+   * mean the same thing. When he stops beside a dinosaur it swings round to show them face to face.
+   */
+  private placeCamera(amount: number, deltaSeconds = 0): void {
     if (this.player) this.cameraFocus.lerp(this.player.root.position, amount)
-    this.camera.position.copy(this.cameraFocus).add(this.cameraOffset)
-    this.camera.lookAt(this.cameraFocus.x, this.cameraFocus.y + this.cameraLookHeight, this.cameraFocus.z)
+    const spot = this.cameraSpot.copy(this.cameraFocus).add(this.cameraOffset)
+    const look = this.cameraLook.set(this.cameraFocus.x, this.cameraFocus.y + this.cameraLookHeight, this.cameraFocus.z)
+
+    if (this.meeting && this.player) this.frameMeeting(this.meeting, this.player)
+    this.meetingView += ((this.meeting ? 1 : 0) - this.meetingView) * Math.min(1, 2.6 * deltaSeconds)
+    if (this.meetingView > 0.001) {
+      // Slow at both ends of the move, so the camera eases away and settles gently.
+      const blend = THREE.MathUtils.smootherstep(this.meetingView, 0, 1)
+      spot.lerp(this.meetingSpot, blend)
+      look.lerp(this.meetingLook, blend)
+    }
+    this.camera.position.copy(spot)
+    this.camera.lookAt(look)
     this.sun.position.copy(this.cameraFocus).add(SUN_OFFSET)
     this.sun.target.position.copy(this.cameraFocus)
+  }
+
+  /** Works out where the camera should sit to see the player and the dinosaur's face together. */
+  private frameMeeting(neighbour: Neighbour, player: Dino): void {
+    const dino = neighbour.dino.root
+    dino.updateWorldMatrix(false, false)
+    const face = dino.localToWorld(this.faceInDino.clone())
+    const eyes = player.root.position.clone()
+    eyes.y += player.height * 0.8
+    const middle = eyes.clone().lerp(face, 0.5)
+    const span = eyes.distanceTo(face)
+
+    // The line from the player to the dinosaur, seen from above, and the direction square to it.
+    // It runs to the middle of the animal, not its face: a giant's head can be right over the player.
+    const toDino = new THREE.Vector3(dino.position.x - eyes.x, 0, dino.position.z - eyes.z)
+    if (toDino.lengthSq() < 0.01) toDino.set(0, 0, -1)
+    toDino.normalize()
+    const sideways = new THREE.Vector3(toDino.z, 0, -toDino.x)
+    // Stay on whichever side the camera is already on, so it swings round the short way.
+    if (this.meetingSide === 0) {
+      this.meetingSide = sideways.dot(this.camera.position.clone().sub(middle)) >= 0 ? 1 : -1
+    }
+
+    // Off to one side and a little behind the player: the dinosaur's face is toward the camera,
+    // and the player is seen over his shoulder. Further back the further apart the two heads are,
+    // and further still for a head high overhead, which has to fit between the name card at the
+    // top of the screen and the lesson at the bottom.
+    const distance = Math.max(5.5, span * 1.5 + 2.5, Math.abs(face.y - eyes.y) * 2.4 + 2)
+    this.meetingSpot
+      .copy(middle)
+      .addScaledVector(sideways, this.meetingSide * distance * 0.88)
+      .addScaledVector(toDino, -distance * 0.42)
+    this.meetingSpot.y = middle.y + 0.8 + span * 0.12
+    // Aiming a little low puts the pair in the upper part of the screen, clear of the lesson below.
+    this.meetingLook.copy(middle)
+    this.meetingLook.y -= distance * 0.06
   }
 }
 
@@ -549,7 +700,7 @@ declare global {
     dinogarten?: {
       world: World
       walkTo(x: number, z: number): void
-      state(): { loaded: boolean; walking: boolean; x: number; z: number }
+      state(): { loaded: boolean; walking: boolean; x: number; z: number; meeting: string | null }
     }
   }
 }

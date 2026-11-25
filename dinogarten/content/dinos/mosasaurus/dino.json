@@ -2,6 +2,10 @@
   "name": "Mosasaurus",
   "sayIt": "MOH-zuh-SORE-us",
   "eats": "fish",
+  "voice": {
+    "name": "am_onyx",
+    "speed": 0.85
+  },
   "position": [
     16,
     -94

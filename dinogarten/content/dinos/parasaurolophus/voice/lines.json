@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Parasaurolophus.",
+    "ipa": "pˌæɹəsɔːɹˈɑːləfəs",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "2c7dfaec6205"
+  },
+  "name": {
+    "text": "Parasaurolophus.",
+    "ipa": "pˌæɹəsɔːɹˈɑːləfəs",
+    "voice": "af_bella",
+    "speed": 0.84,
+    "hash": "6adbde669675"
+  },
+  "eats": {
+    "text": "I eat plants.",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "03c25fbaa160"
+  }
+}

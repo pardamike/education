@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Pterodactyl.",
+    "ipa": "tˌɛɹədˈæktɪl",
+    "voice": "af_alloy",
+    "speed": 1.1,
+    "hash": "59f246566b4f"
+  },
+  "name": {
+    "text": "Pterodactyl.",
+    "ipa": "tˌɛɹədˈæktɪl",
+    "voice": "af_alloy",
+    "speed": 0.88,
+    "hash": "6d59d8a002fe"
+  },
+  "eats": {
+    "text": "I eat fish.",
+    "voice": "af_alloy",
+    "speed": 1.1,
+    "hash": "21d948b00cb0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am an Apatosaurus.",
+    "ipa": "əpˌætəsˈɔɹəs",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "2bb7e6e0a80b"
+  },
+  "name": {
+    "text": "Apatosaurus.",
+    "ipa": "əpˌætəsˈɔɹəs",
+    "voice": "am_michael",
+    "speed": 0.64,
+    "hash": "93dde92e054b"
+  },
+  "eats": {
+    "text": "I eat plants.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "1de39cf65c28"
+  }
+}

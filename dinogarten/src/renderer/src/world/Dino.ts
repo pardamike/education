@@ -179,6 +179,7 @@ export class Dino implements Creature {
       const name = clip.name.split('_').pop()!.toLowerCase()
       this.actions.set(name, this.mixer.clipAction(clip))
     }
+    this.mixer.addEventListener('finished', () => this.play('idle', 0.3))
     this.play('idle', 0)
     this.standOnGround(model, meshes)
   }
@@ -340,11 +341,23 @@ export class Dino implements Creature {
   play(name: DinoAnimation, fadeSeconds = 0.25, rate = 1): void {
     const next = this.actions.get(name)
     if (!next || next === this.current) return
-    next.reset().setEffectiveTimeScale(rate).setEffectiveWeight(1)
+    next.reset().setLoop(THREE.LoopRepeat, Infinity).setEffectiveTimeScale(rate).setEffectiveWeight(1)
     if (fadeSeconds > 0) next.fadeIn(fadeSeconds)
     next.play()
     this.current?.fadeOut(fadeSeconds)
     this.current = next
+  }
+
+  /** Plays an animation once through, then goes back to standing. Returns how long it lasts, in seconds. */
+  playOnce(name: DinoAnimation): number {
+    const action = this.actions.get(name)
+    if (!action) return 0
+    if (this.current === action) this.current = null
+    this.play(name, 0.15)
+    // Holding the last frame when it ends lets the standing animation fade back in without a jolt.
+    action.setLoop(THREE.LoopOnce, 1)
+    action.clampWhenFinished = true
+    return action.getClip().duration
   }
 
   /** Speeds up or slows down whichever animation is playing. */

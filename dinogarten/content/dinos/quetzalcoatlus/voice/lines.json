@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Quetzalcoatlus.",
+    "ipa": "kˌɛtsəlkoʊˈætləs",
+    "voice": "bf_isabella",
+    "speed": 0.9,
+    "hash": "f4abdae06552"
+  },
+  "name": {
+    "text": "Quetzalcoatlus.",
+    "ipa": "kˌɛtsəlkoʊˈætləs",
+    "voice": "bf_isabella",
+    "speed": 0.72,
+    "hash": "0a80e3158ff7"
+  },
+  "eats": {
+    "text": "I eat meat.",
+    "voice": "bf_isabella",
+    "speed": 0.9,
+    "hash": "3e39c7c753fe"
+  }
+}

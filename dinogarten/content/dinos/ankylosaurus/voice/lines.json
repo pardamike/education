@@ -1,0 +1,20 @@
+{
+  "hello": {
+    "text": "Hello! I am an Ankylosaurus.",
+    "voice": "am_eric",
+    "speed": 0.95,
+    "hash": "6c827432cb79"
+  },
+  "name": {
+    "text": "Ankylosaurus.",
+    "voice": "am_eric",
+    "speed": 0.76,
+    "hash": "31754de1441f"
+  },
+  "eats": {
+    "text": "I eat plants.",
+    "voice": "am_eric",
+    "speed": 0.95,
+    "hash": "b0ac027efee2"
+  }
+}

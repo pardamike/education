@@ -2,6 +2,10 @@
   "name": "Ankylosaurus",
   "sayIt": "an-KY-luh-SORE-us",
   "eats": "plants",
+  "voice": {
+    "name": "am_eric",
+    "speed": 0.95
+  },
   "position": [
     8,
     10
@@ -10,7 +14,7 @@
   "look": {
     "height": 1.55,
     "stretch": [
-      2.0,
+      2,
       1.35
     ],
     "colors": {

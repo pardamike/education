@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Dilophosaurus.",
+    "ipa": "daɪlˌoʊfəsˈɔːɹəs",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "6eec26f23e9a"
+  },
+  "name": {
+    "text": "Dilophosaurus.",
+    "ipa": "daɪlˌoʊfəsˈɔːɹəs",
+    "voice": "af_sky",
+    "speed": 0.84,
+    "hash": "2c90be00b552"
+  },
+  "eats": {
+    "text": "I eat meat.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "d8ad8644ebd4"
+  }
+}

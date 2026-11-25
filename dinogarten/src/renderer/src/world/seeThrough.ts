@@ -24,8 +24,8 @@ export class SeeThrough {
     this.items.push({ object, radius, height, opacity: 1, swaps: null })
   }
 
-  /** Call once a frame, after the camera has been placed. */
-  update(camera: THREE.Vector3, player: THREE.Vector3, deltaSeconds: number): void {
+  /** Call once a frame, after the camera has been placed. `except` is something that must stay solid whatever happens. */
+  update(camera: THREE.Vector3, player: THREE.Vector3, deltaSeconds: number, except?: THREE.Object3D): void {
     // The line of sight, seen from above, runs from the camera to the player.
     const dx = player.x - camera.x
     const dz = player.z - camera.z
@@ -35,7 +35,7 @@ export class SeeThrough {
       // How far along the line of sight this thing is (0 at the camera, 1 at the player), and how far off to the side.
       const along = ((position.x - camera.x) * dx + (position.z - camera.z) * dz) / lengthSquared
       let inTheWay = false
-      if (along > 0.02 && along < 0.92) {
+      if (item.object !== except && along > 0.02 && along < 0.92) {
         const aside = Math.hypot(camera.x + dx * along - position.x, camera.z + dz * along - position.z)
         const sightHeight = camera.y + (player.y + 1 - camera.y) * along
         // Things close to the camera cover more of the screen, so they count from further off to the side.

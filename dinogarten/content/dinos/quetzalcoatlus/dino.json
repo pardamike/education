@@ -2,6 +2,10 @@
   "name": "Quetzalcoatlus",
   "sayIt": "KET-sul-koh-AT-lus",
   "eats": "meat",
+  "voice": {
+    "name": "bf_isabella",
+    "speed": 0.9
+  },
   "position": [
     0,
     -52
@@ -17,7 +21,7 @@
     "height": 11
   },
   "look": {
-    "height": 2.0,
+    "height": 2,
     "colors": {
       "Body": "#f1e8d5",
       "Wings": "#bfa98a",
@@ -27,7 +31,7 @@
     "boneScales": {
       "neck1": [
         1,
-        2.0,
+        2,
         1
       ]
     },

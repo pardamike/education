@@ -1,0 +1,20 @@
+{
+  "hello": {
+    "text": "Hello! I am a Microraptor.",
+    "voice": "af_nova",
+    "speed": 1.15,
+    "hash": "ff5659e7e65a"
+  },
+  "name": {
+    "text": "Microraptor.",
+    "voice": "af_nova",
+    "speed": 0.92,
+    "hash": "e82fc9846dd5"
+  },
+  "eats": {
+    "text": "I eat meat.",
+    "voice": "af_nova",
+    "speed": 1.15,
+    "hash": "06725968b1ad"
+  }
+}

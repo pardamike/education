@@ -2,6 +2,10 @@
   "name": "Microraptor",
   "sayIt": "MY-kroh-RAP-tor",
   "eats": "meat",
+  "voice": {
+    "name": "af_nova",
+    "speed": 1.15
+  },
   "position": [
     27,
     -13

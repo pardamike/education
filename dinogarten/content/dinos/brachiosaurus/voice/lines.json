@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Brachiosaurus.",
+    "ipa": "bɹˌækiəsˈɔːɹəs",
+    "voice": "bf_emma",
+    "speed": 0.8,
+    "hash": "67e1f206e0a1"
+  },
+  "name": {
+    "text": "Brachiosaurus.",
+    "ipa": "bɹˌækiəsˈɔːɹəs",
+    "voice": "bf_emma",
+    "speed": 0.64,
+    "hash": "f920589af958"
+  },
+  "eats": {
+    "text": "I eat plants.",
+    "voice": "bf_emma",
+    "speed": 0.8,
+    "hash": "a562b3b03e84"
+  }
+}

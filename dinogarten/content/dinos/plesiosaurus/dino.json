@@ -2,6 +2,10 @@
   "name": "Plesiosaurus",
   "sayIt": "PLEE-zee-uh-SORE-us",
   "eats": "fish",
+  "voice": {
+    "name": "af_aoede",
+    "speed": 0.9
+  },
   "position": [
     -20,
     -95

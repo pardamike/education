@@ -2,6 +2,10 @@
   "name": "Dilophosaurus",
   "sayIt": "dy-LOH-fuh-SORE-us",
   "eats": "meat",
+  "voice": {
+    "name": "af_sky",
+    "speed": 1.05
+  },
   "position": [
     -4,
     24

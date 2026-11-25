@@ -36,6 +36,14 @@ Each one tells the player three things about itself before its lesson: its name,
 | Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | A little scary: long jaws full of teeth. Patrols the east side of the deep water and swims over to look at the player | Built in code (`src/renderer/src/world/SeaReptile.ts`) | In the game |
 | Plesiosaurus | PLEE-zee-uh-SORE-us | fish | Sea reptile with a long neck and four flippers | Gentle and curious. Patrols the west side of the deep water and swims up close to the player | Built in code, in the same file | In the game |
 
+## Lessons
+
+| Dinosaur | Lesson | Status |
+| --- | --- | --- |
+| Triceratops | Find the letter T, shown among S and O | In the game |
+
+Every other land dinosaur introduces itself (its name, how to say it, what it eats) but has no lesson yet. The swimmers and the fliers do not introduce themselves yet: meetings only happen on land.
+
 ## Places
 
 - **Meadow and forest**: in the game. The round meadow where the player starts, covered in ferns, with horsetails round the pond. See [Land plants](#land-plants).

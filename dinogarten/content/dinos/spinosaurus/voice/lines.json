@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Spinosaurus.",
+    "ipa": "spˌaɪnəsˈɔɹəs",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "6e5fc62722db"
+  },
+  "name": {
+    "text": "Spinosaurus.",
+    "ipa": "spˌaɪnəsˈɔɹəs",
+    "voice": "bm_lewis",
+    "speed": 0.72,
+    "hash": "d50a2f358365"
+  },
+  "eats": {
+    "text": "I eat fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "b3485176cc9a"
+  }
+}

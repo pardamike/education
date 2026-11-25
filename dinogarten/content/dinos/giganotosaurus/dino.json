@@ -2,6 +2,10 @@
   "name": "Giganotosaurus",
   "sayIt": "jig-uh-NOT-uh-SORE-us",
   "eats": "meat",
+  "voice": {
+    "name": "am_fenrir",
+    "speed": 0.9
+  },
   "position": [
     22,
     16

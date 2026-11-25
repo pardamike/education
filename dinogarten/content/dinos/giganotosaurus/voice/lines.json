@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Giganotosaurus.",
+    "ipa": "dʒˌɪɡənˌɑːtəsˈɔːɹəs",
+    "voice": "am_fenrir",
+    "speed": 0.9,
+    "hash": "c42ad9e72e03"
+  },
+  "name": {
+    "text": "Giganotosaurus.",
+    "ipa": "dʒˌɪɡənˌɑːtəsˈɔːɹəs",
+    "voice": "am_fenrir",
+    "speed": 0.72,
+    "hash": "912e6dd831ea"
+  },
+  "eats": {
+    "text": "I eat meat.",
+    "voice": "am_fenrir",
+    "speed": 0.9,
+    "hash": "15390fdd7f74"
+  }
+}

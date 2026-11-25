@@ -2,6 +2,10 @@
   "name": "Velociraptor",
   "sayIt": "veh-LOSS-ih-RAP-tor",
   "eats": "meat",
+  "voice": {
+    "name": "am_puck",
+    "speed": 1.1
+  },
   "position": [
     -10,
     3

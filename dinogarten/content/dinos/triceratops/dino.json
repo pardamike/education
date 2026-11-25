@@ -2,7 +2,22 @@
   "name": "Triceratops",
   "sayIt": "try-SAIR-uh-tops",
   "eats": "plants",
-  "position": [7, -6],
+  "lesson": {
+    "type": "find-letter",
+    "letter": "T",
+    "others": [
+      "S",
+      "O"
+    ]
+  },
+  "voice": {
+    "name": "af_heart",
+    "speed": 0.95
+  },
+  "position": [
+    7,
+    -6
+  ],
   "facing": 320,
   "look": {
     "height": 3.2,

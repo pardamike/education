@@ -16,3 +16,225 @@ body,
   cursor: pointer;
   touch-action: none;
 }
+
+/* ---- Meeting a dinosaur: its name card at the top, its lesson at the bottom ---- */
+
+.meeting {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 3.5vh 3vw 5vh;
+  /* Clicks pass through to the world, so the player can still walk away. Only buttons take them. */
+  pointer-events: none;
+  font-family: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', 'Segoe UI', system-ui, sans-serif;
+  color: #3b3b4d;
+}
+
+.meeting button {
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.card {
+  padding: 1.6vh 4vw 2vh;
+  border-radius: 4vh;
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 1vh 0 rgb(0 0 0 / 0.12);
+  text-align: center;
+  animation: pop-in 0.4s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.name {
+  font-size: 8.5vh;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+/* The letter the dinosaur's name starts with stands out: it is the one its lesson is about. */
+.first-letter {
+  color: #f2743a;
+}
+
+.say-it {
+  font-size: 3.4vh;
+  font-weight: 600;
+  color: #80809a;
+  animation: rise 0.3s both;
+}
+
+.eats {
+  margin-top: 0.6vh;
+  font-size: 3.6vh;
+  font-weight: 700;
+  animation: rise 0.3s both;
+}
+
+.food {
+  font-size: 5vh;
+  vertical-align: middle;
+}
+
+.letters {
+  display: flex;
+  align-items: center;
+  gap: 3.2vh;
+}
+
+.again {
+  width: 11vh;
+  height: 11vh;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0.9vh 0 rgb(0 0 0 / 0.15);
+  font-size: 5vh;
+  transition: transform 0.12s;
+}
+
+.again:hover {
+  transform: scale(1.08);
+}
+
+.again:active {
+  transform: translateY(0.5vh);
+}
+
+.tile {
+  position: relative;
+  width: 22vh;
+  height: 22vh;
+  border: 1.1vh solid currentcolor;
+  border-radius: 4.5vh;
+  background: #fff;
+  box-shadow: 0 1.3vh 0 rgb(0 0 0 / 0.16);
+  font-size: 15vh;
+  font-weight: 800;
+  line-height: 1;
+  transition:
+    transform 0.12s,
+    opacity 0.3s;
+  animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.tile-0 {
+  color: #3d9be9;
+}
+
+.tile-1 {
+  color: #f2994a;
+  animation-delay: 0.08s;
+}
+
+.tile-2 {
+  color: #e2619f;
+  animation-delay: 0.16s;
+}
+
+.tile:hover:not(:disabled) {
+  transform: translateY(-0.8vh) scale(1.05);
+}
+
+.tile:active:not(:disabled) {
+  transform: translateY(0.6vh);
+}
+
+/* A wrong letter that has been tried: it shakes its head and fades into the background. */
+.tile.tried {
+  opacity: 0.25;
+  cursor: default;
+  animation: shake 0.45s both;
+}
+
+/* The right letter, once it is the only one left: it glows to say "here I am". */
+.tile.pointed-out {
+  animation: glow 0.8s ease-in-out infinite alternate;
+}
+
+.tile.found {
+  border-color: #3fae52;
+  background: #5ecb6b;
+  color: #fff;
+  animation: bounce 0.7s both;
+}
+
+.star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 6vh;
+  pointer-events: none;
+  animation: fly 1.1s ease-out both;
+}
+
+.earned {
+  font-size: 0.7em;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1vh);
+  }
+}
+
+@keyframes shake {
+  20% {
+    transform: translateX(-1.2vh) rotate(-4deg);
+  }
+  50% {
+    transform: translateX(1.2vh) rotate(4deg);
+  }
+  80% {
+    transform: translateX(-0.6vh) rotate(-2deg);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow:
+      0 1.3vh 0 rgb(0 0 0 / 0.16),
+      0 0 0 0 rgb(255 214 64 / 0.9);
+  }
+  to {
+    transform: scale(1.07);
+    box-shadow:
+      0 1.3vh 0 rgb(0 0 0 / 0.16),
+      0 0 0 2.4vh rgb(255 214 64 / 0.55);
+  }
+}
+
+@keyframes bounce {
+  30% {
+    transform: translateY(-3.5vh) scale(1.12);
+  }
+  55% {
+    transform: translateY(0) scale(0.96);
+  }
+  75% {
+    transform: translateY(-1.2vh) scale(1.04);
+  }
+}
+
+@keyframes fly {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  to {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--across) * 22vh), calc(-50% + var(--up) * 22vh)) scale(1.3) rotate(40deg);
+  }
+}

@@ -2,6 +2,10 @@
   "name": "Parasaurolophus",
   "sayIt": "pair-uh-sore-OL-uh-fus",
   "eats": "plants",
+  "voice": {
+    "name": "af_bella",
+    "speed": 1.05
+  },
   "position": [
     21,
     -3

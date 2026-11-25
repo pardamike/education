@@ -2,6 +2,10 @@
   "name": "Allosaurus",
   "sayIt": "AL-uh-SORE-us",
   "eats": "meat",
+  "voice": {
+    "name": "bm_george",
+    "speed": 1
+  },
   "position": [
     -22,
     14

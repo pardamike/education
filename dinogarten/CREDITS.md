@@ -30,6 +30,10 @@ The Pterodactyl and the Quetzalcoatlus are both made from [Low Spec Pterosaur](h
 
 That model ships as a Blender file. `content/dinos/pterodactyl/model.glb` and `content/dinos/quetzalcoatlus/model.glb` are the same conversion of it, made with Blender, keeping the model, its skeleton and its two flying animations and leaving out its texture. The game paints and reshapes it when it loads.
 
+## Voices
+
+The dinosaurs' voices are computer speech, made with [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) by hexgrad, an open text-to-speech model released under the Apache 2.0 licence. Thank you! The tool that makes them is in `tools/voices`.
+
 ## Sea reptiles
 
 The Mosasaurus and the Plesiosaurus have no model files. Their bodies, heads, flippers and tails are built by the game's own code.

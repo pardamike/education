@@ -2,6 +2,10 @@
   "name": "Pterodactyl",
   "sayIt": "TAIR-uh-DAK-til",
   "eats": "fish",
+  "voice": {
+    "name": "af_alloy",
+    "speed": 1.1
+  },
   "position": [
     -6,
     -30

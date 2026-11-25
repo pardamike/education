@@ -2,6 +2,10 @@
   "name": "Apatosaurus",
   "sayIt": "uh-PAT-uh-SORE-us",
   "eats": "plants",
+  "voice": {
+    "name": "am_michael",
+    "speed": 0.8
+  },
   "position": [
     -15,
     -20

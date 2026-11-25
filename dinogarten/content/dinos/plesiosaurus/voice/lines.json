@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Plesiosaurus.",
+    "ipa": "plˌiːziəsˈɔːɹəs",
+    "voice": "af_aoede",
+    "speed": 0.9,
+    "hash": "0765daf29012"
+  },
+  "name": {
+    "text": "Plesiosaurus.",
+    "ipa": "plˌiːziəsˈɔːɹəs",
+    "voice": "af_aoede",
+    "speed": 0.72,
+    "hash": "40b938495a3e"
+  },
+  "eats": {
+    "text": "I eat fish.",
+    "voice": "af_aoede",
+    "speed": 0.9,
+    "hash": "5a7b4630e633"
+  }
+}

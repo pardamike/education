@@ -1,0 +1,44 @@
+{
+  "hello": {
+    "text": "Hello! I am a Triceratops.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "18dfb76ad6db"
+  },
+  "name": {
+    "text": "Triceratops.",
+    "voice": "af_heart",
+    "speed": 0.76,
+    "hash": "87570839e4f9"
+  },
+  "eats": {
+    "text": "I eat plants.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "c758ba4b5c7a"
+  },
+  "ask": {
+    "text": "Can you find the letter T?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "f35441a88aba"
+  },
+  "again": {
+    "text": "Try again! Find the letter T.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "9be72810e204"
+  },
+  "show": {
+    "text": "Here it is. This is the letter T.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "522ed4c05e3b"
+  },
+  "yes": {
+    "text": "Yes! That is the letter T. T is for Triceratops!",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "979e722338db"
+  }
+}

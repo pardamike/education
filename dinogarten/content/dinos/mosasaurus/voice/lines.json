@@ -1,0 +1,22 @@
+{
+  "hello": {
+    "text": "Hello! I am a Mosasaurus.",
+    "ipa": "mˌoʊzəsˈɔːɹəs",
+    "voice": "am_onyx",
+    "speed": 0.85,
+    "hash": "374171662feb"
+  },
+  "name": {
+    "text": "Mosasaurus.",
+    "ipa": "mˌoʊzəsˈɔːɹəs",
+    "voice": "am_onyx",
+    "speed": 0.68,
+    "hash": "c8a6f9288c08"
+  },
+  "eats": {
+    "text": "I eat fish.",
+    "voice": "am_onyx",
+    "speed": 0.85,
+    "hash": "6a5313898261"
+  }
+}

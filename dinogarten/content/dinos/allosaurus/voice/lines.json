@@ -1,0 +1,20 @@
+{
+  "hello": {
+    "text": "Hello! I am an Allosaurus.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "2ebedd5ebb0d"
+  },
+  "name": {
+    "text": "Allosaurus.",
+    "voice": "bm_george",
+    "speed": 0.8,
+    "hash": "f64d6c850b7e"
+  },
+  "eats": {
+    "text": "I eat meat.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "1949b250045b"
+  }
+}
