@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { buildCoast, isCoast, WORLD_RADIUS } from './coast'
 import { buildVolcanoes } from './volcanoes'
 
 /** A circle on the ground the player cannot walk through. */
@@ -7,9 +8,6 @@ export interface Obstacle {
   z: number
   r: number
 }
-
-/** The player can roam this far from the middle of the world. */
-export const WORLD_RADIUS = 36
 
 export const SKY_COLOR = '#a9defa'
 
@@ -144,15 +142,27 @@ export function buildScenery(keepClear: Obstacle[]): {
   const group = new THREE.Group()
   const obstacles: Obstacle[] = []
 
-  group.add(flatDisc(600, '#8ccf63', 0))
+  // Grass covers everything south of the coast. The beach and sea take over to the north.
+  const grass = new THREE.Mesh(new THREE.PlaneGeometry(1200, 630), paint('#8ccf63'))
+  grass.rotation.x = -Math.PI / 2
+  grass.position.z = 285
+  grass.receiveShadow = true
+  group.add(grass)
+
+  const coast = buildCoast(random)
+  group.add(coast.group)
+  obstacles.push(...coast.obstacles)
 
   // Lighter and sandier patches so the ground is not one flat colour.
   for (let i = 0; i < 26; i++) {
     const angle = random() * Math.PI * 2
     const distance = Math.sqrt(random()) * (WORLD_RADIUS + 10)
-    const patch = flatDisc(2 + random() * 5, random() < 0.7 ? '#9bd974' : '#e9d9a1', 0.01 + i * 0.0005)
+    const radius = 2 + random() * 5
+    const patch = flatDisc(radius, random() < 0.7 ? '#9bd974' : '#e9d9a1', 0.01 + i * 0.0005)
     patch.position.x = Math.cos(angle) * distance
     patch.position.z = Math.sin(angle) * distance
+    // Keep patches clear of the sand at the back of the beach.
+    if (isCoast(patch.position.z, 9 + radius)) continue
     group.add(patch)
   }
 
@@ -192,17 +202,26 @@ export function buildScenery(keepClear: Obstacle[]): {
     const distance = 6 + Math.sqrt(random()) * (WORLD_RADIUS - 8)
     const x = Math.cos(angle) * distance
     const z = Math.sin(angle) * distance
-    if (!isFree(x, z, 2.2)) continue
+    if (!isFree(x, z, 2.2) || isCoast(z, -2)) continue
     if (random() < 0.25) place(rock(random), x, z, 0.8 + random() * 0.8, 0.9)
     else place(anyTree(), x, z, 0.9 + random() * 0.5, 0.7)
     placed++
   }
 
-  // A thick ring of trees marks the edge of the world.
+  // A thick ring of trees marks the edge of the meadow, except to the north where it opens onto the beach.
   for (let i = 0; i < 90; i++) {
     const angle = (i / 90) * Math.PI * 2 + random() * 0.05
     const distance = WORLD_RADIUS + 2.5 + random() * 7
-    place(anyTree(), Math.cos(angle) * distance, Math.sin(angle) * distance, 1.2 + random() * 0.9, 0)
+    const x = Math.cos(angle) * distance
+    const z = Math.sin(angle) * distance
+    if (isCoast(z, 6)) continue
+    place(anyTree(), x, z, 1.2 + random() * 0.9, 0)
+  }
+  // Trees also line the back of the beach on either side of the meadow.
+  for (const side of [-1, 1]) {
+    for (let x = 27; x < 50; x += 2.4) {
+      place(anyTree(), side * (x + random()), -19 + random() * 4, 1.2 + random() * 0.9, 0)
+    }
   }
 
   // Little ferns and flowers; you can walk straight through these.
@@ -212,7 +231,7 @@ export function buildScenery(keepClear: Obstacle[]): {
     const distance = Math.sqrt(random()) * (WORLD_RADIUS + 4)
     const x = Math.cos(angle) * distance
     const z = Math.sin(angle) * distance
-    if (!isFree(x, z, 0.3)) continue
+    if (!isFree(x, z, 0.3) || isCoast(z)) continue
     if (random() < 0.5) {
       const fern = part(coneGeometry, LEAF_GREENS[i % LEAF_GREENS.length]!, false)
       fern.scale.set(0.35, 0.5, 0.35)
@@ -240,5 +259,12 @@ export function buildScenery(keepClear: Obstacle[]): {
   const volcanoes = buildVolcanoes()
   group.add(volcanoes.group)
 
-  return { group, obstacles, update: volcanoes.update }
+  return {
+    group,
+    obstacles,
+    update(timeSeconds, deltaSeconds) {
+      volcanoes.update(timeSeconds, deltaSeconds)
+      coast.update(timeSeconds)
+    }
+  }
 }

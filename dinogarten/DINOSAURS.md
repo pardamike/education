@@ -22,7 +22,7 @@ Each one tells the player three things about itself before its lesson: its name,
 | Brachiosaurus | BRAK-ee-uh-SORE-us | plants | Among the tallest trees | Apatosaurus, reshaped: longer front legs, neck held high | To build |
 | Giganotosaurus | jig-uh-NOT-uh-SORE-us | meat | Volcano country | T-Rex, reshaped: longer head and arms | To build |
 | Allosaurus | AL-uh-SORE-us | meat | Forest edge | T-Rex, reshaped, with small brow horns added | To build |
-| Spinosaurus | SPY-nuh-SORE-us | fish | Old and cranky. Lives in a rocky inlet on the beach (in the meadow until the beach exists) | T-Rex, reshaped: long snout, bigger arms, longer teeth, slimmed body, angry brows, with a sail added along the back | In the game |
+| Spinosaurus | SPY-nuh-SORE-us | fish | Old and cranky. Lives in a rocky inlet on the beach | T-Rex, reshaped: long snout, bigger arms, longer teeth, slimmed body, angry brows, with a sail added along the back | In the game |
 | Dilophosaurus | dy-LOH-fuh-SORE-us | meat | Forest | Velociraptor, with twin head crests added | To build |
 | Ankylosaurus | an-KY-luh-SORE-us | plants | Meadow | Stegosaurus without its plates, with armour and a tail club added | To build |
 | Microraptor | MY-kroh-RAP-tor | meat | A whole flock of them, in the trees. Crow-sized, with four wings | Velociraptor, tiny, with wing feathers added | To build |
@@ -35,13 +35,13 @@ Each one tells the player three things about itself before its lesson: its name,
 | Pterodactyl | TAIR-uh-DAK-til | fish | Flying reptile. Its full name is Pterodactylus | Cliffs and sky | Converted from a public-domain pterosaur | To build |
 | Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | Waits for the player in the sea off the beach | Built in code | To build |
 
-## Places these characters need
+## Places
 
-- **Meadow and forest**: the world as it is today.
-- **Beach with a rocky inlet**: the Spinosaurus's home.
-- **Shallow sea**: the T. rex can run down the beach, along the sea floor and swim a little, then run back up. The game stops him before it gets deep. The Mosasaurus waits out there.
-- **Cliffs and sky**: somewhere for the fliers to perch and circle.
-- **Volcanoes**: lots, all along the horizon, some smoking, some running with lava, some erupting. These are in the game today.
+- **Meadow and forest**: in the game. The round meadow where the player starts.
+- **Beach with a rocky inlet**: in the game, along the north side of the meadow. The Spinosaurus stands in a pool in the inlet.
+- **Shallow sea**: in the game. The T. rex can run down the beach and along the sea floor until the water is over his head, then the game stops him going further. Still to come: swimming, and the Mosasaurus waiting out there.
+- **Volcanoes**: in the game. They rise out of the sea all along the horizon, some smoking, some running with lava, some erupting.
+- **Cliffs and sky**: still to come. Somewhere for the fliers to perch and circle.
 
 ## Where the models come from
 

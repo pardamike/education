@@ -2,11 +2,8 @@
   "name": "Spinosaurus",
   "sayIt": "SPY-nuh-SORE-us",
   "eats": "fish",
-  "position": [
-    14,
-    -17
-  ],
-  "facing": 340,
+  "position": [17, -35.5],
+  "facing": 0,
   "look": {
     "height": 3.4,
     "colors": {

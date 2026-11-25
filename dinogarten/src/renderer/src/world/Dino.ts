@@ -142,6 +142,59 @@ export class Dino {
       this.actions.set(name, this.mixer.clipAction(clip))
     }
     this.play('idle', 0)
+    this.standOnGround(model, meshes)
+  }
+
+  /**
+   * Stands the model on the ground by its back feet, in the pose it actually idles in.
+   * Measuring the whole body is not enough: a drooping tail or a lowered head can hang below
+   * the feet, and the pose a model was built in can differ from the one it stands in.
+   */
+  private standOnGround(model: THREE.Object3D, meshes: THREE.Mesh[]): void {
+    const idle = this.actions.get('idle')
+    if (!idle) return
+
+    // The corners of the surface that follow the back-foot bones. Every animal here stands on those.
+    const soles: Array<{ mesh: THREE.SkinnedMesh; corners: number[] }> = []
+    for (const mesh of meshes) {
+      if (!(mesh instanceof THREE.SkinnedMesh)) continue
+      const footBones = new Set(mesh.skeleton.bones.flatMap((bone, i) => (bone.name.startsWith('BackFoot') ? [i] : [])))
+      const skinIndex = mesh.geometry.getAttribute('skinIndex')
+      const skinWeight = mesh.geometry.getAttribute('skinWeight')
+      const corners: number[] = []
+      for (let i = 0; i < skinIndex.count; i++) {
+        let weight = 0
+        for (let slot = 0; slot < 4; slot++) {
+          if (footBones.has(skinIndex.getComponent(i, slot))) weight += skinWeight.getComponent(i, slot)
+        }
+        if (weight >= 0.5) corners.push(i)
+      }
+      soles.push({ mesh, corners })
+    }
+    const hasFeet = soles.some(({ corners }) => corners.length > 0)
+
+    const duration = idle.getClip().duration
+    const point = new THREE.Vector3()
+    const box = new THREE.Box3()
+    let lowest = Infinity
+    for (let sample = 0; sample < 6; sample++) {
+      this.mixer.setTime((duration * sample) / 6)
+      for (const [bone, scale] of this.scaledBones) bone.scale.copy(scale)
+      this.root.updateMatrixWorld(true)
+      for (const { mesh, corners } of soles) {
+        if (hasFeet) {
+          for (const corner of corners) {
+            lowest = Math.min(lowest, mesh.getVertexPosition(corner, point).applyMatrix4(mesh.matrixWorld).y)
+          }
+        } else {
+          // A model with no foot bones: fall back to the lowest point of the whole body.
+          mesh.computeBoundingBox()
+          lowest = Math.min(lowest, box.copy(mesh.boundingBox!).applyMatrix4(mesh.matrixWorld).min.y)
+        }
+      }
+    }
+    this.mixer.setTime(0)
+    if (Number.isFinite(lowest)) model.position.y -= lowest
   }
 
   /** Places two cartoon eyes on the head while it is in its resting pose, then pins them to the head bone. */
@@ -204,7 +257,9 @@ export class Dino {
   play(name: DinoAnimation, fadeSeconds = 0.25, rate = 1): void {
     const next = this.actions.get(name)
     if (!next || next === this.current) return
-    next.reset().setEffectiveTimeScale(rate).fadeIn(fadeSeconds).play()
+    next.reset().setEffectiveTimeScale(rate).setEffectiveWeight(1)
+    if (fadeSeconds > 0) next.fadeIn(fadeSeconds)
+    next.play()
     this.current?.fadeOut(fadeSeconds)
     this.current = next
   }

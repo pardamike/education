@@ -2,7 +2,9 @@ import * as THREE from 'three'
 import playerModelUrl from '@content/player/model.glb?url'
 import playerLook from '@content/player/player.json'
 import { Dino, type DinoLook } from './Dino'
-import { buildScenery, SKY_COLOR, WORLD_RADIUS, type Obstacle } from './scenery'
+import { groundHeight, keepInWorld, waterLevel } from './coast'
+import { Ripples } from './ripples'
+import { buildScenery, SKY_COLOR, type Obstacle } from './scenery'
 
 /** One dinosaur you can meet. This is the shape of content/dinos/<id>/dino.json. */
 export interface DinoDefinition {
@@ -38,6 +40,9 @@ const PLAYER_SPEED = 4.3
  */
 const PLAYER_RUN_RATE = 1.5
 const PLAYER_RADIUS = 0.7
+/** In water deeper than this the player slows down, as if wading. */
+const WADING_DEPTH = 0.5
+const WADING_SPEED = 0.7
 const SUN_OFFSET = new THREE.Vector3(-10, 24, 14)
 /** A waiting dinosaur turns to watch the player inside this distance. */
 const NOTICE_DISTANCE = 9
@@ -77,6 +82,8 @@ export class World {
   private readonly neighbours: Neighbour[] = []
 
   private player: Dino | null = null
+  /** Ripples for the player and for each dinosaur that stands in water. */
+  private readonly ripples: Array<{ dino: Dino; rings: Ripples }> = []
   private target: THREE.Vector3 | null = null
   private closestToTarget = Infinity
   private secondsWithoutProgress = 0
@@ -165,7 +172,7 @@ export class World {
       const { definition } = entries[index]!
       const [x, z] = definition.position
       const homeYaw = THREE.MathUtils.degToRad(definition.facing)
-      dino.root.position.set(x, 0, z)
+      dino.root.position.set(x, groundHeight(x, z), z)
       dino.root.rotation.y = homeYaw
       this.scene.add(dino.root)
       // By default, big enough that the two stop nose to nose with a little gap, not overlapping.
@@ -176,6 +183,12 @@ export class World {
 
     this.scene.add(player.root)
     this.player = player
+
+    for (const dino of [player, ...others]) {
+      const rings = new Ripples(dino.radius * 0.5)
+      this.scene.add(rings.group)
+      this.ripples.push({ dino, rings })
+    }
   }
 
   dispose(): void {
@@ -190,7 +203,7 @@ export class World {
   /** Sends the player walking to a spot on the ground. */
   walkTo(x: number, z: number): void {
     const target = new THREE.Vector3(x, 0, z)
-    target.clampLength(0, WORLD_RADIUS)
+    keepInWorld(target)
     // A click on a tree, the pond or a dinosaur means "go there", so aim for the nearest edge.
     for (const obstacle of this.obstacles) {
       const reach = obstacle.r + PLAYER_RADIUS + 0.15
@@ -208,8 +221,7 @@ export class World {
     this.target = target
     this.closestToTarget = Infinity
     this.secondsWithoutProgress = 0
-    this.marker.position.x = target.x
-    this.marker.position.z = target.z
+    this.marker.position.set(target.x, groundHeight(target.x, target.z) + 0.08, target.z)
     this.marker.visible = true
   }
 
@@ -227,8 +239,14 @@ export class World {
       -((event.clientY - bounds.top) / bounds.height) * 2 + 1
     )
     this.raycaster.setFromCamera(pointer, this.camera)
-    const spot = this.raycaster.ray.intersectPlane(this.groundPlane, new THREE.Vector3())
-    if (spot) this.walkTo(spot.x, spot.z)
+    // The sea floor is lower than the land, so aim at flat ground first, then again at the height found there.
+    const spot = new THREE.Vector3()
+    this.groundPlane.constant = 0
+    for (let pass = 0; pass < 4; pass++) {
+      if (!this.raycaster.ray.intersectPlane(this.groundPlane, spot)) return
+      this.groundPlane.constant = -groundHeight(spot.x, spot.z)
+    }
+    this.walkTo(spot.x, spot.z)
   }
 
   private readonly onKeyDown = (event: KeyboardEvent): void => {
@@ -255,6 +273,11 @@ export class World {
     this.movePlayer(deltaSeconds)
     this.updateNeighbours(deltaSeconds)
     this.updateScenery(timeMs / 1000, deltaSeconds)
+    const level = waterLevel(timeMs / 1000)
+    for (const { dino, rings } of this.ripples) {
+      const { x, z } = dino.root.position
+      rings.update(timeMs / 1000, x, z, level, level - groundHeight(x, z))
+    }
     this.placeCamera(1 - Math.exp(-6 * deltaSeconds))
     if (this.marker.visible) this.marker.scale.setScalar(1 + Math.sin(timeMs / 160) * 0.15)
     this.renderer.render(this.scene, this.camera)
@@ -285,7 +308,8 @@ export class World {
     const player = this.player
     if (!player) return
     const position = player.root.position
-    const step = this.wantedStep(position, PLAYER_SPEED * deltaSeconds)
+    const wading = -position.y > WADING_DEPTH
+    const step = this.wantedStep(position, PLAYER_SPEED * (wading ? WADING_SPEED : 1) * deltaSeconds)
 
     if (!step) {
       // Standing next to a dinosaur: turn to look at it.
@@ -328,7 +352,8 @@ export class World {
       position.x = obstacle.x + (dx / distance) * minimum
       position.z = obstacle.z + (dz / distance) * minimum
     }
-    position.clampLength(0, WORLD_RADIUS)
+    keepInWorld(position)
+    position.y = groundHeight(position.x, position.z)
 
     player.root.rotation.y = turnToward(player.root.rotation.y, Math.atan2(x, z), 10 * deltaSeconds)
     player.play('run', 0.2, PLAYER_RUN_RATE)
@@ -365,7 +390,7 @@ export class World {
   private placeCamera(amount: number): void {
     if (this.player) this.cameraFocus.lerp(this.player.root.position, amount)
     this.camera.position.copy(this.cameraFocus).add(this.cameraOffset)
-    this.camera.lookAt(this.cameraFocus.x, this.cameraLookHeight, this.cameraFocus.z)
+    this.camera.lookAt(this.cameraFocus.x, this.cameraFocus.y + this.cameraLookHeight, this.cameraFocus.z)
     this.sun.position.copy(this.cameraFocus).add(SUN_OFFSET)
     this.sun.target.position.copy(this.cameraFocus)
   }
