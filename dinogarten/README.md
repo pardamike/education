@@ -2,7 +2,7 @@
 
 A free, offline dinosaur learning game for kindergarteners. You are a little T. rex. Walk around, meet other dinosaurs, and learn letters and numbers from them.
 
-**Status:** early. You can walk around a meadow, down a beach and swim out to sea, and meet seven other animals, including a cranky old Spinosaurus in his rocky inlet and a Mosasaurus in the water, under a skyline of volcanoes. Lessons, voices, player names and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
+**Status:** early. You can walk around a meadow, down a beach and into a deep underwater world, and meet seven other animals, including a cranky old Spinosaurus in his rocky inlet and a Mosasaurus that patrols the sea floor, under a skyline of volcanoes. Lessons, voices, player names and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Run it
 
@@ -37,7 +37,7 @@ The `look` section of `dino.json` is where a model is made friendly:
 - `slim`: pulls the body's surface in around the bones you list, for a leaner animal.
 - `parts`: extra body parts built in code and pinned to the skeleton, such as a `sail`.
 
-An animal built in code has no `model.glb`; its `dino.json` names it with `madeInCode`, and `floats` sets how far below the sea's surface it sits. The Mosasaurus is the only one so far.
+An animal built in code has no `model.glb`; its `dino.json` names it with `madeInCode`, and `swims` gives the stretch of water it patrols. The Mosasaurus is the only one so far.
 
 Outside `look`, two settings help with giants: `"turnsToPlayer": false` makes an animal stand still instead of swinging round to watch the player, and `personalSpace` sets how close the player can get.
 

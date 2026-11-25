@@ -9,7 +9,7 @@ const CELL = 1
 /** The grid covers the whole world with room to spare: x from WEST to EAST, z from NORTH to SOUTH. */
 const WEST = -52
 const EAST = 52
-const NORTH = -72
+const NORTH = -118
 const SOUTH = 42
 
 const COLUMNS = Math.round((EAST - WEST) / CELL)

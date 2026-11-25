@@ -13,8 +13,12 @@ const SHORE_Z = -38
 /** One inlet, where the sea reaches south into the beach. This is the Spinosaurus's home. */
 export const INLET = { x: 17, reach: 7, width: 5.5 }
 
-/** The sea floor slopes down over `wadeLength`, bottoms out at `maxDepth`, and the player may go `reach` out. */
-const SEA = { maxDepth: 3, wadeLength: 22, reach: 26 }
+/**
+ * The shape of the sea floor, measured north from the shoreline. A gentle slope to wade down
+ * (`wadeDepth` deep after `wadeLength`), then a drop between `dropStart` and `dropEnd` to a deep
+ * floor where everything is fully underwater. The player may go `reach` out.
+ */
+export const SEA = { wadeDepth: 3, wadeLength: 22, dropStart: 24, dropEnd: 48, floorDepth: 13, reach: 72 }
 
 /** The stretch of coast the player can walk on: between these x values, and no further south than `landEdge`. */
 const COAST = { west: -44, east: 44, landEdge: -24 }
@@ -24,15 +28,17 @@ export function shoreline(x: number): number {
   return SHORE_Z + INLET.reach * Math.exp(-(((x - INLET.x) / INLET.width) ** 2))
 }
 
-/** Height of the sea floor `out` units north of the shoreline. Zero or negative `out` is dry land. */
+const smooth = (t: number): number => {
+  const clamped = Math.min(1, Math.max(0, t))
+  return clamped * clamped * (3 - 2 * clamped)
+}
+
+/** Height of the sea floor `out` units north of the shoreline, before any dunes. Zero or negative `out` is dry land. */
 function seaFloor(out: number): number {
   if (out <= 0) return 0
-  if (out <= SEA.reach) {
-    const t = Math.min(1, out / SEA.wadeLength)
-    return -SEA.maxDepth * t * t * (3 - 2 * t)
-  }
-  // Beyond where the player can go, it keeps dropping into deep water.
-  return Math.max(-14, -SEA.maxDepth - (out - SEA.reach) * 0.14)
+  const shallows = -SEA.wadeDepth * smooth(out / SEA.wadeLength)
+  const drop = smooth((out - SEA.dropStart) / (SEA.dropEnd - SEA.dropStart))
+  return shallows - (SEA.floorDepth - SEA.wadeDepth) * drop
 }
 
 /** A deeper pool in the middle of the inlet, so whoever lives there stands properly in the water. */
@@ -43,7 +49,9 @@ export function groundHeight(x: number, z: number): number {
   const out = shoreline(x) - z
   if (out <= 0) return 0
   const inPool = Math.exp(-(((x - POOL.x) / POOL.width) ** 2) - ((z - POOL.z) / POOL.length) ** 2)
-  return seaFloor(out) - POOL.depth * inPool * Math.min(1, out / 2.5)
+  // Out on the deep floor the sand rolls in long, low dunes.
+  const dunes = 1.3 * Math.sin(x * 0.11 + 1.3) * Math.cos(z * 0.09) + 0.6 * Math.sin(x * 0.23 + z * 0.17)
+  return seaFloor(out) - POOL.depth * inPool * Math.min(1, out / 2.5) + dunes * smooth((out - SEA.dropEnd + 8) / 10)
 }
 
 /** Height of the sea's surface. It rises and falls a touch, so the water's edge laps up and down the beach. */
@@ -99,8 +107,10 @@ const GROUND_COLORS: Array<[number, string]> = [
   [1.5, '#e3d49c'],
   [6, '#d2d6a4'],
   [14, '#aacfb2'],
-  [26, '#7fbcc0'],
-  [60, '#4d97b8'],
+  [24, '#8fc4b6'],
+  [48, '#93bba6'],
+  [80, '#86b0a0'],
+  [140, '#5f9db5'],
   [600, '#3a7fa8']
 ]
 
@@ -120,7 +130,9 @@ function buildBeachAndSeaFloor(): THREE.Mesh {
   const columns: number[] = [-600, -300, -150, -90]
   for (let x = -60; x <= 60; x += 1) columns.push(x)
   columns.push(90, 150, 300, 600)
-  const rows = [-11, -7, -3, 0, 1, 2, 3, 4.5, 6, 8, 10, 14, 22, 26, 34, 60, 150, 600]
+  const rows = [-11, -7, -3, 0, 1, 2, 3, 4.5, 6, 8, 10, 14, 18, 22]
+  for (let out = 24; out <= 104; out += 2) rows.push(out)
+  rows.push(116, 140, 200, 350, 600)
 
   const positions: number[] = []
   const colors: number[] = []
@@ -130,7 +142,7 @@ function buildBeachAndSeaFloor(): THREE.Mesh {
     for (const out of rows) {
       // Sand sits a hair above the grass it overlaps.
       const z = shoreline(x) - out
-      positions.push(x, out < 0 ? 0.04 : out > SEA.reach ? seaFloor(out) : groundHeight(x, z), z)
+      positions.push(x, out < 0 ? 0.04 : groundHeight(x, z), z)
       groundColor(out, color)
       colors.push(color.r, color.g, color.b)
     }
@@ -179,7 +191,14 @@ export function buildCoast(random: () => number): {
 
   const water = new THREE.Mesh(
     new THREE.PlaneGeometry(1200, 580),
-    new THREE.MeshLambertMaterial({ color: '#4fb3e8', transparent: true, opacity: 0.6, depthWrite: false })
+    // Double-sided and unlit, so from underneath it is the bright ceiling of the underwater world.
+    new THREE.MeshBasicMaterial({
+      color: '#5ab6e6',
+      transparent: true,
+      opacity: 0.6,
+      depthWrite: false,
+      side: THREE.DoubleSide
+    })
   )
   water.rotation.x = -Math.PI / 2
   water.position.z = COAST.landEdge - 6 - 290
@@ -208,7 +227,9 @@ export function buildCoast(random: () => number): {
   // Walls of rock close off both ends of the beach.
   for (const x of [COAST.west - 2.5, COAST.east + 2.5]) {
     for (let z = COAST.landEdge + 2; z > SHORE_Z - SEA.reach - 6; z -= 3.4) {
-      group.add(rock(random, x + (random() - 0.5) * 2, z, 2.4 + random() * 1.4))
+      // Underwater the wall becomes a tall cliff of boulders.
+      const deep = -groundHeight(x, z) > 4
+      group.add(rock(random, x + (random() - 0.5) * 2, z, (deep ? 5 : 2.4) + random() * (deep ? 3 : 1.4)))
     }
   }
 

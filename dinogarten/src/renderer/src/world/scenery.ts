@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { buildCoast, isCoast, WORLD_RADIUS } from './coast'
+import { buildSeabed } from './seabed'
 import { buildVolcanoes } from './volcanoes'
 
 /** A circle on the ground the player cannot walk through. */
@@ -135,7 +136,9 @@ function mountain(radius: number, height: number, color: string): THREE.Mesh {
 export function buildScenery(keepClear: Obstacle[]): {
   group: THREE.Group
   obstacles: Obstacle[]
-  /** Call once a frame to keep the moving scenery (lava, smoke) going. */
+  /** Lets the player blow a bubble underwater. */
+  blowBubble: (from: THREE.Vector3) => void
+  /** Call once a frame to keep the moving scenery (lava, smoke, waves, kelp, fish) going. */
   update: (timeSeconds: number, deltaSeconds: number) => void
 } {
   const random = seededRandom(20261125)
@@ -258,13 +261,21 @@ export function buildScenery(keepClear: Obstacle[]): {
 
   const volcanoes = buildVolcanoes()
   group.add(volcanoes.group)
+  obstacles.push(...volcanoes.obstacles)
+
+  // The underwater scenery keeps clear of the volcanoes' feet and of anything that lives down there.
+  const seabed = buildSeabed(random, [...volcanoes.obstacles, ...keepClear])
+  group.add(seabed.group)
+  obstacles.push(...seabed.obstacles)
 
   return {
     group,
     obstacles,
+    blowBubble: seabed.blowBubble,
     update(timeSeconds, deltaSeconds) {
       volcanoes.update(timeSeconds, deltaSeconds)
       coast.update(timeSeconds)
+      seabed.update(timeSeconds, deltaSeconds)
     }
   }
 }

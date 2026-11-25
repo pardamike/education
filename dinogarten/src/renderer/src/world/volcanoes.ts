@@ -1,4 +1,7 @@
 import * as THREE from 'three'
+import { SEA } from './coast'
+import { Puffs } from './puffs'
+import type { Obstacle } from './scenery'
 
 // Far-off volcanoes for the horizon. They are scenery only: the player never reaches them.
 // The camera always looks north (toward -z), so they line the northern skyline where they show.
@@ -94,89 +97,6 @@ function getGlowTexture(): THREE.CanvasTexture {
 
 const between = (low: number, high: number): number => low + Math.random() * (high - low)
 
-interface PuffStyle {
-  /** How hard the puffs are pulled down. Negative makes them float up. */
-  gravity: number
-  /** Sideways push from the wind. */
-  drift: THREE.Vector3
-  /** Size at each moment of a puff's life, from 0 (just born) to 1 (gone). */
-  sizeAt: (life: number) => number
-  /** Optional colour at each moment of a puff's life. */
-  colorAt?: (life: number, target: THREE.Color) => void
-}
-
-/** A fixed pool of little shapes that are launched, fly for a while, and are reused. */
-class Puffs {
-  readonly mesh: THREE.InstancedMesh
-  private readonly position: THREE.Vector3[]
-  private readonly velocity: THREE.Vector3[]
-  private readonly age: Float32Array
-  private readonly lifetime: Float32Array
-  private readonly size: Float32Array
-  private readonly placer = new THREE.Object3D()
-  private readonly color = new THREE.Color()
-  private next = 0
-
-  constructor(
-    geometry: THREE.BufferGeometry,
-    material: THREE.Material,
-    private readonly count: number,
-    private readonly style: PuffStyle
-  ) {
-    this.mesh = new THREE.InstancedMesh(geometry, material, count)
-    this.mesh.frustumCulled = false
-    this.position = Array.from({ length: count }, () => new THREE.Vector3())
-    this.velocity = Array.from({ length: count }, () => new THREE.Vector3())
-    this.age = new Float32Array(count)
-    this.lifetime = new Float32Array(count) // 0 means "not in use"
-    this.size = new Float32Array(count)
-    this.placer.scale.setScalar(0)
-    this.placer.updateMatrix()
-    for (let i = 0; i < count; i++) {
-      this.mesh.setMatrixAt(i, this.placer.matrix)
-      if (style.colorAt) this.mesh.setColorAt(i, this.color.set('#ffffff'))
-    }
-  }
-
-  launch(from: THREE.Vector3, velocity: THREE.Vector3, size: number, lifetime: number): void {
-    const i = this.next
-    this.next = (this.next + 1) % this.count
-    this.position[i]!.copy(from)
-    this.velocity[i]!.copy(velocity)
-    this.age[i] = 0
-    this.lifetime[i] = lifetime
-    this.size[i] = size
-  }
-
-  /** `floor` is the height below which a puff has landed and disappears. */
-  update(deltaSeconds: number, floor: number): void {
-    const { gravity, drift, sizeAt, colorAt } = this.style
-    for (let i = 0; i < this.count; i++) {
-      const lifetime = this.lifetime[i]!
-      if (lifetime === 0) continue
-      const age = (this.age[i]! += deltaSeconds)
-      const position = this.position[i]!
-      const velocity = this.velocity[i]!
-      velocity.y -= gravity * deltaSeconds
-      position.addScaledVector(velocity, deltaSeconds).addScaledVector(drift, deltaSeconds)
-
-      const life = age / lifetime
-      const finished = life >= 1 || position.y < floor
-      if (finished) this.lifetime[i] = 0
-      this.placer.position.copy(position)
-      this.placer.scale.setScalar(finished ? 0 : this.size[i]! * sizeAt(life))
-      this.placer.updateMatrix()
-      this.mesh.setMatrixAt(i, this.placer.matrix)
-      if (colorAt && !finished) {
-        colorAt(life, this.color)
-        this.mesh.setColorAt(i, this.color)
-      }
-    }
-    this.mesh.instanceMatrix.needsUpdate = true
-    if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true
-  }
-}
-
 const lavaYellow = new THREE.Color('#ffe066')
 const lavaRed = new THREE.Color('#e0401a')
 
@@ -216,6 +136,8 @@ function lavaRiver(height: number, baseRadius: number, craterRadius: number, ang
 class Volcano {
   readonly group = new THREE.Group()
   private readonly top = new THREE.Vector3()
+  /** How wide the cone is where it meets the deep sea floor. */
+  private footRadius = 0
   private readonly craterRadius: number
   private readonly lava: Puffs | null = null
   private readonly smoke: Puffs | null = null
@@ -234,8 +156,16 @@ class Volcano {
     this.group.position.set(spec.x, 0, spec.z)
     this.top.set(spec.x, height, spec.z)
 
-    const slopes = new THREE.Mesh(new THREE.CylinderGeometry(shoulderRadius, baseRadius, height * 0.68 + 2, 12, 1, true), rock)
-    slopes.position.y = (height * 0.68) / 2 - 1
+    // The slopes carry on at the same angle below the waterline, down past the deep sea floor,
+    // so from underwater a volcano is a mountain standing on the bottom.
+    const slopeHeight = height * 0.68
+    const sunk = SEA.floorDepth + 4
+    this.footRadius = baseRadius + ((baseRadius - shoulderRadius) / slopeHeight) * sunk
+    const slopes = new THREE.Mesh(
+      new THREE.CylinderGeometry(shoulderRadius, this.footRadius, slopeHeight + sunk, 12, 1, true),
+      rock
+    )
+    slopes.position.y = (slopeHeight - sunk) / 2
     const summit = new THREE.Mesh(
       new THREE.CylinderGeometry(craterRadius, shoulderRadius, height * 0.32, 12, 1, true),
       mood === 'sleeping' ? snow : scorchedRock
@@ -282,6 +212,11 @@ class Volcano {
       sizeAt: (life) => 1 - life * 0.5,
       colorAt: (life, target) => target.lerpColors(lavaYellow, lavaRed, Math.min(1, life * 1.6))
     })
+  }
+
+  /** The patch of sea floor the cone stands on, which nothing can walk through. */
+  get footprint(): Obstacle {
+    return { x: this.spec.x, z: this.spec.z, r: this.footRadius * 0.93 }
   }
 
   /** Particle meshes live in world space, so they are added to the scene beside the volcano. */
@@ -346,12 +281,17 @@ class Volcano {
 }
 
 /** Builds every volcano. Call `update` once a frame to keep the lava and smoke moving. */
-export function buildVolcanoes(): { group: THREE.Group; update: (timeSeconds: number, deltaSeconds: number) => void } {
+export function buildVolcanoes(): {
+  group: THREE.Group
+  obstacles: Obstacle[]
+  update: (timeSeconds: number, deltaSeconds: number) => void
+} {
   const group = new THREE.Group()
   const volcanoes = VOLCANOES.map((spec) => new Volcano(spec))
   for (const volcano of volcanoes) group.add(volcano.group, ...volcano.extras)
   return {
     group,
+    obstacles: volcanoes.map((volcano) => volcano.footprint),
     update(timeSeconds, deltaSeconds) {
       lavaFlowMaterial.uniforms['time']!.value = timeSeconds
       for (const volcano of volcanoes) volcano.update(timeSeconds, deltaSeconds)

@@ -33,15 +33,38 @@ Each one tells the player three things about itself before its lesson: its name,
 | --- | --- | --- | --- | --- | --- | --- |
 | Quetzalcoatlus | KET-sul-koh-AT-lus | meat | Flying reptile, as tall as a giraffe | Cliffs and sky | Converted from a public-domain pterosaur, reshaped: long neck and beak | To build |
 | Pterodactyl | TAIR-uh-DAK-til | fish | Flying reptile. Its full name is Pterodactylus | Cliffs and sky | Converted from a public-domain pterosaur | To build |
-| Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | Waits for the player in the sea off the beach | Built in code (`src/renderer/src/world/Mosasaur.ts`) | In the game |
+| Mosasaurus | MOH-zuh-SORE-us | fish | Sea reptile | A little scary: long jaws full of teeth. Patrols the deep water and swims over to look at the player | Built in code (`src/renderer/src/world/Mosasaur.ts`) | In the game |
 
 ## Places
 
 - **Meadow and forest**: in the game. The round meadow where the player starts.
 - **Beach with a rocky inlet**: in the game, along the north side of the meadow. The Spinosaurus stands in a pool in the inlet.
-- **Shallow sea**: in the game. The T. rex can run down the beach and along the sea floor, and once the water is over his head he swims with his head out. The game stops him before it gets deep. The Mosasaurus floats out there waiting.
+- **The sea**: in the game. The T. rex wades down the beach, then the sea floor drops away to a deep underwater world where he swims along just above the bottom, blowing bubbles. The Mosasaurus lives down there. See [Sea life](#sea-life) for what grows and swims around them.
 - **Volcanoes**: in the game. They rise out of the sea all along the horizon, some smoking, some running with lava, some erupting.
 - **Cliffs and sky**: still to come. Somewhere for the fliers to perch and circle.
+
+## Sea life
+
+Everything in the underwater scenery lived in the seas of the dinosaurs' time, alongside the Mosasaurus in the Late Cretaceous. It is all built in code (`src/renderer/src/world/seabed.ts`).
+
+| In the game | What it is |
+| --- | --- |
+| Seagrass meadows | The oldest known seagrass fossils are Late Cretaceous |
+| Sea lilies | Crinoids: animals that look like flowers on stalks |
+| Rudist reefs | Clams shaped like ice-cream cones, standing on their points. They built the reefs of this era |
+| Platter clams | Inoceramid clams, which lay flat on the mud and grew up to two metres across |
+| Coral heads | Stony corals |
+| Sea urchins | Spiny, as now |
+| Ammonites | Relatives of squid in shells, both coiled and straight (baculites). Empty shells lie on the sand too |
+| Shoals of fish | Bony fish, the Mosasaurus's usual meal |
+
+There is no kelp, on purpose. Kelp forests look right to us but the earliest secure kelp fossils are about 32 million years old, more than 30 million years after the last dinosaurs.
+
+Animals from the same seas that would make good additions: the giant turtle Archelon, the big predatory fish Xiphactinus, and the toothed diving bird Hesperornis.
+
+Sources: [Berkeley News on the age of kelp](https://news.berkeley.edu/2024/01/15/pacific-kelp-forests-are-far-older-than-we-thought/), [Utrecht University on Late Cretaceous seagrass](https://research-portal.uu.nl/en/publications/seagrass-stems-with-attached-roots-from-the-type-area-of-the-maas/), [Kansas Geological Survey on the Niobrara Chalk's inoceramids, crinoids and rudists](https://www.kgs.ku.edu/Publications/Bulletins/225/05_bios.html), [American Museum of Natural History on the Western Interior Seaway](https://www.amnh.org/research/paleontology/invertebrate-paleontology/western-interior-seaway), [Britannica on Cretaceous ammonites](https://www.britannica.com/science/Cretaceous-Period/Paleoclimate).
+
+One thing on land is not yet true to the era: the green ground reads as grass, and grasslands did not exist then. Ferns and horsetails covered the ground instead.
 
 ## Where the models come from
 

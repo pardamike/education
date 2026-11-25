@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import playerModelUrl from '@content/player/model.glb?url'
 import playerLook from '@content/player/player.json'
 import { Dino, type Creature, type DinoLook } from './Dino'
-import { Mosasaur } from './Mosasaur'
+import { Mosasaur, type SwimSpec } from './Mosasaur'
 import { groundHeight, keepInWorld, waterLevel } from './coast'
 import { Navigator } from './navigation'
 import { Ripples } from './ripples'
@@ -23,8 +23,8 @@ export interface DinoDefinition {
   personalSpace?: number
   /** For an animal built in code, which one. It then needs no model.glb. */
   madeInCode?: 'mosasaurus'
-  /** For a swimmer: how far below the surface of the sea its middle floats. Left out, it stands on the ground. */
-  floats?: number
+  /** For an animal that swims about on its own: where it patrols. It then ignores `position` and `facing`. */
+  swims?: SwimSpec
   look: DinoLook
 }
 
@@ -49,8 +49,12 @@ const PLAYER_RADIUS = 0.7
 /** In water deeper than this the player slows down, as if wading. */
 const WADING_DEPTH = 0.5
 const WADING_SPEED = 0.7
-/** Once the water is deeper than this, the player's feet leave the bottom and he swims with his head out. */
-const SWIMMING_DEPTH = 1.25
+/** Once the water is deeper than this he is fully under, and swims along just above the sea floor. */
+const SWIMMING_DEPTH = 2.4
+const SWIMMING_SPEED = 0.85
+/** The colour of the water when the camera is under it. */
+const DEEP_COLOR = new THREE.Color('#2a7fae')
+const SKY = new THREE.Color(SKY_COLOR)
 const SUN_OFFSET = new THREE.Vector3(-10, 24, 14)
 /** A waiting dinosaur turns to watch the player inside this distance. */
 const NOTICE_DISTANCE = 9
@@ -59,6 +63,8 @@ interface Neighbour {
   dino: Creature
   homeYaw: number
   turns: boolean
+  /** True for an animal that moves itself around; the world then leaves its position and heading alone. */
+  roams: boolean
   /** The player counts as standing with this dinosaur when their centres are closer than this. */
   reach: number
 }
@@ -74,6 +80,13 @@ export class World {
   private readonly scene = new THREE.Scene()
   private readonly camera = new THREE.PerspectiveCamera(50, 1, 0.1, 900)
   private readonly sun = new THREE.DirectionalLight('#fff3d6', 2.4)
+  private readonly skyLight = new THREE.HemisphereLight('#ffffff', '#9ccf7a', 1.5)
+  private readonly fog = new THREE.Fog(SKY_COLOR, 90, 430)
+  private readonly background = new THREE.Color(SKY_COLOR)
+  /** 0 on land, rising to 1 as the player goes from wading to swimming underwater. */
+  private swimming = 0
+  /** 0 with the camera in the air, 1 with it underwater. Eases between the two so the change is gentle. */
+  private underwater = 0
   private readonly raycaster = new THREE.Raycaster()
   private readonly groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)
   private readonly marker: THREE.Mesh
@@ -87,6 +100,8 @@ export class World {
   private readonly keysDown = new Set<string>()
   private readonly obstacles: Obstacle[]
   private readonly updateScenery: (timeSeconds: number, deltaSeconds: number) => void
+  private readonly blowBubble: (from: THREE.Vector3) => void
+  private secondsToNextBubble = 0
   private readonly neighbours: Neighbour[] = []
 
   private player: Dino | null = null
@@ -109,10 +124,10 @@ export class World {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     this.renderer.shadowMap.enabled = true
 
-    this.scene.background = new THREE.Color(SKY_COLOR)
-    this.scene.fog = new THREE.Fog(SKY_COLOR, 90, 430)
+    this.scene.background = this.background
+    this.scene.fog = this.fog
 
-    this.scene.add(new THREE.HemisphereLight('#ffffff', '#9ccf7a', 1.5))
+    this.scene.add(this.skyLight)
     this.sun.castShadow = true
     this.sun.shadow.mapSize.set(2048, 2048)
     this.sun.shadow.camera.left = this.sun.shadow.camera.bottom = -26
@@ -131,6 +146,7 @@ export class World {
     this.scene.add(scenery.group)
     this.obstacles = scenery.obstacles
     this.updateScenery = scenery.update
+    this.blowBubble = scenery.blowBubble
 
     this.marker = new THREE.Mesh(
       new THREE.RingGeometry(0.45, 0.68, 32),
@@ -179,25 +195,39 @@ export class World {
     const [player, ...others] = await Promise.all([
       Dino.load(playerModelUrl, playerLook),
       ...entries.map(({ definition, modelUrl }): Promise<Creature> | Creature =>
-        modelUrl ? Dino.load(modelUrl, definition.look) : new Mosasaur(definition.look)
+        modelUrl
+          ? Dino.load(modelUrl, definition.look)
+          : new Mosasaur(definition.look, definition.swims ?? { around: definition.position, width: 20, length: 8, depth: 6 })
       )
     ])
     if (this.disposed) return
 
     others.forEach((dino, index) => {
       const { definition } = entries[index]!
+      this.scene.add(dino.root)
+      if (definition.swims) {
+        // A swimmer places and steers itself, and is never in the way.
+        this.neighbours.push({ dino, homeYaw: 0, turns: false, roams: true, reach: 0 })
+        return
+      }
       const [x, z] = definition.position
       const homeYaw = THREE.MathUtils.degToRad(definition.facing)
-      const y = definition.floats === undefined ? groundHeight(x, z) : waterLevel(0) - definition.floats
-      dino.root.position.set(x, y, z)
+      dino.root.position.set(x, groundHeight(x, z), z)
       dino.root.rotation.y = homeYaw
-      this.scene.add(dino.root)
       // By default, big enough that the two stop nose to nose with a little gap, not overlapping.
       const r = definition.personalSpace ?? dino.radius + player.radius + 0.2
       this.obstacles.push({ x, z, r })
-      this.neighbours.push({ dino, homeYaw, turns: definition.turnsToPlayer ?? true, reach: r + PLAYER_RADIUS + 1 })
+      this.neighbours.push({
+        dino,
+        homeYaw,
+        turns: definition.turnsToPlayer ?? true,
+        roams: false,
+        reach: r + PLAYER_RADIUS + 1
+      })
     })
 
+    // Turn first, then tip forward: lets him lean into a swim whichever way he is facing.
+    player.root.rotation.order = 'YXZ'
     this.scene.add(player.root)
     this.player = player
 
@@ -267,7 +297,7 @@ export class World {
     // The sea floor is lower than the land, so aim at flat ground first, then again at the height found there.
     const spot = new THREE.Vector3()
     this.groundPlane.constant = 0
-    for (let pass = 0; pass < 4; pass++) {
+    for (let pass = 0; pass < 8; pass++) {
       if (!this.raycaster.ray.intersectPlane(this.groundPlane, spot)) return
       this.groundPlane.constant = -groundHeight(spot.x, spot.z)
     }
@@ -301,10 +331,13 @@ export class World {
     this.updateScenery(timeMs / 1000, deltaSeconds)
     const level = waterLevel(timeMs / 1000)
     for (const { dino, rings } of this.ripples) {
-      const { x, z } = dino.root.position
-      rings.update(timeMs / 1000, x, z, level, level - groundHeight(x, z))
+      const { x, y, z } = dino.root.position
+      // Only something that breaks the surface makes ripples; fully underwater it makes none.
+      const breaksSurface = y < level && y + dino.height > level
+      rings.update(timeMs / 1000, x, z, level, breaksSurface ? level - y : 0)
     }
     this.placeCamera(1 - Math.exp(-6 * deltaSeconds))
+    this.tintForDepth(level, deltaSeconds)
     if (this.marker.visible) this.marker.scale.setScalar(1 + Math.sin(timeMs / 160) * 0.15)
     this.renderer.render(this.scene, this.camera)
   }
@@ -340,12 +373,23 @@ export class World {
     if (!player) return
     const position = player.root.position
     const wading = -groundHeight(position.x, position.z) > WADING_DEPTH
-    const step = this.wantedStep(position, PLAYER_SPEED * (wading ? WADING_SPEED : 1) * deltaSeconds)
+    const pace = this.swimming > 0.5 ? SWIMMING_SPEED : wading ? WADING_SPEED : 1
+    const step = this.wantedStep(position, PLAYER_SPEED * pace * deltaSeconds)
 
-    // In deep water he floats at the surface, bobbing, instead of following the sea floor down.
+    // Fully underwater he swims: lifted just off the sea floor, leaning forward, bobbing gently.
     const floor = groundHeight(position.x, position.z)
-    const afloat = waterLevel(this.timeSeconds) - SWIMMING_DEPTH + Math.sin(this.timeSeconds * 3) * 0.05
-    position.y = Math.max(floor, afloat)
+    const under = waterLevel(this.timeSeconds) - floor > SWIMMING_DEPTH
+    this.swimming += ((under ? 1 : 0) - this.swimming) * Math.min(1, 3 * deltaSeconds)
+    position.y = floor + this.swimming * (0.6 + Math.sin(this.timeSeconds * 2.2) * 0.12)
+    player.root.rotation.x = this.swimming * 0.32
+
+    // And he blows a little stream of bubbles from about where his nose is.
+    this.secondsToNextBubble -= deltaSeconds
+    if (under && this.secondsToNextBubble <= 0) {
+      this.secondsToNextBubble = 0.25 + Math.random() * 0.5
+      const yaw = player.root.rotation.y
+      this.blowBubble(new THREE.Vector3(position.x + Math.sin(yaw) * 1.4, position.y + 1.3, position.z + Math.cos(yaw) * 1.4))
+    }
 
     if (!step) {
       // Standing next to a dinosaur: turn to look at it.
@@ -392,6 +436,8 @@ export class World {
 
     player.root.rotation.y = turnToward(player.root.rotation.y, Math.atan2(x, z), 10 * deltaSeconds)
     player.play('run', 0.2, PLAYER_RUN_RATE)
+    // Underwater his legs paddle slowly instead of sprinting.
+    player.setRate(PLAYER_RUN_RATE * (1 - 0.45 * this.swimming))
     player.update(deltaSeconds)
 
     // Give up if the player has been walking on the spot: something unexpected is in the way.
@@ -408,7 +454,11 @@ export class World {
 
   private updateNeighbours(deltaSeconds: number): void {
     const playerPosition = this.player?.root.position
-    for (const { dino, homeYaw, turns } of this.neighbours) {
+    for (const { dino, homeYaw, turns, roams } of this.neighbours) {
+      if (roams) {
+        dino.update(deltaSeconds, playerPosition ?? null)
+        continue
+      }
       let wantedYaw = homeYaw
       if (playerPosition && turns) {
         const dx = playerPosition.x - dino.root.position.x
@@ -416,8 +466,27 @@ export class World {
         if (Math.hypot(dx, dz) < NOTICE_DISTANCE) wantedYaw = Math.atan2(dx, dz)
       }
       dino.root.rotation.y = turnToward(dino.root.rotation.y, wantedYaw, 3 * deltaSeconds)
-      dino.update(deltaSeconds)
+      dino.update(deltaSeconds, playerPosition ?? null)
     }
+  }
+
+  /**
+   * Above the water the world is bright and you can see for miles. Once the camera dips under,
+   * everything turns blue and fades out a short way off, the way it does for a diver.
+   */
+  private tintForDepth(level: number, deltaSeconds: number): void {
+    // Start turning blue while the camera is still well above the water, and finish well below it,
+    // then ease toward that over a second or so. Crossing the surface is no longer a sudden switch.
+    const wanted = THREE.MathUtils.smoothstep(level - this.camera.position.y, -3, 2)
+    this.underwater += (wanted - this.underwater) * Math.min(1, 1.6 * deltaSeconds)
+    const under = this.underwater
+    this.background.lerpColors(SKY, DEEP_COLOR, under)
+    this.fog.color.copy(this.background)
+    // Distances shrink by a steady proportion, which looks even; a straight blend would rush at the start.
+    this.fog.near = 90 * (2 / 90) ** under
+    this.fog.far = 430 * (62 / 430) ** under
+    this.skyLight.intensity = THREE.MathUtils.lerp(1.5, 1.25, under)
+    this.sun.intensity = THREE.MathUtils.lerp(2.4, 1.2, under)
   }
 
   /** The camera never turns; it glides after the player so arrow keys always mean the same thing. */

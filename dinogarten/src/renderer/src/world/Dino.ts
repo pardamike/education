@@ -52,7 +52,10 @@ export interface Creature {
   readonly root: THREE.Group
   /** Half its length, nose to tail, in world units. */
   readonly radius: number
-  update(deltaSeconds: number): void
+  /** How tall it is, in world units. */
+  readonly height: number
+  /** `playerPosition` lets an animal that moves about react to where the player is. */
+  update(deltaSeconds: number, playerPosition?: THREE.Vector3 | null): void
 }
 
 const loader = new GLTFLoader()
@@ -85,6 +88,7 @@ export class Dino implements Creature {
   readonly root = new THREE.Group()
   /** Half the dinosaur's length, nose to tail, in world units. */
   readonly radius: number
+  readonly height: number
 
   private readonly mixer: THREE.AnimationMixer
   private readonly actions = new Map<string, THREE.AnimationAction>()
@@ -97,6 +101,7 @@ export class Dino implements Creature {
   }
 
   private constructor(model: THREE.Object3D, clips: THREE.AnimationClip[], look: DinoLook) {
+    this.height = look.height
     const meshes: THREE.Mesh[] = []
     model.traverse((node) => {
       if (!(node instanceof THREE.Mesh)) return
@@ -273,6 +278,11 @@ export class Dino implements Creature {
     next.play()
     this.current?.fadeOut(fadeSeconds)
     this.current = next
+  }
+
+  /** Speeds up or slows down whichever animation is playing. */
+  setRate(rate: number): void {
+    this.current?.setEffectiveTimeScale(rate)
   }
 
   update(deltaSeconds: number): void {
