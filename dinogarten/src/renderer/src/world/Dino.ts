@@ -1,14 +1,24 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { addParts, skinMaterial, type PartSpec } from './parts'
 import { roundOff, smoothShading } from './rounding'
 
-/** Cartoon eye placement, measured from the base of the head. Every value is a fraction of the dinosaur's height. */
+/** Cartoon eyes. Placement is measured from the base of the head, as fractions of the dinosaur's height. */
 export interface EyeLook {
   forward: number
   up: number
   apart: number
   size: number
+  /** Upper eyelids: how much of each eye they cover, from 0 (none) to 1 (shut). Leave out for wide-open eyes. */
+  lid?: number
+  /** Tilts the eyelids down toward the nose, in degrees. Around 25 looks grumpy. */
+  frown?: number
+  /** Eyelid colour; normally the same as the skin around the eyes. */
+  lidColor?: string
 }
+
+/** One number scales a bone evenly. Three numbers stretch it along its own axes; the middle one runs along the bone. */
+type BoneScale = number | [number, number, number]
 
 /** How a model is dressed up for the game. Lives in each dinosaur's JSON file. */
 export interface DinoLook {
@@ -17,8 +27,10 @@ export interface DinoLook {
   /** Model colour slot name -> CSS colour, or "hidden" to leave that part out. Unlisted slots keep the model's colour. */
   colors?: Record<string, string>
   /** Bone name -> scale. A bigger "Head" and shorter "Tail1" give a youngster's proportions. */
-  boneScales?: Record<string, number>
+  boneScales?: Record<string, BoneScale>
   eyes?: EyeLook
+  /** Extra body parts built in code, such as a sail. */
+  parts?: PartSpec[]
 }
 
 export type DinoAnimation = 'idle' | 'walk' | 'run' | 'jump' | 'attack' | 'death'
@@ -56,7 +68,7 @@ export class Dino {
   private readonly mixer: THREE.AnimationMixer
   private readonly actions = new Map<string, THREE.AnimationAction>()
   private current: THREE.AnimationAction | null = null
-  private readonly scaledBones: Array<[THREE.Object3D, number]> = []
+  private readonly scaledBones: Array<[THREE.Object3D, THREE.Vector3]> = []
 
   static async load(url: string, look: DinoLook): Promise<Dino> {
     const gltf = await loader.loadAsync(url)
@@ -73,15 +85,7 @@ export class Dino {
         node.visible = false
         return
       }
-      // A little of the colour glows on its own, so the shaded side stays bright and cartoon-like
-      // (plain shading turns a yellow plate olive in shadow).
-      const color = new THREE.Color(override ?? original.color)
-      node.material = new THREE.MeshLambertMaterial({
-        name: original.name,
-        color,
-        emissive: color,
-        emissiveIntensity: 0.22
-      })
+      node.material = skinMaterial(override ?? original.color, original.name)
       node.castShadow = true
       // The skeleton moves the mesh well outside its resting bounds, so never cull it.
       node.frustumCulled = false
@@ -101,16 +105,20 @@ export class Dino {
     this.root.add(model)
     this.root.updateMatrixWorld(true)
 
-    // Eyes go on while the skeleton is still in its resting pose, before any bone is rescaled.
+    for (const [boneName, boneScale] of Object.entries(look.boneScales ?? {})) {
+      const bone = model.getObjectByName(boneName)
+      if (!bone) continue
+      const amount = typeof boneScale === 'number' ? new THREE.Vector3().setScalar(boneScale) : new THREE.Vector3(...boneScale)
+      this.scaledBones.push([bone, amount])
+    }
+
+    // Eyes and extra parts go on while the skeleton is still in its resting pose, before any bone is rescaled.
     const head = model.getObjectByName('Head')
     const headEnd = model.getObjectByName('Head_end')
     if (look.eyes && head && headEnd) {
       this.addEyes(head, headEnd, look.eyes, look.height)
     }
-    for (const [boneName, boneScale] of Object.entries(look.boneScales ?? {})) {
-      const bone = model.getObjectByName(boneName)
-      if (bone) this.scaledBones.push([bone, boneScale])
-    }
+    addParts(this.root, meshes, look.parts ?? [], look.height)
 
     this.mixer = new THREE.AnimationMixer(model)
     for (const clip of clips) {
@@ -129,8 +137,15 @@ export class Dino {
     const up = new THREE.Vector3(0, 1, 0)
     const side = new THREE.Vector3().crossVectors(forward, up).normalize()
 
+    // The eyes hang off a holder, not the head bone itself. If the head is stretched into a long
+    // snout, the holder is squashed by the same amounts, so the eyes stay round.
+    const holder = new THREE.Group()
+    head.add(holder)
+    holder.updateMatrixWorld(true)
+
     for (const sign of [-1, 1]) {
-      const eye = makeEye(eyes.size * length)
+      const radius = eyes.size * length
+      const eye = makeEye(radius)
       eye.position
         .copy(base)
         .addScaledVector(forward, eyes.forward * length)
@@ -141,7 +156,24 @@ export class Dino {
       eye.lookAt(eye.position.clone().add(gaze))
       this.root.add(eye)
       eye.updateMatrixWorld(true)
-      head.attach(eye)
+
+      if (eyes.lid) {
+        const lid = new THREE.Mesh(
+          new THREE.SphereGeometry(radius * 1.08, 16, 8, 0, Math.PI * 2, 0, Math.PI * eyes.lid),
+          skinMaterial(eyes.lidColor ?? '#777777')
+        )
+        // Droop the lid forward over the pupil, and tip it down toward the nose for a frown.
+        const noseSide = Math.sign(eye.worldToLocal(eye.getWorldPosition(new THREE.Vector3()).add(forward)).x)
+        lid.rotation.set(0.35, 0, -noseSide * THREE.MathUtils.degToRad(eyes.frown ?? 0))
+        eye.add(lid)
+      }
+      holder.attach(eye)
+    }
+
+    const headScale = this.scaledBones.find(([bone]) => bone === head)?.[1]
+    if (headScale) {
+      const even = Math.cbrt(headScale.x * headScale.y * headScale.z)
+      holder.scale.set(even / headScale.x, even / headScale.y, even / headScale.z)
     }
   }
 
@@ -157,6 +189,6 @@ export class Dino {
   update(deltaSeconds: number): void {
     this.mixer.update(deltaSeconds)
     // Applied after the animation so a clip that animates the same bone cannot undo it.
-    for (const [bone, scale] of this.scaledBones) bone.scale.setScalar(scale)
+    for (const [bone, scale] of this.scaledBones) bone.scale.copy(scale)
   }
 }

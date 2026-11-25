@@ -1,0 +1,49 @@
+{
+  "name": "Spinosaurus",
+  "sayIt": "SPY-nuh-SORE-us",
+  "eats": "fish",
+  "position": [
+    14,
+    -17
+  ],
+  "facing": 340,
+  "look": {
+    "height": 3.4,
+    "colors": {
+      "Green": "#3f9e9a",
+      "LightGreen": "#f1e3b5",
+      "LightYellow": "hidden",
+      "Black": "#4b4f45",
+      "Red": "#e98a8a"
+    },
+    "boneScales": {
+      "Head": [
+        0.78,
+        1.45,
+        0.8
+      ],
+      "FrontLegR": 1.6,
+      "FrontLegL": 1.6,
+      "Tail1": 1.1
+    },
+    "eyes": {
+      "forward": 0.13,
+      "up": 0.055,
+      "apart": 0.07,
+      "size": 0.04,
+      "lid": 0.5,
+      "frown": 28,
+      "lidColor": "#35877f"
+    },
+    "parts": [
+      {
+        "type": "sail",
+        "bone": "Torso",
+        "start": 0.28,
+        "end": 0.7,
+        "height": 0.4,
+        "color": "#ffa26b"
+      }
+    ]
+  }
+}
