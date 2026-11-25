@@ -73,9 +73,14 @@ export class Dino {
         node.visible = false
         return
       }
+      // A little of the colour glows on its own, so the shaded side stays bright and cartoon-like
+      // (plain shading turns a yellow plate olive in shadow).
+      const color = new THREE.Color(override ?? original.color)
       node.material = new THREE.MeshLambertMaterial({
         name: original.name,
-        color: override ?? original.color
+        color,
+        emissive: color,
+        emissiveIntensity: 0.22
       })
       node.castShadow = true
       // The skeleton moves the mesh well outside its resting bounds, so never cull it.
