@@ -23,9 +23,9 @@ const loader = new GLTFLoader()
 
 const CRUISE_SPEED = 6.5
 const VISIT_SPEED = 4.6
-/** When it comes down to see the player, it circles him this far out and this far above his feet. */
+/** When it comes down to see the player, it circles at least this far out and this far above his feet. Bigger fliers keep further off. */
 const VISIT_RADIUS = 4.5
-const VISIT_HEIGHT = 3
+const VISIT_HEIGHT = 2.2
 
 /** Bones whose names start like this carry the wings and the head. Everything else is the body. */
 const WING_BONES = ['arm_', 'hand', 'finger']
@@ -187,17 +187,22 @@ export class Flier implements Creature {
     )
     let wantedSpeed = CRUISE_SPEED
     let visiting = false
-    if (playerPosition && playerPosition.y > -1.5) {
+    // It visits him on land or wading, with his head out of the water, not once he has gone under.
+    if (playerPosition && playerPosition.y > -3.3) {
       const across = (playerPosition.x - centreX) / (width + 4)
       const along = (playerPosition.z - centreZ) / (length + 4)
       if (across * across + along * along < 1) {
         visiting = true
+        // It circles a spot a little beyond him, so it stays where the camera, which looks north, can see it.
+        // A big flier needs a wide circle, or it would have to bank its wings upright to get round.
+        const orbit = VISIT_RADIUS + this.radius * 1.5
+        const overZ = playerPosition.z - orbit * 0.75
         // Aim a little way further round the circle than where it is now, so it keeps going round.
-        const angle = Math.atan2(position.x - playerPosition.x, position.z - playerPosition.z) + 0.8
+        const angle = Math.atan2(position.x - playerPosition.x, position.z - overZ) + 0.8
         target.set(
-          playerPosition.x + Math.sin(angle) * VISIT_RADIUS,
-          Math.max(playerPosition.y, waterLevel(0)) + VISIT_HEIGHT + this.height,
-          playerPosition.z + Math.cos(angle) * VISIT_RADIUS
+          playerPosition.x + Math.sin(angle) * orbit,
+          Math.max(playerPosition.y, waterLevel(0)) + VISIT_HEIGHT + this.height * 0.5,
+          overZ + Math.cos(angle) * orbit
         )
         wantedSpeed = VISIT_SPEED
       }
