@@ -1,0 +1,25 @@
+{
+  "name": "Parasaurolophus",
+  "sayIt": "pair-uh-sore-OL-uh-fus",
+  "eats": "plants",
+  "position": [
+    21,
+    -3
+  ],
+  "facing": 300,
+  "look": {
+    "height": 3.6,
+    "colors": {
+      "Green": "#f27fa5",
+      "LightGreen": "#ffd9e4",
+      "LightYellow": "#ffe17a",
+      "Red": "#ffcf4a"
+    },
+    "eyes": {
+      "forward": 0.097,
+      "up": 0.022,
+      "apart": 0.055,
+      "size": 0.033
+    }
+  }
+}

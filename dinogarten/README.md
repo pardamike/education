@@ -2,7 +2,7 @@
 
 A free, offline dinosaur learning game for kindergarteners. You are a little T. rex. Walk around, meet other dinosaurs, and learn letters and numbers from them.
 
-**Status:** early. You can walk around the world and meet a Triceratops, a Stegosaurus and a cranky old Spinosaurus under a skyline of volcanoes. Lessons, voices, player names and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
+**Status:** early. You can walk around the world and meet six other dinosaurs, including a cranky old Spinosaurus, under a skyline of volcanoes. Lessons, voices, player names and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Run it
 
@@ -31,9 +31,13 @@ The `look` section of `dino.json` is where a model is made friendly:
 
 - `height`: how tall it stands. The little T. rex is 1.7.
 - `colors`: a colour for each of the model's colour slots, or `"hidden"` to leave a part out (the T. rex's teeth, for example).
-- `eyes`: where the cartoon eyes sit, measured from the base of the head as fractions of the dinosaur's height. Every head is a different shape, so expect to nudge these while looking at the game. Add `lid` and `frown` for heavy, grumpy eyelids.
+- `eyes`: where the cartoon eyes sit, measured from the base of the head as fractions of the dinosaur's height. Every head is a different shape, so expect to nudge these while looking at the game. Add `lid`, `frown`, `brow` and a smaller `pupil` for a grumpy or angry face.
 - `boneScales`: resize parts of the skeleton. A bigger `Head` and a shorter `Tail1` make a youngster. Three numbers instead of one stretch a bone along its own axes, which is how a head becomes a long snout.
+- `lengthen`: makes every separate piece in a colour slot longer, such as a row of teeth.
+- `slim`: pulls the body's surface in around the bones you list, for a leaner animal.
 - `parts`: extra body parts built in code and pinned to the skeleton, such as a `sail`.
+
+Outside `look`, two settings help with giants: `"turnsToPlayer": false` makes an animal stand still instead of swinging round to watch the player, and `personalSpace` sets how close the player can get.
 
 A new animal does not need a new model. The Spinosaurus is the T. rex model with different colours, a stretched head, bigger arms and a sail; see [DINOSAURS.md](DINOSAURS.md).
 

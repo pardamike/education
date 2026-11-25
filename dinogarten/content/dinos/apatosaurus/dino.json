@@ -1,0 +1,25 @@
+{
+  "name": "Apatosaurus",
+  "sayIt": "uh-PAT-uh-SORE-us",
+  "eats": "plants",
+  "position": [
+    -15,
+    -20
+  ],
+  "facing": 35,
+  "turnsToPlayer": false,
+  "personalSpace": 4,
+  "look": {
+    "height": 4.5,
+    "colors": {
+      "Brown": "#a98ff0",
+      "Material": "#efe6ff"
+    },
+    "eyes": {
+      "forward": 0.1,
+      "up": 0.022,
+      "apart": 0.047,
+      "size": 0.031
+    }
+  }
+}

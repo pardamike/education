@@ -12,7 +12,7 @@
     "colors": {
       "Green": "#3f9e9a",
       "LightGreen": "#f1e3b5",
-      "LightYellow": "hidden",
+      "LightYellow": "#fffbea",
       "Black": "#4b4f45",
       "Red": "#e98a8a"
     },
@@ -31,9 +31,11 @@
       "up": 0.055,
       "apart": 0.07,
       "size": 0.04,
-      "lid": 0.5,
-      "frown": 28,
-      "lidColor": "#35877f"
+      "lid": 0.56,
+      "frown": 42,
+      "lidColor": "#35877f",
+      "pupil": 0.45,
+      "brow": "#1f5f5a"
     },
     "parts": [
       {
@@ -44,6 +46,23 @@
         "height": 0.4,
         "color": "#ffa26b"
       }
-    ]
+    ],
+    "lengthen": {
+      "LightYellow": 2.1
+    },
+    "slim": {
+      "amount": 0.06,
+      "bones": [
+        "Body",
+        "Hips",
+        "Torso",
+        "Shoulders",
+        "Back",
+        "BackLegR",
+        "BackLegL",
+        "BackUpLegR",
+        "BackUpLegL"
+      ]
+    }
   }
 }

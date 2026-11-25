@@ -15,7 +15,8 @@ interface Shape {
   triangles: number[][]
 }
 
-const positionKey = (point: THREE.Vector3): string =>
+/** Corners closer together than a hair's width get the same key, so they can be treated as one point. */
+export const positionKey = (point: THREE.Vector3): string =>
   `${Math.round(point.x * 1e5)},${Math.round(point.y * 1e5)},${Math.round(point.z * 1e5)}`
 
 /** Reads every mesh into one shared list of corners; corners in the same place become one corner. */

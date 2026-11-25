@@ -9,11 +9,14 @@ The dinosaur models and their animations are by [Quaternius](https://quaternius.
 | `content/player/model.glb` | T-Rex | https://poly.pizza/m/UYtneO5FpF |
 | `content/dinos/triceratops/model.glb` | Triceratops | https://poly.pizza/m/IGvrUqGrRM |
 | `content/dinos/stegosaurus/model.glb` | Stegosaurus | https://poly.pizza/m/eFcNbOlpvl |
+| `content/dinos/apatosaurus/model.glb` | Apatosaurus | https://poly.pizza/m/fvo0x8Zk3z |
+| `content/dinos/parasaurolophus/model.glb` | Parasaurolophus | https://poly.pizza/m/KeeQrrouRK |
+| `content/dinos/velociraptor/model.glb` | Velociraptor | https://poly.pizza/m/cnlGH2UcDd |
 | `content/dinos/spinosaurus/model.glb` | T-Rex (the same file as the player; the game reshapes it) | https://poly.pizza/m/UYtneO5FpF |
 
 The model files are used unchanged. Their colours, cartoon eyes, proportions, rounded shapes and smooth shading are applied by the game when it loads them.
 
-More from the same set, ready to add: [Apatosaurus](https://poly.pizza/m/fvo0x8Zk3z), [Parasaurolophus](https://poly.pizza/m/KeeQrrouRK), [Velociraptor](https://poly.pizza/m/cnlGH2UcDd). The full planned cast is in [DINOSAURS.md](DINOSAURS.md).
+That is the whole set. The animals still to come are built from these; the full planned cast is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Scenery
 

@@ -13,6 +13,10 @@ export interface DinoDefinition {
   position: [number, number]
   /** Which way it faces, in degrees. 0 looks straight at the camera. */
   facing: number
+  /** Set to false for giants, which stand still instead of swinging round to watch the player. */
+  turnsToPlayer?: boolean
+  /** How close the player can get to its middle, in world units. Left out, the two stop nose to nose. */
+  personalSpace?: number
   look: DinoLook
 }
 
@@ -41,6 +45,7 @@ const NOTICE_DISTANCE = 9
 interface Neighbour {
   dino: Dino
   homeYaw: number
+  turns: boolean
   /** The player counts as standing with this dinosaur when their centres are closer than this. */
   reach: number
 }
@@ -163,10 +168,10 @@ export class World {
       dino.root.position.set(x, 0, z)
       dino.root.rotation.y = homeYaw
       this.scene.add(dino.root)
-      // Big enough that the two stop nose to nose with a little gap, not overlapping.
-      const r = dino.radius + player.radius + 0.2
+      // By default, big enough that the two stop nose to nose with a little gap, not overlapping.
+      const r = definition.personalSpace ?? dino.radius + player.radius + 0.2
       this.obstacles.push({ x, z, r })
-      this.neighbours.push({ dino, homeYaw, reach: r + PLAYER_RADIUS + 1 })
+      this.neighbours.push({ dino, homeYaw, turns: definition.turnsToPlayer ?? true, reach: r + PLAYER_RADIUS + 1 })
     })
 
     this.scene.add(player.root)
@@ -344,9 +349,9 @@ export class World {
 
   private updateNeighbours(deltaSeconds: number): void {
     const playerPosition = this.player?.root.position
-    for (const { dino, homeYaw } of this.neighbours) {
+    for (const { dino, homeYaw, turns } of this.neighbours) {
       let wantedYaw = homeYaw
-      if (playerPosition) {
+      if (playerPosition && turns) {
         const dx = playerPosition.x - dino.root.position.x
         const dz = playerPosition.z - dino.root.position.z
         if (Math.hypot(dx, dz) < NOTICE_DISTANCE) wantedYaw = Math.atan2(dx, dz)

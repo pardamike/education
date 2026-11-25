@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { addParts, skinMaterial, type PartSpec } from './parts'
+import { lengthenPieces, slim, type SlimSpec } from './reshape'
 import { roundOff, smoothShading } from './rounding'
 
 /** Cartoon eyes. Placement is measured from the base of the head, as fractions of the dinosaur's height. */
@@ -15,6 +16,10 @@ export interface EyeLook {
   frown?: number
   /** Eyelid colour; normally the same as the skin around the eyes. */
   lidColor?: string
+  /** Adds a brow ridge along the edge of each eyelid, in this colour. Needs `lid`. A dark brow looks angry. */
+  brow?: string
+  /** Pupil size compared with the eye. The default 0.6 is wide-eyed; 0.45 is a hard stare. */
+  pupil?: number
 }
 
 /** One number scales a bone evenly. Three numbers stretch it along its own axes; the middle one runs along the bone. */
@@ -28,6 +33,10 @@ export interface DinoLook {
   colors?: Record<string, string>
   /** Bone name -> scale. A bigger "Head" and shorter "Tail1" give a youngster's proportions. */
   boneScales?: Record<string, BoneScale>
+  /** Colour slot name -> how many times longer to make each separate piece in it: teeth, claws, spikes. */
+  lengthen?: Record<string, number>
+  /** Slims the body down around the listed bones. */
+  slim?: SlimSpec
   eyes?: EyeLook
   /** Extra body parts built in code, such as a sail. */
   parts?: PartSpec[]
@@ -42,13 +51,14 @@ const eyePupil = new THREE.MeshLambertMaterial({ color: '#1d1d1d' })
 const eyeShine = new THREE.MeshBasicMaterial({ color: '#ffffff' })
 const eyeSphere = new THREE.SphereGeometry(1, 16, 12)
 
-function makeEye(radius: number): THREE.Group {
+function makeEye(radius: number, pupilSize: number): THREE.Group {
   const eye = new THREE.Group()
   const white = new THREE.Mesh(eyeSphere, eyeWhite)
   white.scale.setScalar(radius)
   const pupil = new THREE.Mesh(eyeSphere, eyePupil)
-  pupil.scale.setScalar(radius * 0.6)
-  pupil.position.z = radius * 0.55
+  pupil.scale.setScalar(radius * pupilSize)
+  // Sits just proud of the white, whatever its size.
+  pupil.position.z = radius * (1.15 - pupilSize)
   const shine = new THREE.Mesh(eyeSphere, eyeShine)
   shine.scale.setScalar(radius * 0.18)
   shine.position.set(radius * 0.2, radius * 0.28, radius * 1.05)
@@ -91,11 +101,16 @@ export class Dino {
       node.frustumCulled = false
       meshes.push(node)
     })
+    model.updateMatrixWorld(true)
+    lengthenPieces(meshes, look.lengthen ?? {})
     roundOff(meshes, ROUNDING_PASSES)
     smoothShading(meshes)
+    if (look.slim) {
+      slim(meshes, look.slim)
+      smoothShading(meshes)
+    }
 
     // Scale to the requested height and stand the model on the ground, centred.
-    model.updateMatrixWorld(true)
     const box = new THREE.Box3().setFromObject(model)
     const scale = look.height / (box.max.y - box.min.y)
     const centre = box.getCenter(new THREE.Vector3())
@@ -145,7 +160,7 @@ export class Dino {
 
     for (const sign of [-1, 1]) {
       const radius = eyes.size * length
-      const eye = makeEye(radius)
+      const eye = makeEye(radius, eyes.pupil ?? 0.6)
       eye.position
         .copy(base)
         .addScaledVector(forward, eyes.forward * length)
@@ -166,6 +181,14 @@ export class Dino {
         const noseSide = Math.sign(eye.worldToLocal(eye.getWorldPosition(new THREE.Vector3()).add(forward)).x)
         lid.rotation.set(0.35, 0, -noseSide * THREE.MathUtils.degToRad(eyes.frown ?? 0))
         eye.add(lid)
+        if (eyes.brow) {
+          // A thick bar along the front edge of the lid.
+          const edge = Math.PI * eyes.lid
+          const brow = new THREE.Mesh(eyeSphere, skinMaterial(eyes.brow))
+          brow.scale.set(radius * 1.3, radius * 0.26, radius * 0.5)
+          brow.position.set(0, radius * 1.08 * Math.cos(edge) + radius * 0.12, radius * 1.08 * Math.sin(edge) * 0.92)
+          lid.add(brow)
+        }
       }
       holder.attach(eye)
     }

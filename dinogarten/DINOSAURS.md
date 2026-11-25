@@ -7,7 +7,6 @@ Each one tells the player three things about itself before its lesson: its name,
 ## Status
 
 - **In the game**: walking around the world today.
-- **Ready**: a matching model exists; it needs colours, eyes and a place to stand.
 - **To build**: no free model matches the style, so it will be made from one we have (see [Where the models come from](#where-the-models-come-from)).
 
 ## Land dinosaurs
@@ -16,14 +15,14 @@ Each one tells the player three things about itself before its lesson: its name,
 | --- | --- | --- | --- | --- | --- |
 | Tyrannosaurus rex | tie-RAN-uh-SORE-us rex | meat | The player: a toddler T. rex | Quaternius T-Rex | In the game |
 | Triceratops | try-SAIR-uh-tops | plants | Meadow | Quaternius Triceratops | In the game |
-| Stegosaurus | STEG-uh-SORE-us | plants | Meadow, near the pond | Quaternius Stegosaurus | In the game |
-| Apatosaurus | uh-PAT-uh-SORE-us | plants | Meadow | Quaternius Apatosaurus | Ready |
-| Parasaurolophus | pair-uh-sore-OL-uh-fus | plants | Meadow | Quaternius Parasaurolophus | Ready |
-| Velociraptor | veh-LOSS-ih-RAP-tor | meat | Meadow. About the size of a turkey | Quaternius Velociraptor | Ready |
+| Stegosaurus | STEG-uh-SORE-us | plants | Meadow, to the north | Quaternius Stegosaurus | In the game |
+| Apatosaurus | uh-PAT-uh-SORE-us | plants | By the pond. Too big to turn round, so it stands still | Quaternius Apatosaurus | In the game |
+| Parasaurolophus | pair-uh-sore-OL-uh-fus | plants | Meadow, east side | Quaternius Parasaurolophus | In the game |
+| Velociraptor | veh-LOSS-ih-RAP-tor | meat | Meadow, west side. About the size of a turkey | Quaternius Velociraptor | In the game |
 | Brachiosaurus | BRAK-ee-uh-SORE-us | plants | Among the tallest trees | Apatosaurus, reshaped: longer front legs, neck held high | To build |
 | Giganotosaurus | jig-uh-NOT-uh-SORE-us | meat | Volcano country | T-Rex, reshaped: longer head and arms | To build |
 | Allosaurus | AL-uh-SORE-us | meat | Forest edge | T-Rex, reshaped, with small brow horns added | To build |
-| Spinosaurus | SPY-nuh-SORE-us | fish | Old and cranky. Lives in a rocky inlet on the beach (in the meadow until the beach exists) | T-Rex, reshaped: long snout, bigger arms, no teeth, with a sail added along the back | In the game |
+| Spinosaurus | SPY-nuh-SORE-us | fish | Old and cranky. Lives in a rocky inlet on the beach (in the meadow until the beach exists) | T-Rex, reshaped: long snout, bigger arms, longer teeth, slimmed body, angry brows, with a sail added along the back | In the game |
 | Dilophosaurus | dy-LOH-fuh-SORE-us | meat | Forest | Velociraptor, with twin head crests added | To build |
 | Ankylosaurus | an-KY-luh-SORE-us | plants | Meadow | Stegosaurus without its plates, with armour and a tail club added | To build |
 | Microraptor | MY-kroh-RAP-tor | meat | A whole flock of them, in the trees. Crow-sized, with four wings | Velociraptor, tiny, with wing feathers added | To build |
@@ -52,7 +51,7 @@ A search in November 2026 found no free set that matches them for the other ten.
 
 So the rest are built from what we have, which also keeps the whole cast in one style:
 
-- **Reshape**: start from the closest model in the set and change it when it loads: new colours, different proportions, and extra parts made in code (a sail, crests, armour, a tail club, feathers) pinned to its skeleton so they move with it. The animal keeps the walk and idle animations of the model it started from.
+- **Reshape**: start from the closest model in the set and change it when it loads: new colours, different proportions, longer teeth or spikes, a slimmer or stockier body, and extra parts made in code (a sail, crests, armour, a tail club, feathers) pinned to its skeleton so they move with it. The animal keeps the walk and idle animations of the model it started from.
 - **Convert**: the two fliers start from a public-domain animated pterosaur on OpenGameArt ([Low Spec Pterosaur](https://opengameart.org/content/low-spec-pterosaur)). It ships as a Blender file, so it has to be converted first.
 - **Build in code**: the Mosasaurus has nothing to start from. A swimming body is the simplest shape to build and animate in code.
 

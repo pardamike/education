@@ -2,8 +2,8 @@
   "name": "Stegosaurus",
   "sayIt": "STEG-uh-SORE-us",
   "eats": "plants",
-  "position": [-3, -16],
-  "facing": 20,
+  "position": [1, -20],
+  "facing": 10,
   "look": {
     "height": 3.4,
     "colors": {
@@ -11,6 +11,11 @@
       "LightBrown": "#dff3fb",
       "Brown": "#ffdf5a"
     },
-    "eyes": { "forward": 0.045, "up": 0.022, "apart": 0.04, "size": 0.032 }
+    "eyes": {
+      "forward": 0.045,
+      "up": 0.022,
+      "apart": 0.04,
+      "size": 0.032
+    }
   }
 }
