@@ -3,6 +3,7 @@ import playerModelUrl from '@content/player/model.glb?url'
 import playerLook from '@content/player/player.json'
 import { Dino, type DinoLook } from './Dino'
 import { groundHeight, keepInWorld, waterLevel } from './coast'
+import { Navigator } from './navigation'
 import { Ripples } from './ripples'
 import { buildScenery, SKY_COLOR, type Obstacle } from './scenery'
 
@@ -84,8 +85,13 @@ export class World {
   private player: Dino | null = null
   /** Ripples for the player and for each dinosaur that stands in water. */
   private readonly ripples: Array<{ dino: Dino; rings: Ripples }> = []
+  /** Where the player has been told to walk to, or null when standing still or steered by keys. */
   private target: THREE.Vector3 | null = null
-  private closestToTarget = Infinity
+  /** The points still to walk through on the way there. The last one is the target itself. */
+  private route: THREE.Vector3[] = []
+  private navigator: Navigator | null = null
+  /** Used to notice when the player has stopped getting anywhere. */
+  private readonly lastProgressAt = new THREE.Vector3()
   private secondsWithoutProgress = 0
   private lastFrameMs = 0
   private disposed = false
@@ -184,6 +190,9 @@ export class World {
     this.scene.add(player.root)
     this.player = player
 
+    // Every obstacle is known now, so the routes around them can be worked out.
+    this.navigator = new Navigator(this.obstacles, PLAYER_RADIUS + 0.2)
+
     for (const dino of [player, ...others]) {
       const rings = new Ripples(dino.radius * 0.5)
       this.scene.add(rings.group)
@@ -218,15 +227,20 @@ export class World {
       target.x = obstacle.x + (awayX / length) * reach
       target.z = obstacle.z + (awayZ / length) * reach
     }
+    const from = this.player?.root.position
+    const path = from && this.navigator ? this.navigator.findPath(from.x, from.z, target.x, target.z) : null
+    // With no route to follow (nothing loaded yet, or no way round), head straight there.
+    this.route = path ? path.map((point) => new THREE.Vector3(point.x, 0, point.z)) : [target]
     this.target = target
-    this.closestToTarget = Infinity
     this.secondsWithoutProgress = 0
+    if (from) this.lastProgressAt.copy(from)
     this.marker.position.set(target.x, groundHeight(target.x, target.z) + 0.08, target.z)
     this.marker.visible = true
   }
 
   private stopWalking(): void {
     this.target = null
+    this.route = []
     this.marker.visible = false
   }
 
@@ -294,10 +308,15 @@ export class World {
     }
     if (!this.target) return null
 
-    const dx = this.target.x - position.x
-    const dz = this.target.z - position.z
+    // Tick off the points along the route as they are reached, then aim for the next one.
+    while (this.route.length > 1 && Math.hypot(this.route[0]!.x - position.x, this.route[0]!.z - position.z) < 0.5) {
+      this.route.shift()
+    }
+    const next = this.route[0] ?? this.target
+    const dx = next.x - position.x
+    const dz = next.z - position.z
     const distance = Math.hypot(dx, dz)
-    if (distance < 0.15) {
+    if (this.route.length <= 1 && distance < 0.15) {
       this.stopWalking()
       return null
     }
@@ -359,15 +378,14 @@ export class World {
     player.play('run', 0.2, PLAYER_RUN_RATE)
     player.update(deltaSeconds)
 
-    // Give up on a clicked spot the player cannot get any closer to.
+    // Give up if the player has been walking on the spot: something unexpected is in the way.
     if (this.target) {
-      const remaining = Math.hypot(this.target.x - position.x, this.target.z - position.z)
-      if (remaining < this.closestToTarget - 0.01) {
-        this.closestToTarget = remaining
+      if (Math.hypot(position.x - this.lastProgressAt.x, position.z - this.lastProgressAt.z) > 0.5) {
+        this.lastProgressAt.copy(position)
         this.secondsWithoutProgress = 0
       } else {
         this.secondsWithoutProgress += deltaSeconds
-        if (this.secondsWithoutProgress > 1.5) this.stopWalking()
+        if (this.secondsWithoutProgress > 1.2) this.stopWalking()
       }
     }
   }

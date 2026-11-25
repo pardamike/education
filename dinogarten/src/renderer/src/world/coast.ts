@@ -59,9 +59,14 @@ function inCoast(x: number, z: number): boolean {
   return x >= COAST.west && x <= COAST.east && z <= COAST.landEdge && z >= shoreline(x) - SEA.reach
 }
 
-/** Moves a point back inside the world if it has strayed out: the round meadow plus the strip of coast. */
+/** True for any spot the player is allowed to stand: the round meadow plus the strip of coast. */
+export function isInWorld(x: number, z: number): boolean {
+  return inMeadow(x, z) || inCoast(x, z)
+}
+
+/** Moves a point back inside the world if it has strayed out. */
 export function keepInWorld(point: THREE.Vector3): void {
-  if (inMeadow(point.x, point.z) || inCoast(point.x, point.z)) return
+  if (isInWorld(point.x, point.z)) return
 
   const distance = Math.hypot(point.x, point.z)
   const meadowX = (point.x / distance) * WORLD_RADIUS
