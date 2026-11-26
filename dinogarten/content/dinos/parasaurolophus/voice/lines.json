@@ -1,4 +1,34 @@
 {
+  "1": {
+    "text": "One!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "a0eb18e87c91"
+  },
+  "2": {
+    "text": "Two!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "a59103aa3299"
+  },
+  "3": {
+    "text": "Three!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "43b74474a20d"
+  },
+  "4": {
+    "text": "Four!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "449ebb7c2152"
+  },
+  "5": {
+    "text": "Five!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "94e3458d1240"
+  },
   "hello": {
     "text": "Hello! I am a Parasaurolophus.",
     "ipa": "pˌæɹəsɔːɹˈɑːləfəs",
@@ -18,5 +48,35 @@
     "voice": "af_bella",
     "speed": 1.05,
     "hash": "03c25fbaa160"
+  },
+  "ask": {
+    "text": "Can you count my eggs? Tap them, one by one.",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "ca11299e1ceb"
+  },
+  "find": {
+    "text": "Five eggs! Can you find the number five?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "8d32eef9bc01"
+  },
+  "again": {
+    "text": "Try again! Find the number five.",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "b11c6409c72e"
+  },
+  "show": {
+    "text": "Here it is. This is the number five.",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "5facf3dd6b5e"
+  },
+  "yes": {
+    "text": "Yes! That is the number five. I have five eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "0bf69676188c"
   }
 }

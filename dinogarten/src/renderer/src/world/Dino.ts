@@ -349,6 +349,19 @@ export class Dino implements Creature {
   }
 
   /** Plays an animation once through, then goes back to standing. Returns how long it lasts, in seconds. */
+  /** Changes colours after loading. Takes model colour slot name -> CSS colour, as `colors` in the look does. */
+  recolour(colors: Record<string, string>): void {
+    this.root.traverse((node) => {
+      if (!(node instanceof THREE.Mesh)) return
+      const material = node.material as THREE.MeshLambertMaterial
+      const color = colors[material.name]
+      if (!color) return
+      material.color.set(color)
+      // Skin glows faintly in its own colour, which keeps the shaded side from going muddy.
+      material.emissive.set(color)
+    })
+  }
+
   playOnce(name: DinoAnimation): number {
     const action = this.actions.get(name)
     if (!action) return 0

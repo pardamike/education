@@ -2,6 +2,14 @@
   "name": "Parasaurolophus",
   "sayIt": "pair-uh-sore-OL-uh-fus",
   "eats": "plants",
+  "lesson": {
+    "type": "count-eggs",
+    "count": 5,
+    "others": [
+      3,
+      8
+    ]
+  },
   "voice": {
     "name": "af_bella",
     "speed": 1.05

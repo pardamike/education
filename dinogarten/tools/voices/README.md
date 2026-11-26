@@ -23,7 +23,8 @@ voice and speed did not change, so it finishes in a fraction of a second.
 | `hello` | Hello! I am a {name}. ("an" before a vowel) |
 | `name` | {name}. (slower, the "how to say it" clip) |
 | `eats` | I eat {eats}. |
-| `ask`, `again`, `show`, `yes` | only for dinosaurs with a `find-letter` lesson |
+| `ask`, `again`, `show`, `yes` | only for dinosaurs with a lesson: the question, the "try again", pointing out the answer, and the "yes!" |
+| `1`, `2`, `3`, ... and `find` | only for a `count-eggs` lesson: each number said while counting, and "can you find the number...?" |
 
 `{name}` and `{eats}` come from `dino.json`. The lines live in `buildLines` in `make.mjs`.
 

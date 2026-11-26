@@ -1,12 +1,19 @@
-// The lessons a dinosaur can give. A dinosaur names one in its dino.json, under "lesson".
+// The lessons a dinosaur can give. Each is written in its dino.json under "lesson",
+// and each kind has one screen component beside this file.
 
-/** "Find the letter": the dinosaur asks for one letter, shown among a few others. */
+/** "Can you find the letter T?", shown among a few other letters. */
 export interface FindLetterLesson {
   type: 'find-letter'
-  /** The capital letter to find. */
   letter: string
-  /** The other letters shown beside it. Pick ones that look nothing like it, for an easy start. */
   others: string[]
 }
 
-export type Lesson = FindLetterLesson
+/** "Can you count my eggs?": the player counts them one by one, then finds that number among a few others. */
+export interface CountEggsLesson {
+  type: 'count-eggs'
+  /** How many eggs are in the nest, from 1 to 20. */
+  count: number
+  others: number[]
+}
+
+export type Lesson = FindLetterLesson | CountEggsLesson

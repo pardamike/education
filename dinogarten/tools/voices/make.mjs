@@ -24,6 +24,16 @@ const PIPELINE_VERSION = "3";
 
 const pronunciations = JSON.parse(readFileSync(join(here, "pronunciations.json"), "utf8"));
 
+// The numbers as words, so the voice reads them the same way every time. NUMBERS[5] is "five".
+const NUMBERS = [
+  "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+  "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty",
+];
+
+function capital(word) {
+  return word[0].toUpperCase() + word.slice(1);
+}
+
 // "a" or "an" in front of the name
 function article(name) {
   return /^[aeiou]/i.test(name) ? "an" : "a";
@@ -45,6 +55,20 @@ function buildLines(id, dino) {
       ["again", `Try again! Find the letter ${L}.`, 1],
       ["show", `Here it is. This is the letter ${L}.`, 1],
       ["yes", `Yes! That is the letter ${L}. ${L} is for ${name}!`, 1, ipa],
+    );
+  }
+  if (dino.lesson?.type === "count-eggs") {
+    const count = dino.lesson.count;
+    const word = NUMBERS[count];
+    const eggs = count === 1 ? "egg" : "eggs";
+    // One clip for each number said while counting: 1.ogg says "One!", 2.ogg says "Two!", and so on.
+    for (let n = 1; n <= count; n++) lines.push([String(n), `${capital(NUMBERS[n])}!`, 1]);
+    lines.push(
+      ["ask", "Can you count my eggs? Tap them, one by one.", 1],
+      ["find", `${capital(word)} ${eggs}! Can you find the number ${word}?`, 1],
+      ["again", `Try again! Find the number ${word}.`, 1],
+      ["show", `Here it is. This is the number ${word}.`, 1],
+      ["yes", `Yes! That is the number ${word}. I have ${word} ${eggs}!`, 1],
     );
   }
   return lines;
@@ -91,14 +115,18 @@ const TRIM_BOTH = `${TRIM},areverse,${TRIM},areverse`;
 const LOUD = "I=-18:TP=-1.5:LRA=11";
 
 // First pass: measure loudness (ffmpeg prints the numbers to stderr).
-function measure(wavPath) {
+// A single word ("One!") is too short for ffmpeg to measure, so it is measured played several times over.
+function measure(wavPath, repeated = false) {
+  const again = repeated ? ",aloop=loop=5:size=240000" : "";
   const r = spawnSync(
     ffmpegPath,
-    ["-hide_banner", "-nostats", "-i", wavPath, "-af", `${TRIM_BOTH},loudnorm=${LOUD}:print_format=json`, "-f", "null", "-"],
+    ["-hide_banner", "-nostats", "-i", wavPath, "-af", `${TRIM_BOTH}${again},loudnorm=${LOUD}:print_format=json`, "-f", "null", "-"],
     { encoding: "utf8" },
   );
   const json = r.stderr.slice(r.stderr.lastIndexOf("{"), r.stderr.lastIndexOf("}") + 1);
-  return JSON.parse(json);
+  const measured = JSON.parse(json);
+  if (!repeated && !Number.isFinite(Number(measured.input_i))) return measure(wavPath, true);
+  return measured;
 }
 
 // Turn a raw wav into a mono Ogg Opus file at a steady loudness.

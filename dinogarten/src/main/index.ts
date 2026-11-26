@@ -1,5 +1,29 @@
-import { join } from 'node:path'
-import { app, BrowserWindow } from 'electron'
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
+import { dirname, join } from 'node:path'
+import { app, BrowserWindow, ipcMain } from 'electron'
+
+// The players and their stars are kept in one small file in the app's own data folder:
+//   macOS    ~/Library/Application Support/dinogarten/players.json
+//   Windows  %APPDATA%\dinogarten\players.json
+// Deleting that file starts everyone afresh; copying it is a backup.
+const savesFile = (): string => join(app.getPath('userData'), 'players.json')
+
+ipcMain.handle('saves:read', async (): Promise<unknown> => {
+  try {
+    return JSON.parse(await readFile(savesFile(), 'utf8'))
+  } catch {
+    // No file yet: nobody has played.
+    return null
+  }
+})
+
+ipcMain.handle('saves:write', async (_event, saves: unknown): Promise<void> => {
+  // Written beside the real file and then swapped in, so a crash mid-write cannot leave half a file.
+  const draft = `${savesFile()}.new`
+  await mkdir(dirname(draft), { recursive: true })
+  await writeFile(draft, JSON.stringify(saves, null, 2))
+  await rename(draft, savesFile())
+})
 
 function createWindow(): void {
   const win = new BrowserWindow({
@@ -10,7 +34,8 @@ function createWindow(): void {
     title: 'Dinogarten',
     backgroundColor: '#a9defa',
     autoHideMenuBar: true,
-    show: false
+    show: false,
+    webPreferences: { preload: join(__dirname, '../preload/index.js') }
   })
   // Automated previews set this so the window appears without taking the keyboard from whoever is typing.
   const quiet = Boolean(process.env['DINOGARTEN_PREVIEW'])

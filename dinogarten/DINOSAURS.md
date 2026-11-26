@@ -41,8 +41,13 @@ Each one tells the player three things about itself before its lesson: its name,
 | Dinosaur | Lesson | Status |
 | --- | --- | --- |
 | Triceratops | Find the letter T, shown among S and O | In the game |
+| Parasaurolophus | Count five eggs, then find the number 5, shown among 3 and 8 | In the game |
 
 Every other land dinosaur introduces itself (its name, how to say it, what it eats) but has no lesson yet. The swimmers and the fliers do not introduce themselves yet: meetings only happen on land.
+
+**The eggs.** Every dinosaur hatched from an egg, but for most kinds no eggs have been found. None are known for Parasaurolophus itself, as far as we could find, so the game borrows from Hypacrosaurus, a close relative (both are duck-bills of the hollow-crested group, the lambeosaurines) whose nests, eggs and hatchlings were found in 1987. Its eggs were roughly spherical, about 24 by 18.5 cm, so the eggs in the lesson are drawn nearly round. Their cream colour and speckles are a guess. The egg lesson went to the Parasaurolophus and not the Stegosaurus for this reason: we could find no confirmed Stegosaurus eggs at all.
+
+Sources: [Wikipedia on Hypacrosaurus](https://en.wikipedia.org/wiki/Hypacrosaurus), [Wikipedia on Parasaurolophus](https://en.wikipedia.org/wiki/Parasaurolophus).
 
 ## Places
 

@@ -80,10 +80,13 @@ body,
   vertical-align: middle;
 }
 
-.letters {
+/* The bottom row: the speaker button and whatever the lesson puts beside it. */
+.choices {
   display: flex;
   align-items: center;
   gap: 3.2vh;
+  /* A near miss between two tiles lands here and does nothing, instead of sending him walking off. */
+  pointer-events: auto;
 }
 
 .again {
@@ -144,14 +147,14 @@ body,
   transform: translateY(0.6vh);
 }
 
-/* A wrong letter that has been tried: it shakes its head and fades into the background. */
+/* A wrong tile that has been tried: it shakes its head and fades into the background. */
 .tile.tried {
   opacity: 0.25;
   cursor: default;
   animation: shake 0.45s both;
 }
 
-/* The right letter, once it is the only one left: it glows to say "here I am". */
+/* The right tile, once it is the only one left: it glows to say "here I am". */
 .tile.pointed-out {
   animation: glow 0.8s ease-in-out infinite alternate;
 }
@@ -237,4 +240,346 @@ body,
     opacity: 0;
     transform: translate(calc(-50% + var(--across) * 22vh), calc(-50% + var(--up) * 22vh)) scale(1.3) rotate(40deg);
   }
+}
+
+/* ---- Eggs: in the nest of the counting lesson, and one for each player on the picker ---- */
+
+.egg {
+  display: inline-block;
+  box-sizing: border-box;
+  width: var(--egg, 12vh);
+  height: calc(var(--egg, 12vh) * 1.16);
+  padding: 0;
+  border: none;
+  /* Nearly round, a little fuller at the bottom. */
+  border-radius: 50% 50% 50% 50% / 56% 56% 44% 44%;
+  background:
+    radial-gradient(circle at 30% 26%, rgb(255 255 255 / 0.75) 0 9%, transparent 10%),
+    radial-gradient(circle at 64% 38%, var(--speckle, #d9c7a1) 0 7%, transparent 8%),
+    radial-gradient(circle at 38% 62%, var(--speckle, #d9c7a1) 0 9%, transparent 10%),
+    radial-gradient(circle at 70% 72%, var(--speckle, #d9c7a1) 0 5%, transparent 6%),
+    var(--shell, #fbf3dd);
+  box-shadow:
+    inset calc(var(--egg, 12vh) * -0.08) calc(var(--egg, 12vh) * -0.1) 0 rgb(0 0 0 / 0.1),
+    0 calc(var(--egg, 12vh) * 0.07) 0 rgb(0 0 0 / 0.16);
+}
+
+/* The eggs sit in a bowl of mud and leaves. Its rim crosses them halfway up. */
+.nest {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 1.8vh;
+  max-width: 76vh;
+  padding: 1.5vh 3.5vh 2.6vh;
+  border-radius: 5vh 5vh 9vh 9vh;
+  background: linear-gradient(to bottom, transparent 46%, #b0834f 46%, #8d6438);
+  transition:
+    max-width 0.4s,
+    gap 0.4s,
+    padding 0.4s;
+}
+
+.nest .egg {
+  font-family: inherit;
+  font-size: calc(var(--egg, 12vh) * 0.62);
+  font-weight: 800;
+  line-height: 1;
+  color: #3b3b4d;
+  transition:
+    width 0.4s,
+    height 0.4s,
+    font-size 0.4s,
+    transform 0.12s;
+  animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.nest .egg:hover:not(:disabled) {
+  transform: translateY(-0.8vh) scale(1.06);
+}
+
+/* An egg that has been counted wears its number. */
+.nest .egg.counted {
+  --shell: #ffdf6b;
+  --speckle: transparent;
+  cursor: default;
+  animation: bounce 0.6s both;
+}
+
+/* All counted: the nest shrinks to one side to make room for the number tiles. */
+.nest.tucked {
+  --egg: 6.4vh;
+  gap: 0.9vh;
+  max-width: 24vh;
+  padding: 1vh 1.6vh 1.6vh;
+}
+
+/* ---- Who is playing: the picker that opens the game, and the corner button that brings it back ---- */
+
+.picker {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5vh;
+  background: rgb(169 222 250 / 0.6);
+  backdrop-filter: blur(1vh);
+  font-family: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', 'Segoe UI', system-ui, sans-serif;
+  color: #3b3b4d;
+  animation: rise 0.3s both;
+}
+
+.picker h1 {
+  margin: 0;
+  font-size: 11vh;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 0.8vh 0 rgb(0 0 0 / 0.14);
+}
+
+.picker h2 {
+  margin: 0;
+  font-size: 5vh;
+  font-weight: 800;
+}
+
+.picker button {
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+
+.players {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3vh;
+  max-width: 92vw;
+}
+
+.player {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 27vh;
+  min-height: 34vh;
+  border-radius: 4.5vh;
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 1.2vh 0 rgb(0 0 0 / 0.13);
+  animation: pop-in 0.4s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.player .egg {
+  --egg: 14vh;
+}
+
+.play {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2vh;
+  width: 100%;
+  padding: 2.5vh 1vh 1.5vh;
+  border: none;
+  border-radius: inherit;
+  background: none;
+  transition: transform 0.12s;
+}
+
+.play:hover {
+  transform: scale(1.05);
+}
+
+.play:active {
+  transform: translateY(0.5vh);
+}
+
+.player-name {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 4vh;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-stars {
+  min-height: 3.6vh;
+  font-size: 3vh;
+  font-weight: 700;
+  white-space: pre;
+}
+
+.plus {
+  display: grid;
+  width: 14vh;
+  height: 16.2vh;
+  place-items: center;
+  font-size: 11vh;
+  font-weight: 800;
+  line-height: 1;
+  color: #9fb4c4;
+}
+
+/* Small and tucked in the corner: this one is for grown-ups. */
+.remove {
+  position: absolute;
+  top: 1.2vh;
+  right: 1.2vh;
+  width: 4.6vh;
+  height: 4.6vh;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-size: 2.4vh;
+  opacity: 0.35;
+}
+
+.remove:hover {
+  background: #eef1f5;
+  opacity: 1;
+}
+
+.player.asking {
+  gap: 1.2vh;
+  padding: 2.5vh 1.5vh;
+  text-align: center;
+}
+
+.player.asking .player-name {
+  font-size: 2.8vh;
+  white-space: normal;
+}
+
+.player.asking .plain {
+  padding: 1vh 1.6vh;
+  font-size: 2.3vh;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5vh;
+}
+
+.plain,
+.picker .go {
+  padding: 1.2vh 2.6vh;
+  border: none;
+  border-radius: 3vh;
+  background: #e9edf2;
+  box-shadow: 0 0.6vh 0 rgb(0 0 0 / 0.12);
+  font-size: 2.6vh;
+  font-weight: 800;
+}
+
+.plain.danger {
+  background: #f2685f;
+  color: #fff;
+}
+
+.picker .go {
+  padding: 1.6vh 5vh;
+  background: #5ecb6b;
+  font-size: 4vh;
+  color: #fff;
+}
+
+.picker .go:disabled {
+  background: #cfd6dd;
+  cursor: default;
+}
+
+.new-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.6vh;
+  padding: 3.5vh 5vh 4vh;
+  border-radius: 4.5vh;
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 1.2vh 0 rgb(0 0 0 / 0.13);
+}
+
+.new-player input {
+  box-sizing: border-box;
+  width: 52vh;
+  padding: 1.2vh 2vh;
+  border: 0.6vh solid #cfd6dd;
+  border-radius: 2.6vh;
+  outline: none;
+  font-family: inherit;
+  font-size: 5vh;
+  font-weight: 800;
+  text-align: center;
+  color: inherit;
+}
+
+.new-player input:focus {
+  border-color: #3d9be9;
+}
+
+.colours {
+  display: flex;
+  gap: 1.2vh;
+}
+
+.colour {
+  padding: 1.2vh 1.2vh 1.6vh;
+  border: 0.7vh solid transparent;
+  border-radius: 3vh;
+  background: none;
+  line-height: 0;
+  transition: transform 0.12s;
+}
+
+.colour .egg {
+  --egg: 8.5vh;
+}
+
+.colour:hover {
+  transform: scale(1.08);
+}
+
+.colour.chosen {
+  border-color: #3d9be9;
+  background: #eaf4fd;
+}
+
+.whoami {
+  position: fixed;
+  top: 2.5vh;
+  left: 2.5vh;
+  display: flex;
+  align-items: center;
+  gap: 1.2vh;
+  padding: 1vh 2.2vh 1.2vh 1.4vh;
+  border: none;
+  border-radius: 4vh;
+  background: rgb(255 255 255 / 0.9);
+  box-shadow: 0 0.7vh 0 rgb(0 0 0 / 0.12);
+  cursor: pointer;
+  font-family: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', 'Segoe UI', system-ui, sans-serif;
+  font-size: 3vh;
+  font-weight: 800;
+  color: #3b3b4d;
+  transition: transform 0.12s;
+}
+
+.whoami .egg {
+  --egg: 4.4vh;
+}
+
+.whoami:hover {
+  transform: scale(1.05);
 }

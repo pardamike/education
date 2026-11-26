@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { CountEggs } from './lessons/CountEggs'
 import { FindLetter } from './lessons/FindLetter'
 import { hush, say } from './voice'
 import type { Meeting } from './world/World'
@@ -10,32 +11,34 @@ import type { Meeting } from './world/World'
 
 const FOOD_PICTURES: Record<string, string> = { plants: '🌿', meat: '🍖', fish: '🐟' }
 
-/** Dinosaurs whose lesson has been finished since the game was opened. Nothing is saved between sessions yet. */
-const finished = new Set<string>()
-
 type Step = 'hello' | 'name' | 'eats' | 'lesson'
 
-export function MeetingCard({ meeting, onCheer }: { meeting: Meeting; onCheer: () => void }) {
+export function MeetingCard({
+  meeting,
+  earned,
+  onRight
+}: {
+  meeting: Meeting
+  /** True when whoever is playing already has this dinosaur's star. */
+  earned: boolean
+  /** Called when the lesson's right answer is found. */
+  onRight: () => void
+}) {
   const [step, setStep] = useState<Step>('hello')
   // Goes up each time the speaker button is pressed, which starts the introduction again.
   const [replays, setReplays] = useState(0)
-  const [, setStars] = useState(0)
 
   useEffect(() => {
-    let walkedOff = false
     const introduce = async (): Promise<void> => {
       for (const line of ['hello', 'name', 'eats'] as const) {
         setStep(line)
-        await say(meeting.id, line)
-        if (walkedOff) return
+        // Cut short, he has walked off or asked to hear it all again: either way this telling is over.
+        if (!(await say(meeting.id, line))) return
       }
       setStep('lesson')
     }
     void introduce()
-    return () => {
-      walkedOff = true
-      hush()
-    }
+    return hush
   }, [meeting.id, replays])
 
   const lesson = step === 'lesson' ? meeting.lesson : undefined
@@ -45,7 +48,7 @@ export function MeetingCard({ meeting, onCheer }: { meeting: Meeting; onCheer: (
         <div className="name">
           <span className="first-letter">{meeting.name.slice(0, 1)}</span>
           {meeting.name.slice(1)}
-          {finished.has(meeting.id) && <span className="earned"> ⭐</span>}
+          {earned && <span className="earned"> ⭐</span>}
         </div>
         {step !== 'hello' && <div className="say-it">{meeting.sayIt}</div>}
         {(step === 'eats' || step === 'lesson') && (
@@ -56,17 +59,11 @@ export function MeetingCard({ meeting, onCheer }: { meeting: Meeting; onCheer: (
       </div>
 
       {lesson?.type === 'find-letter' ? (
-        <FindLetter
-          dinosaur={meeting.id}
-          lesson={lesson}
-          onRight={() => {
-            finished.add(meeting.id)
-            setStars((count) => count + 1)
-            onCheer()
-          }}
-        />
+        <FindLetter dinosaur={meeting.id} lesson={lesson} onRight={onRight} />
+      ) : lesson?.type === 'count-eggs' ? (
+        <CountEggs dinosaur={meeting.id} lesson={lesson} onRight={onRight} />
       ) : (
-        <div className="letters">
+        <div className="choices">
           <button className="again" aria-label="Hear it again" onClick={() => setReplays((count) => count + 1)}>
             🔊
           </button>

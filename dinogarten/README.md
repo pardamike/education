@@ -2,7 +2,7 @@
 
 A free, offline dinosaur learning game for kindergarteners. You are a little T. rex. Walk around, meet other dinosaurs, and learn letters and numbers from them.
 
-**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet sixteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a toothy Mosasaurus and a gentle Plesiosaurus on the sea floor, and two flying reptiles overhead, under a skyline of volcanoes. Walk up to any land dinosaur and it introduces itself out loud; the Triceratops then gives the first lesson, finding the letter T. More lessons, player names, saved progress and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
+**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet sixteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a toothy Mosasaurus and a gentle Plesiosaurus on the sea floor, and two flying reptiles overhead, under a skyline of volcanoes. Walk up to any land dinosaur and it introduces itself out loud. Two of them then give a lesson: the Triceratops asks for the letter T, and the Parasaurolophus has eggs to count. Each player has a name, a colour and saved stars. More lessons and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Run it
 
@@ -12,6 +12,8 @@ You need [Node.js](https://nodejs.org) 24 or newer and [pnpm](https://pnpm.io).
 pnpm install
 pnpm dev        # opens the game and reloads as you edit
 ```
+
+The game opens by asking who is playing. A grown-up adds each player once: type a name and choose an egg. From then on a child picks their own egg, and the little T. rex comes out in that colour. The button in the top corner of the game goes back to change player.
 
 Click where you want the T. rex to go, or use the arrow keys.
 
@@ -53,15 +55,36 @@ A new animal does not need a new model. The Spinosaurus is the T. rex model with
 
 The player's own settings are in `content/player/player.json`.
 
+## Players and saved stars
+
+Everyone who plays on a computer, and the stars each has earned, is kept in one small file:
+
+- macOS: `~/Library/Application Support/dinogarten/players.json`
+- Windows: `%APPDATA%\dinogarten\players.json`
+
+Delete the file to start everyone afresh, or copy it to keep a backup. It is outside this folder, so players' names never end up in git.
+
+A player earns one star for each dinosaur whose lesson they finish. A lesson can be played again as often as they like; the star is kept.
+
 ## Add a lesson
 
-A dinosaur gives a lesson when its `dino.json` has a `lesson`. The Triceratops has the first one:
+A dinosaur gives a lesson when its `dino.json` has a `lesson`. There are two kinds so far.
 
 ```json
 "lesson": { "type": "find-letter", "letter": "T", "others": ["S", "O"] }
 ```
 
-`find-letter` shows the letter among the others on big tiles and asks for it. There is no way to fail: a wrong tile fades away with a "try again", and when only the right one is left the dinosaur points it out. A right answer earns a star, and both dinosaurs jump for joy.
+`find-letter` shows the letter among the others on big tiles and asks for it. The Triceratops has this one.
+
+```json
+"lesson": { "type": "count-eggs", "count": 5, "others": [3, 8] }
+```
+
+`count-eggs` shows a nest of that many eggs, up to 20. The player touches them one at a time, and the dinosaur counts along out loud. Then it asks for that number, shown among the others on big tiles. The Parasaurolophus has this one.
+
+There is no way to fail either lesson: a wrong tile fades away with a "try again", and when only the right one is left the dinosaur points it out. A right answer earns a star, and both dinosaurs jump for joy.
+
+After adding or changing a lesson, make its spoken lines (see [Voices](#voices)).
 
 Each kind of lesson is one file in `src/renderer/src/lessons/`. The player cannot read yet, so a lesson must work by listening and looking alone.
 
@@ -83,7 +106,8 @@ Each dinosaur's `dino.json` picks its voice and how fast it talks, under `voice`
 
 - [Electron](https://www.electronjs.org) wraps the game as a desktop app.
 - [Three.js](https://threejs.org) draws the 3D world (`src/renderer/src/world/`).
-- [React](https://react.dev) will draw the menus and lessons on top.
+- [React](https://react.dev) draws the player picker, the name cards and the lessons on top (`src/renderer/src/`).
+- The game's screen is a web page, which may not touch files. `src/main/` reads and writes the save file for it, and `src/preload/` is the small bridge between the two.
 
 ## Credits
 

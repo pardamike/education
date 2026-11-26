@@ -17,36 +17,38 @@ for (const [path, url] of Object.entries(files)) {
 /** How long a dinosaur with no recording for a line stays quiet in its place, in milliseconds. */
 const SILENT_LINE_MS = 900
 
-/** Whatever is being said right now, and how to tell whoever is waiting that it is over. */
-let speaking: { audio: HTMLAudioElement | null; finish: () => void } | null = null
+/** Whatever is being said right now, and how to tell whoever is waiting how it ended. */
+let speaking: { audio: HTMLAudioElement | null; finish: (heard: boolean) => void } | null = null
 
 /** Stops whatever is being said. Anyone waiting for that line to end is let go at once. */
 export function hush(): void {
   const stopped = speaking
   speaking = null
   stopped?.audio?.pause()
-  stopped?.finish()
+  stopped?.finish(false)
 }
 
 /**
  * Says one of a dinosaur's lines, cutting off anything already being said.
- * The promise settles when the line ends, or when it is cut short by `hush` or by another line.
+ * The promise gives true when the line was heard to the end, and false when it was cut short
+ * by `hush` or by another line. Whatever was going to be said next should then be left unsaid.
  */
-export function say(dinosaur: string, line: string): Promise<void> {
+export function say(dinosaur: string, line: string): Promise<boolean> {
   hush()
   return new Promise((resolve) => {
     const url = clips.get(`${dinosaur}/${line}`)
-    if (!url) {
-      const timer = window.setTimeout(resolve, SILENT_LINE_MS)
-      speaking = { audio: null, finish: () => (window.clearTimeout(timer), resolve()) }
-      return
-    }
-    const audio = new Audio(url)
+    const audio = url ? new Audio(url) : null
     const mine = { audio, finish: resolve }
     speaking = mine
     const done = (): void => {
       if (speaking === mine) speaking = null
-      resolve()
+      resolve(true)
+    }
+    if (!audio) {
+      // No recording: stay quiet for a moment in its place, so the screen still keeps its pace.
+      const timer = window.setTimeout(done, SILENT_LINE_MS)
+      mine.finish = (heard) => (window.clearTimeout(timer), resolve(heard))
+      return
     }
     audio.addEventListener('ended', done)
     audio.addEventListener('error', done)

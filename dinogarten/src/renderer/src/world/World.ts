@@ -156,6 +156,10 @@ export class World {
   private readonly cameraLook = new THREE.Vector3()
 
   private player: Dino | null = null
+  /** True while nobody is playing (the player picker is up): the mouse and the keys do nothing. */
+  private paused = true
+  /** The colours of whoever is playing, kept so they can go on a T. rex that has not finished loading. */
+  private playerColours: { body: string; belly: string } | null = null
   /** Ripples for the player and for each dinosaur that stands in water. */
   private readonly ripples: Array<{ dino: Creature; rings: Ripples }> = []
   private timeSeconds = 0
@@ -317,6 +321,7 @@ export class World {
     player.root.rotation.order = 'YXZ'
     this.scene.add(player.root)
     this.player = player
+    this.wearColours()
 
     // Every obstacle is known now, so the routes around them can be worked out.
     this.navigator = new Navigator(this.obstacles, PLAYER_RADIUS + 0.2)
@@ -335,6 +340,30 @@ export class World {
     this.renderer.setAnimationLoop(null)
     this.renderer.dispose()
     delete window.dinogarten
+  }
+
+  /** Starts the game for one player, or carries it on: the little T. rex takes that player's colours. */
+  play(colours: { body: string; belly: string }): void {
+    this.playerColours = colours
+    this.wearColours()
+    this.paused = false
+    // Whoever he is standing beside says hello again, in case somebody new has taken over.
+    for (const neighbour of this.neighbours) neighbour.greeted = false
+    this.secondsStanding = 0
+  }
+
+  /** Stops the game while the player picker is up. The world carries on moving behind it. */
+  pause(): void {
+    this.paused = true
+    this.keysDown.clear()
+    this.stopWalking()
+    if (this.meeting) this.endMeeting()
+  }
+
+  private wearColours(): void {
+    if (!this.playerColours) return
+    // These are the names of the body and belly colours in the T. rex model.
+    this.player?.recolour({ Green: this.playerColours.body, LightGreen: this.playerColours.belly })
   }
 
   /** Sends the player walking to a spot on the ground. */
@@ -373,6 +402,7 @@ export class World {
   }
 
   private readonly onPointer = (event: PointerEvent): void => {
+    if (this.paused) return
     // Holding the button and dragging keeps steering; a plain hover does nothing.
     if (event.type === 'pointermove' && event.buttons === 0) return
     const bounds = this.canvas.getBoundingClientRect()
@@ -425,6 +455,8 @@ export class World {
   }
 
   private readonly onKeyDown = (event: KeyboardEvent): void => {
+    // With the picker up, the keys are for typing a name.
+    if (this.paused) return
     if (event.code.startsWith('Arrow')) event.preventDefault()
     this.keysDown.add(event.code)
   }
@@ -529,7 +561,7 @@ export class World {
         const dz = beside.dino.root.position.z - position.z
         player.root.rotation.y = turnToward(player.root.rotation.y, Math.atan2(dx, dz), 6 * deltaSeconds)
         this.secondsStanding += deltaSeconds
-        if (!this.meeting && !beside.greeted && this.secondsStanding > 0.35) this.startMeeting(beside)
+        if (!this.paused && !this.meeting && !beside.greeted && this.secondsStanding > 0.35) this.startMeeting(beside)
       }
       if (this.timeSeconds > this.cheeringUntil) player.play('idle')
       player.update(deltaSeconds)
