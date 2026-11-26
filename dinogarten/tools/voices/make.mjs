@@ -95,6 +95,27 @@ function buildLines(id, dino) {
     // Any key can be pressed by mistake, so the dinosaur can name all of them.
     for (const key of [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"]) lines.push([`is-${key}`, `That is the ${what(key)}.`, 1]);
   }
+  if (lesson.type === "type-it") {
+    // The words and the numbers any level can ask for. The letters and digits are spelled out by name.
+    const words = [...new Set(lesson.levels.flatMap((level) => level.words ?? []))];
+    const spelled = (text) => [...text].map((c) => (/\d/.test(c) ? NUMBERS[Number(c)] : c.toUpperCase())).join(", ");
+    for (const word of words) {
+      lines.push(
+        [`ask-${word}`, `Let's write ${word}. ${spelled(word)}.`, 1],
+        [`yes-${word}`, `Yes! ${spelled(word)}. That spells ${word}!`, 1],
+      );
+    }
+    for (const n of numbers) {
+      if (n > 20) throw new Error(`NUMBERS only goes up to twenty, so ${n} has no words`);
+      lines.push(
+        [`ask-${n}`, `Let's write ${NUMBERS[n]}. ${capital(spelled(String(n)))}.`, 1],
+        [`yes-${n}`, `Yes! ${capital(spelled(String(n)))}. That makes ${NUMBERS[n]}!`, 1],
+      );
+    }
+    // Each letter and digit is said as it is typed: A.ogg says "A!", 7.ogg says "Seven!".
+    for (const L of new Set(words.join("").toUpperCase())) lines.push([L, `${L}!`, 1]);
+    if (numbers.length > 0) for (let d = 0; d <= 9; d++) lines.push([String(d), `${capital(NUMBERS[d])}!`, 1]);
+  }
   if (lesson.type === "count-eggs") {
     // One clip for each number said while counting: 1.ogg says "One!", 2.ogg says "Two!", and so on.
     for (let n = 1; n <= numbers[numbers.length - 1]; n++) lines.push([String(n), `${capital(NUMBERS[n])}!`, 1]);

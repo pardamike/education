@@ -6,6 +6,41 @@
     "name": "af_sky",
     "speed": 1.05
   },
+  "lesson": {
+    "type": "type-it",
+    "levels": [
+      {
+        "words": [
+          "cat",
+          "dog",
+          "sun",
+          "egg",
+          "pig",
+          "hat",
+          "bug",
+          "bed"
+        ]
+      },
+      {
+        "words": [
+          "fox",
+          "hen",
+          "ant",
+          "bat",
+          "cup",
+          "box",
+          "van",
+          "bus"
+        ]
+      },
+      {
+        "numbers": [
+          10,
+          20
+        ]
+      }
+    ]
+  },
   "position": [
     -4,
     24

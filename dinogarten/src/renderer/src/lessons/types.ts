@@ -34,7 +34,14 @@ export interface FindKeyLesson {
   levels: Array<{ keys: string }>
 }
 
-export type Lesson = FindLetterLesson | FindNumberLesson | CountEggsLesson | FindKeyLesson
+/** "Can you write cat?": the player types a whole short word, or a number, letter by letter. */
+export interface TypeItLesson {
+  type: 'type-it'
+  /** A level has either `words` to choose from (each needs content/pictures/<word>.svg), or `numbers`: [from, to], both included. */
+  levels: Array<{ words: string[] } | { numbers: [number, number] }>
+}
+
+export type Lesson = FindLetterLesson | FindNumberLesson | CountEggsLesson | FindKeyLesson | TypeItLesson
 
 /** How many questions make up one round. */
 export const ROUND_SIZE = 3
@@ -70,4 +77,16 @@ export interface KeyQuestion {
   yes: string
 }
 
-export type Question = PickQuestion | EggQuestion | KeyQuestion
+/** One question about typing: write this word or number. */
+export interface TypeQuestion {
+  kind: 'type'
+  /** What to type: a lowercase word like "cat", or the digits of a number like "12". */
+  text: string
+  /** Whether a picture of the word goes on the card. A number has none. */
+  picture: boolean
+  /** The clip that asks it, and the clip that says "yes!". */
+  ask: string
+  yes: string
+}
+
+export type Question = PickQuestion | EggQuestion | KeyQuestion | TypeQuestion

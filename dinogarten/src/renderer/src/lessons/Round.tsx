@@ -5,6 +5,7 @@ import { FindKey, findKeyQuestions } from './FindKey'
 import { findLetterQuestions } from './FindLetter'
 import { findNumberQuestions } from './FindNumber'
 import { PickTile } from './PickTile'
+import { TypeIt, typeItQuestions } from './TypeIt'
 import { ROUND_SIZE, type Lesson, type Question } from './types'
 
 // One round of a lesson: three questions at one level, one after the other, with three dots to show
@@ -24,6 +25,8 @@ function makeQuestions(lesson: Lesson, level: number): Question[] {
       return countEggsQuestions(lesson.levels[level]!)
     case 'find-key':
       return findKeyQuestions(lesson.levels[level]!)
+    case 'type-it':
+      return typeItQuestions(lesson.levels[level]!)
   }
 }
 
@@ -107,6 +110,8 @@ export function Round({
         <CountEggs key={current} dinosaur={dinosaur} question={question} locked={celebrating} onRight={() => void right(question)} />
       ) : question.kind === 'key' ? (
         <FindKey key={current} dinosaur={dinosaur} question={question} locked={celebrating} onRight={() => void right(question)} />
+      ) : question.kind === 'type' ? (
+        <TypeIt key={current} dinosaur={dinosaur} question={question} locked={celebrating} onRight={() => void right(question)} />
       ) : (
         <PickTile key={current} dinosaur={dinosaur} question={question} locked={celebrating} onRight={() => void right(question)} />
       )}

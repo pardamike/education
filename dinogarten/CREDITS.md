@@ -34,6 +34,29 @@ That model ships as a Blender file. `content/dinos/pterodactyl/model.glb` and `c
 
 The dinosaurs' voices are computer speech, made with [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) by hexgrad, an open text-to-speech model released under the Apache 2.0 licence. Thank you! The tool that makes them is in `tools/voices`.
 
+## Word pictures
+
+The pictures on the cards of the Type it lesson are [Twemoji](https://github.com/jdecked/twemoji) graphics, maintained by Jason Sofonia and Justine De Caires (originally by Twitter), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Thank you! They are used unchanged, one file for each word, in `content/pictures/`:
+
+| Word | Twemoji file |
+| --- | --- |
+| `cat.svg` | `assets/svg/1f431.svg` |
+| `dog.svg` | `assets/svg/1f436.svg` |
+| `sun.svg` | `assets/svg/2600.svg` |
+| `egg.svg` | `assets/svg/1f95a.svg` |
+| `pig.svg` | `assets/svg/1f437.svg` |
+| `hat.svg` | `assets/svg/1f3a9.svg` |
+| `bug.svg` | `assets/svg/1f41b.svg` |
+| `bed.svg` | `assets/svg/1f6cf.svg` |
+| `fox.svg` | `assets/svg/1f98a.svg` |
+| `hen.svg` | `assets/svg/1f414.svg` |
+| `ant.svg` | `assets/svg/1f41c.svg` |
+| `bat.svg` | `assets/svg/1f987.svg` |
+| `cup.svg` | `assets/svg/1f964.svg` |
+| `box.svg` | `assets/svg/1f4e6.svg` |
+| `van.svg` | `assets/svg/1f690.svg` |
+| `bus.svg` | `assets/svg/1f68c.svg` |
+
 ## Sea reptiles
 
 The Mosasaurus and the Plesiosaurus have no model files. Their bodies, heads, flippers and tails are built by the game's own code.

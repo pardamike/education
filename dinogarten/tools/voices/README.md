@@ -30,6 +30,8 @@ voice and speed did not change, so it finishes in a fraction of a second.
 | `is-G`, `is-7`, ... | `find-key`: one for every letter and number, whatever the levels, for a key pressed by mistake: "That is the letter G." |
 | `1`, `2`, `3`, ... | `count-eggs`: each number said while counting, up to the biggest nest |
 | `ask`, `find-5`, `yes-5`, ... | `count-eggs`: "Can you count my eggs? Tap them, one by one.", then for each count any level can use, "Five eggs! Can you find the number five?" and "Yes! That is the number five. I have five eggs!" |
+| `ask-cat`, `yes-cat`, `ask-12`, `yes-12`, ... | `type-it`: a pair for each word and each number any level can ask. "Let's write cat. C, A, T." and "Yes! C, A, T. That spells cat!", or "Let's write twelve. One, two." and "Yes! One, two. That makes twelve!" |
+| `A`, `B`, ..., `0`, `1`, ..., `9` | `type-it`: the name of each letter used by any word ("A!") and of each digit ("Seven!"), said as the key is typed |
 
 `{name}` and `{eats}` come from `dino.json`. The lines live in `buildLines` in `make.mjs`.
 

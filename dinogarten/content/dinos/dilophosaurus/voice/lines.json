@@ -1,4 +1,64 @@
 {
+  "0": {
+    "text": "Zero!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "2ddb69b7433a"
+  },
+  "1": {
+    "text": "One!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "826c763af9ba"
+  },
+  "2": {
+    "text": "Two!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "69383b8b06b3"
+  },
+  "3": {
+    "text": "Three!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "8f79689370d9"
+  },
+  "4": {
+    "text": "Four!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "c3c950103fe4"
+  },
+  "5": {
+    "text": "Five!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "0fe45b6a5532"
+  },
+  "6": {
+    "text": "Six!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "fa31328f31cb"
+  },
+  "7": {
+    "text": "Seven!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "fa4c3313825d"
+  },
+  "8": {
+    "text": "Eight!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "ec3511c76050"
+  },
+  "9": {
+    "text": "Nine!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "320daca968ec"
+  },
   "hello": {
     "text": "Hello! I am a Dilophosaurus.",
     "ipa": "daɪlˌoʊfəsˈɔːɹəs",
@@ -18,5 +78,455 @@
     "voice": "af_sky",
     "speed": 1.05,
     "hash": "d8ad8644ebd4"
+  },
+  "back": {
+    "text": "Hello again!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "36c94fffb63d"
+  },
+  "again": {
+    "text": "Try again!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "dc46364ca9ee"
+  },
+  "show": {
+    "text": "Here it is!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "ef2f7d96cff2"
+  },
+  "done": {
+    "text": "Well done! You did it!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "ef3c58c0f05b"
+  },
+  "ask-cat": {
+    "text": "Let's write cat. C, A, T.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "b63f9bdbf6bb"
+  },
+  "yes-cat": {
+    "text": "Yes! C, A, T. That spells cat!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "0b253561cbf6"
+  },
+  "ask-dog": {
+    "text": "Let's write dog. D, O, G.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "943009d784fe"
+  },
+  "yes-dog": {
+    "text": "Yes! D, O, G. That spells dog!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "fa7940265907"
+  },
+  "ask-sun": {
+    "text": "Let's write sun. S, U, N.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "e76b128496c2"
+  },
+  "yes-sun": {
+    "text": "Yes! S, U, N. That spells sun!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "68df2b0c9718"
+  },
+  "ask-egg": {
+    "text": "Let's write egg. E, G, G.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "03d1af53ef79"
+  },
+  "yes-egg": {
+    "text": "Yes! E, G, G. That spells egg!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "1d3a5c4defab"
+  },
+  "ask-pig": {
+    "text": "Let's write pig. P, I, G.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "e41ce5bdc705"
+  },
+  "yes-pig": {
+    "text": "Yes! P, I, G. That spells pig!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "1e4535bdbecf"
+  },
+  "ask-hat": {
+    "text": "Let's write hat. H, A, T.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "90eb81aa7d24"
+  },
+  "yes-hat": {
+    "text": "Yes! H, A, T. That spells hat!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "b9a14fce18e2"
+  },
+  "ask-bug": {
+    "text": "Let's write bug. B, U, G.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "79cdfadebc8e"
+  },
+  "yes-bug": {
+    "text": "Yes! B, U, G. That spells bug!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "7fe3241aef0a"
+  },
+  "ask-bed": {
+    "text": "Let's write bed. B, E, D.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "5980ebf32a58"
+  },
+  "yes-bed": {
+    "text": "Yes! B, E, D. That spells bed!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "bfad759bdba0"
+  },
+  "ask-fox": {
+    "text": "Let's write fox. F, O, X.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "2ebbf383d733"
+  },
+  "yes-fox": {
+    "text": "Yes! F, O, X. That spells fox!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "635062b4fda7"
+  },
+  "ask-hen": {
+    "text": "Let's write hen. H, E, N.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "e676bb9c4c1d"
+  },
+  "yes-hen": {
+    "text": "Yes! H, E, N. That spells hen!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "eed226b2331a"
+  },
+  "ask-ant": {
+    "text": "Let's write ant. A, N, T.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "7246dd6e9ce3"
+  },
+  "yes-ant": {
+    "text": "Yes! A, N, T. That spells ant!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "e61a46768579"
+  },
+  "ask-bat": {
+    "text": "Let's write bat. B, A, T.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "5eb3d534e871"
+  },
+  "yes-bat": {
+    "text": "Yes! B, A, T. That spells bat!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "373b16a987d5"
+  },
+  "ask-cup": {
+    "text": "Let's write cup. C, U, P.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "7f02469e6b24"
+  },
+  "yes-cup": {
+    "text": "Yes! C, U, P. That spells cup!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "bca24c36345d"
+  },
+  "ask-box": {
+    "text": "Let's write box. B, O, X.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "40eb1f8b480c"
+  },
+  "yes-box": {
+    "text": "Yes! B, O, X. That spells box!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "95826828d27b"
+  },
+  "ask-van": {
+    "text": "Let's write van. V, A, N.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "3de7129627bb"
+  },
+  "yes-van": {
+    "text": "Yes! V, A, N. That spells van!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "2e1936ed5c4d"
+  },
+  "ask-bus": {
+    "text": "Let's write bus. B, U, S.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "99c7064f332a"
+  },
+  "yes-bus": {
+    "text": "Yes! B, U, S. That spells bus!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "dabc95798b96"
+  },
+  "ask-10": {
+    "text": "Let's write ten. One, zero.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "9f151ee3ae6a"
+  },
+  "yes-10": {
+    "text": "Yes! One, zero. That makes ten!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "8557f64a61eb"
+  },
+  "ask-11": {
+    "text": "Let's write eleven. One, one.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "c1ad8338c4f7"
+  },
+  "yes-11": {
+    "text": "Yes! One, one. That makes eleven!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "b0d0c800351c"
+  },
+  "ask-12": {
+    "text": "Let's write twelve. One, two.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "2d8f4834eea7"
+  },
+  "yes-12": {
+    "text": "Yes! One, two. That makes twelve!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "1f4b403c265f"
+  },
+  "ask-13": {
+    "text": "Let's write thirteen. One, three.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "6b8fa9f008d0"
+  },
+  "yes-13": {
+    "text": "Yes! One, three. That makes thirteen!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "d106e3db302d"
+  },
+  "ask-14": {
+    "text": "Let's write fourteen. One, four.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "52bc44aec016"
+  },
+  "yes-14": {
+    "text": "Yes! One, four. That makes fourteen!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "3af7f07271d2"
+  },
+  "ask-15": {
+    "text": "Let's write fifteen. One, five.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "0e5273221c62"
+  },
+  "yes-15": {
+    "text": "Yes! One, five. That makes fifteen!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "3e0104d3773d"
+  },
+  "ask-16": {
+    "text": "Let's write sixteen. One, six.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "3cecea19da69"
+  },
+  "yes-16": {
+    "text": "Yes! One, six. That makes sixteen!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "a66ac9e3d32b"
+  },
+  "ask-17": {
+    "text": "Let's write seventeen. One, seven.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "d530c5ad88ed"
+  },
+  "yes-17": {
+    "text": "Yes! One, seven. That makes seventeen!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "d22bccae80ab"
+  },
+  "ask-18": {
+    "text": "Let's write eighteen. One, eight.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "05cfe66345a8"
+  },
+  "yes-18": {
+    "text": "Yes! One, eight. That makes eighteen!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "a1827dc54a7b"
+  },
+  "ask-19": {
+    "text": "Let's write nineteen. One, nine.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "83f0cae95cea"
+  },
+  "yes-19": {
+    "text": "Yes! One, nine. That makes nineteen!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "6cf92d0517a5"
+  },
+  "ask-20": {
+    "text": "Let's write twenty. Two, zero.",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "0b7c2877b839"
+  },
+  "yes-20": {
+    "text": "Yes! Two, zero. That makes twenty!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "8f25dbcaba47"
+  },
+  "C": {
+    "text": "C!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "ffd7dd444735"
+  },
+  "A": {
+    "text": "A!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "31b63e816775"
+  },
+  "T": {
+    "text": "T!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "9a22ace686e6"
+  },
+  "D": {
+    "text": "D!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "4c65ed347efa"
+  },
+  "O": {
+    "text": "O!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "e8c56279e11d"
+  },
+  "G": {
+    "text": "G!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "a8edf335a38b"
+  },
+  "S": {
+    "text": "S!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "5354d9586632"
+  },
+  "U": {
+    "text": "U!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "2bcd9a870966"
+  },
+  "N": {
+    "text": "N!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "0c6f362d38d4"
+  },
+  "E": {
+    "text": "E!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "0534ade30aab"
+  },
+  "P": {
+    "text": "P!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "d67e5fa1a1c4"
+  },
+  "I": {
+    "text": "I!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "373c63633d30"
+  },
+  "H": {
+    "text": "H!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "5e56d25bb465"
+  },
+  "B": {
+    "text": "B!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "02f70148b6d4"
+  },
+  "F": {
+    "text": "F!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "4330e3f2c015"
+  },
+  "X": {
+    "text": "X!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "25da0df702ce"
+  },
+  "V": {
+    "text": "V!",
+    "voice": "af_sky",
+    "speed": 1.05,
+    "hash": "e0a0859d1b6d"
   }
 }

@@ -2,7 +2,7 @@
 
 A free, offline dinosaur learning game for kindergarteners. You are a little T. rex. Walk around, meet other dinosaurs, and learn letters and numbers from them.
 
-**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet sixteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a toothy Mosasaurus and a gentle Plesiosaurus on the sea floor, and two flying reptiles overhead, under a skyline of volcanoes. Walk up to any land dinosaur and it introduces itself out loud. Three of them then give a lesson: the Triceratops asks for letters, the Stegosaurus asks for numbers, and the Parasaurolophus has eggs to count. Each lesson has three levels that get harder. Each player has a name, a colour and saved stars. More lessons and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
+**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet sixteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a toothy Mosasaurus and a gentle Plesiosaurus on the sea floor, and two flying reptiles overhead, under a skyline of volcanoes. Walk up to any land dinosaur and it introduces itself out loud. Some of them then give a lesson: finding letters and numbers, counting eggs, finding keys on the real keyboard and typing short words. Each lesson has three levels that get harder. Each player has a name, a colour and saved stars. More lessons and installers are still to come. The cast, and who teaches what, is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Run it
 
@@ -68,7 +68,7 @@ A player earns one star for each level of a dinosaur's lesson they finish, so a 
 
 ## Add a lesson
 
-A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kind of game and a list of `levels` that get harder. Each visit is a round of three questions at the player's level for that dinosaur. There are four kinds so far.
+A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kind of game and a list of `levels` that get harder. Each visit is a round of three questions at the player's level for that dinosaur. There are five kinds so far.
 
 ```json
 "lesson": { "type": "find-letter", "levels": [ { "letters": "TSAPMD" }, { "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }, { "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "small": true } ] }
@@ -93,6 +93,12 @@ A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kin
 ```
 
 `find-key` asks for one letter or number from the level's `keys`. A big card shows it, above a picture of a keyboard, and the player presses that key on the real keyboard (clicking the picture works too). A wrong key shakes, and the dinosaur says which key it was and asks again. After two wrong keys the right one glows. The Velociraptor has this one.
+
+```json
+"lesson": { "type": "type-it", "levels": [ { "words": ["cat", "dog", "sun"] }, { "words": ["fox", "hen", "ant"] }, { "numbers": [10, 20] } ] }
+```
+
+`type-it` asks for a whole short word, or a number, and the player types it letter by letter on the real keyboard. A level has either `words` or a `numbers` range, `[from, to]`, both included (up to twenty). A card shows the word's picture and a faint slot for each letter to copy; a number has no picture. The slot to fill next pulses gently. A right key fills its slot and the dinosaur says the letter's name. A wrong key shakes and the dinosaur says "Try again!", and after two wrong keys on one slot the right key glows. When the last letter is in, every slot turns green. Each word needs a picture at `content/pictures/<word>.svg` (see [CREDITS.md](CREDITS.md) for where the current ones come from). The Dilophosaurus has this one.
 
 How a round goes:
 
