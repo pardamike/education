@@ -43,13 +43,13 @@ Each one tells the player three things about itself before its lesson: its name,
 | Find the letter | Triceratops | Hears a letter and taps it among two others | T S A P M D, then all 26, then small letters matched to a big capital | In the game |
 | Find the number | Stegosaurus | Hears a number and taps it among two others | 0 to 5, 6 to 10, 11 to 20 | In the game |
 | Count the eggs | Parasaurolophus | Taps the eggs one by one to count them, then finds that number | 1 to 5 eggs, 6 to 10, 11 to 20 | In the game |
-| What comes next? | Apatosaurus | Finds the letter that comes next | A to G, H to P, Q to Z | Planned |
+| What comes next? | Apatosaurus | Sees the letters before a letter on small cards, with an empty card for the next one, and finds that letter among two others | B to G, H to P, Q to Z (never A, which has nothing before it) | In the game |
 | Find the key | Velociraptor | Hears a letter or number and presses it on the real keyboard, shown as a picture of one. A wrong key is named and asked again, and the right key glows after two | S A T P I N M D, then all 26 letters, then 0 to 9 | In the game |
 | Type it | Dilophosaurus | Types a whole word, or a number, letter by letter on the real keyboard. The word's picture is on a card, with a faint slot for each letter. A wrong key shakes and is asked again, and the right key glows after two | Eight three-letter words such as cat and dog, then eight more such as fox and bus, then the numbers 10 to 20 | In the game |
-| How many now? | Spinosaurus | Hears "I had 5 fish. I ate 3." and says how many are left | Take away within 5, within 10, then adding | Planned |
+| How many now? | Spinosaurus | Hears "I had five fish. I ate three." while the eaten fish fade to ghosts, or "Then I caught two more." while new fish pop in, then picks how many there are now. The fish that are left can be tapped to count them | Take away within 5, within 10, then adding up to 10 | In the game |
 | First sounds | Allosaurus | Picks the letter a pictured word starts with | s a t p i n m d, then g o c k, then sounding out | Planned |
 
-The pictures on the Type it cards (a cat, a dog, a bus) are pictures on a card, not things in the dinosaurs' world.
+The pictures on the Type it cards (a cat, a dog, a bus) are pictures on a card, not things in the dinosaurs' world. The same goes for the fish in How many now?
 
 Each game has three levels, and each visit is a round of three questions. The number ranges follow the US Common Core kindergarten standards and the sound order follows the UK "Letters and Sounds" programme: [Common Core kindergarten maths](https://ospi.k12.wa.us/sites/default/files/2022-12/mathstandards_kindergarten.pdf), [Letters and Sounds](https://assets.publishing.service.gov.uk/media/5a7aa7b6e5274a34770e630c/Letters_and_Sounds_-_DFES-00281-2007.pdf).
 

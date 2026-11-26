@@ -36,7 +36,7 @@ The dinosaurs' voices are computer speech, made with [Kokoro-82M](https://huggin
 
 ## Word pictures
 
-The pictures on the cards of the Type it lesson are [Twemoji](https://github.com/jdecked/twemoji) graphics, maintained by Jason Sofonia and Justine De Caires (originally by Twitter), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Thank you! They are used unchanged, one file for each word, in `content/pictures/`:
+The pictures on the cards of the Type it lesson are [Twemoji](https://github.com/jdecked/twemoji) graphics, maintained by Jason Sofonia and Justine De Caires (originally by Twitter), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Thank you! They are used unchanged, one file for each word, in `content/pictures/`. The fish in the How many now? lesson is one too:
 
 | Word | Twemoji file |
 | --- | --- |
@@ -56,6 +56,7 @@ The pictures on the cards of the Type it lesson are [Twemoji](https://github.com
 | `box.svg` | `assets/svg/1f4e6.svg` |
 | `van.svg` | `assets/svg/1f690.svg` |
 | `bus.svg` | `assets/svg/1f68c.svg` |
+| `fish.svg` | `assets/svg/1f41f.svg` |
 
 ## Sea reptiles
 

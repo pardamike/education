@@ -18,5 +18,329 @@
     "voice": "am_michael",
     "speed": 0.8,
     "hash": "1de39cf65c28"
+  },
+  "back": {
+    "text": "Hello again!",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "765a63779c38"
+  },
+  "again": {
+    "text": "Try again!",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "ae5bb62f8d27"
+  },
+  "show": {
+    "text": "Here it is!",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "bdba66244530"
+  },
+  "done": {
+    "text": "Well done! You did it!",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "1c55b58292cf"
+  },
+  "ask-B": {
+    "text": "A. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "bebbd66daac2"
+  },
+  "yes-B": {
+    "text": "Yes! A, B.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "262e37dfaf55"
+  },
+  "ask-C": {
+    "text": "A, B. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "477b914113de"
+  },
+  "yes-C": {
+    "text": "Yes! A, B, C.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "745afb1db9b9"
+  },
+  "ask-D": {
+    "text": "A, B, C. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "62ecdcaf95a3"
+  },
+  "yes-D": {
+    "text": "Yes! A, B, C, D.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "508b1af826a2"
+  },
+  "ask-E": {
+    "text": "B, C, D. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "a1999c8d61e2"
+  },
+  "yes-E": {
+    "text": "Yes! B, C, D, E.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "5d8887349d56"
+  },
+  "ask-F": {
+    "text": "C, D, E. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "7721400cc7ca"
+  },
+  "yes-F": {
+    "text": "Yes! C, D, E, F.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "99d8adc802fa"
+  },
+  "ask-G": {
+    "text": "D, E, F. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "1f3cacb01438"
+  },
+  "yes-G": {
+    "text": "Yes! D, E, F, G.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "35e4a0c081cc"
+  },
+  "ask-H": {
+    "text": "E, F, G. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "966b9d33b974"
+  },
+  "yes-H": {
+    "text": "Yes! E, F, G, H.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "bc20bb3f9823"
+  },
+  "ask-I": {
+    "text": "F, G, H. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "dac832861d15"
+  },
+  "yes-I": {
+    "text": "Yes! F, G, H, I.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "19f4c4beb6b8"
+  },
+  "ask-J": {
+    "text": "G, H, I. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "b5765c746774"
+  },
+  "yes-J": {
+    "text": "Yes! G, H, I, J.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "96f670704292"
+  },
+  "ask-K": {
+    "text": "H, I, J. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "b2617bd98987"
+  },
+  "yes-K": {
+    "text": "Yes! H, I, J, K.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "cfb176654bc0"
+  },
+  "ask-L": {
+    "text": "I, J, K. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "34fd07071953"
+  },
+  "yes-L": {
+    "text": "Yes! I, J, K, L.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "7343b6acb79a"
+  },
+  "ask-M": {
+    "text": "J, K, L. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "b5436a266c65"
+  },
+  "yes-M": {
+    "text": "Yes! J, K, L, M.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "6efdb225542a"
+  },
+  "ask-N": {
+    "text": "K, L, M. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "61e5b959b8b2"
+  },
+  "yes-N": {
+    "text": "Yes! K, L, M, N.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "542d80492f6f"
+  },
+  "ask-O": {
+    "text": "L, M, N. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "bffbd9f001a2"
+  },
+  "yes-O": {
+    "text": "Yes! L, M, N, O.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "c112166e2443"
+  },
+  "ask-P": {
+    "text": "M, N, O. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "65a20e7f720e"
+  },
+  "yes-P": {
+    "text": "Yes! M, N, O, P.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "c9c2d061837f"
+  },
+  "ask-Q": {
+    "text": "N, O, P. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "fdbe44367eef"
+  },
+  "yes-Q": {
+    "text": "Yes! N, O, P, Q.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "6cb86ea4336a"
+  },
+  "ask-R": {
+    "text": "O, P, Q. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "cdbe4a2f6ae6"
+  },
+  "yes-R": {
+    "text": "Yes! O, P, Q, R.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "ed24c3dd90a2"
+  },
+  "ask-S": {
+    "text": "P, Q, R. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "fb5337553c7b"
+  },
+  "yes-S": {
+    "text": "Yes! P, Q, R, S.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "b28709a8e868"
+  },
+  "ask-T": {
+    "text": "Q, R, S. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "4e842715a57e"
+  },
+  "yes-T": {
+    "text": "Yes! Q, R, S, T.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "78861641e63b"
+  },
+  "ask-U": {
+    "text": "R, S, T. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "b980cce8f881"
+  },
+  "yes-U": {
+    "text": "Yes! R, S, T, U.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "510c2c7c2d8d"
+  },
+  "ask-V": {
+    "text": "S, T, U. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "e1f1648bbd76"
+  },
+  "yes-V": {
+    "text": "Yes! S, T, U, V.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "56fbe7530a4f"
+  },
+  "ask-W": {
+    "text": "T, U, V. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "34e885070d94"
+  },
+  "yes-W": {
+    "text": "Yes! T, U, V, W.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "107e146c84b5"
+  },
+  "ask-X": {
+    "text": "U, V, W. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "5b636af8ea8b"
+  },
+  "yes-X": {
+    "text": "Yes! U, V, W, X.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "884162409486"
+  },
+  "ask-Y": {
+    "text": "V, W, X. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "64038b2a044a"
+  },
+  "yes-Y": {
+    "text": "Yes! V, W, X, Y.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "432ab0f6bd82"
+  },
+  "ask-Z": {
+    "text": "W, X, Y. What comes next?",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "3452807e275f"
+  },
+  "yes-Z": {
+    "text": "Yes! W, X, Y, Z.",
+    "voice": "am_michael",
+    "speed": 0.8,
+    "hash": "839265bf82aa"
   }
 }

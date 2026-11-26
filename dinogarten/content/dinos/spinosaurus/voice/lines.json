@@ -1,4 +1,64 @@
 {
+  "1": {
+    "text": "One!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "6d78e5728f93"
+  },
+  "2": {
+    "text": "Two!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "c7d15401cfd2"
+  },
+  "3": {
+    "text": "Three!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "9a11c750f4e9"
+  },
+  "4": {
+    "text": "Four!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "bc1bd572b98b"
+  },
+  "5": {
+    "text": "Five!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "eb5419d3b32b"
+  },
+  "6": {
+    "text": "Six!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "eef585d25752"
+  },
+  "7": {
+    "text": "Seven!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "87d6291d6444"
+  },
+  "8": {
+    "text": "Eight!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "6c31f1c5c655"
+  },
+  "9": {
+    "text": "Nine!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "6499037b5582"
+  },
+  "10": {
+    "text": "Ten!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "50968040aa17"
+  },
   "hello": {
     "text": "Hello! I am a Spinosaurus.",
     "ipa": "spˌaɪnəsˈɔɹəs",
@@ -18,5 +78,263 @@
     "voice": "bm_lewis",
     "speed": 0.9,
     "hash": "b3485176cc9a"
+  },
+  "back": {
+    "text": "Hello again!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "38b23abbdf54"
+  },
+  "again": {
+    "text": "Try again!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "00f2fa6c55f8"
+  },
+  "show": {
+    "text": "Here it is!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "7c5f2d26c2c4"
+  },
+  "done": {
+    "text": "Well done! You did it!",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "df41e61192cf"
+  },
+  "had-1": {
+    "text": "I had one fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "0fc9079adc8c"
+  },
+  "had-2": {
+    "text": "I had two fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "a0b647953cae"
+  },
+  "had-3": {
+    "text": "I had three fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "976034b30bbc"
+  },
+  "had-4": {
+    "text": "I had four fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "cd2f5041c52a"
+  },
+  "had-5": {
+    "text": "I had five fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "d96a8aded217"
+  },
+  "had-6": {
+    "text": "I had six fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "2de694c47cac"
+  },
+  "had-7": {
+    "text": "I had seven fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "2fd3edefe720"
+  },
+  "had-8": {
+    "text": "I had eight fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "d54f3c72d991"
+  },
+  "had-9": {
+    "text": "I had nine fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "ba9a9626eece"
+  },
+  "had-10": {
+    "text": "I had ten fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "b6154cb42583"
+  },
+  "ate-1": {
+    "text": "I ate one.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "22bc603fbd29"
+  },
+  "ate-2": {
+    "text": "I ate two.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "ece844cce9d6"
+  },
+  "ate-3": {
+    "text": "I ate three.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "ed20bbbd19a2"
+  },
+  "ate-4": {
+    "text": "I ate four.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "e701d41e9cbf"
+  },
+  "ate-5": {
+    "text": "I ate five.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "c39bfb495371"
+  },
+  "ate-6": {
+    "text": "I ate six.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "76e5608d66ff"
+  },
+  "ate-7": {
+    "text": "I ate seven.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "940574f7b453"
+  },
+  "ate-8": {
+    "text": "I ate eight.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "d6b8f8f33f08"
+  },
+  "ate-9": {
+    "text": "I ate nine.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "4e294217132a"
+  },
+  "more-1": {
+    "text": "Then I caught one more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "66f54b6ac3a1"
+  },
+  "more-2": {
+    "text": "Then I caught two more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "2ad56e315b9c"
+  },
+  "more-3": {
+    "text": "Then I caught three more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "6c11a8dcfa99"
+  },
+  "more-4": {
+    "text": "Then I caught four more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "010249e10e86"
+  },
+  "more-5": {
+    "text": "Then I caught five more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "0afa3862e13d"
+  },
+  "more-6": {
+    "text": "Then I caught six more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "26c2f2f7656e"
+  },
+  "more-7": {
+    "text": "Then I caught seven more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "73f422d60b9a"
+  },
+  "more-8": {
+    "text": "Then I caught eight more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "4bd760cc9504"
+  },
+  "more-9": {
+    "text": "Then I caught nine more.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "0eff090235fb"
+  },
+  "now": {
+    "text": "How many do I have now?",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "b81e29c17fa7"
+  },
+  "yes-1": {
+    "text": "Yes! Now I have one fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "e58088836b07"
+  },
+  "yes-2": {
+    "text": "Yes! Now I have two fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "b27e04192529"
+  },
+  "yes-3": {
+    "text": "Yes! Now I have three fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "755daf991863"
+  },
+  "yes-4": {
+    "text": "Yes! Now I have four fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "0b7e27c486e6"
+  },
+  "yes-5": {
+    "text": "Yes! Now I have five fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "773aa4aa5654"
+  },
+  "yes-6": {
+    "text": "Yes! Now I have six fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "334f38dd88a4"
+  },
+  "yes-7": {
+    "text": "Yes! Now I have seven fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "8e9a74979ef1"
+  },
+  "yes-8": {
+    "text": "Yes! Now I have eight fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "814954432120"
+  },
+  "yes-9": {
+    "text": "Yes! Now I have nine fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "7383bf900cfa"
+  },
+  "yes-10": {
+    "text": "Yes! Now I have ten fish.",
+    "voice": "bm_lewis",
+    "speed": 0.9,
+    "hash": "c001e9d7148a"
   }
 }

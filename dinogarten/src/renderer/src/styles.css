@@ -583,6 +583,116 @@ body,
   padding: 1vh 1.6vh 1.6vh;
 }
 
+/* ---- How many now?: a blue pool of fish, and the letters so far of What comes next? ---- */
+
+.pool {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 8vh);
+  grid-auto-rows: 8vh;
+  justify-content: center;
+  gap: 1vh;
+  padding: 2.2vh 2.6vh;
+  border: 0.7vh solid #7cc4ef;
+  border-radius: 4.5vh;
+  /* Pale water, so the blue fish stand out against it. */
+  background: linear-gradient(to bottom, #f6fcff, #d6eefc);
+  box-shadow: 0 1.3vh 0 rgb(0 0 0 / 0.16);
+  animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.fish {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  transition:
+    opacity 0.5s calc(var(--n, 0) * 0.5s),
+    filter 0.5s calc(var(--n, 0) * 0.5s),
+    transform 0.5s calc(var(--n, 0) * 0.5s);
+  animation: pop-in 0.45s calc(var(--i) * 0.08s) cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.fish img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.fish:hover:not(:disabled) {
+  transform: translateY(-0.6vh) scale(1.08);
+}
+
+/* A fish he has eaten: still there to see, but faint and grey. */
+.fish.gone {
+  opacity: 0.28;
+  filter: grayscale(1);
+  transform: scale(0.85);
+}
+
+/* A fish he has caught: it pops in after the ones before it. */
+.fish.arriving {
+  animation-delay: calc(var(--n) * 0.5s);
+}
+
+/* A fish that has been counted wears its number. */
+.fish.counted {
+  animation: bounce 0.6s both;
+}
+
+.fish-number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.2vh;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  text-shadow:
+    0 0 0.5vh #1f5f8f,
+    0 0 0.5vh #1f5f8f,
+    0 0.3vh 0 #1f5f8f;
+  pointer-events: none;
+}
+
+.fish-number.long {
+  font-size: 3.2vh;
+}
+
+/* The letters before the one he is asked for, and an empty card for it. */
+.sequence {
+  display: flex;
+  gap: 1.2vh;
+}
+
+.seq-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 9vh;
+  height: 11vh;
+  border: 0.8vh solid #3d9be9;
+  border-radius: 2.6vh;
+  background: #fff;
+  box-shadow: 0 1vh 0 rgb(0 0 0 / 0.16);
+  color: #3d9be9;
+  font-size: 6.6vh;
+  font-weight: 800;
+  line-height: 1;
+  animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+/* The one still to come: a faint dashed card with a question mark. */
+.seq-card.seq-empty {
+  border-style: dashed;
+  border-color: #f2994a;
+  background: rgb(255 255 255 / 0.6);
+  color: #f2994a;
+}
+
 /* ---- Who is playing: the picker that opens the game, and the corner button that brings it back ---- */
 
 .picker {

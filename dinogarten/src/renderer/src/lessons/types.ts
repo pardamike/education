@@ -41,7 +41,31 @@ export interface TypeItLesson {
   levels: Array<{ words: string[] } | { numbers: [number, number] }>
 }
 
-export type Lesson = FindLetterLesson | FindNumberLesson | CountEggsLesson | FindKeyLesson | TypeItLesson
+/** "I had 5 fish. I ate 3. How many now?": taking away, then adding, shown with fish. */
+export interface HowManyLesson {
+  type: 'how-many'
+  /**
+   * A level is either `takeAway: N`: he starts with 2 to N fish, eats some and has at least 1 left.
+   * Or `add: N`: he starts with at least 1, catches some more, and has N at the most.
+   */
+  levels: Array<{ takeAway: number } | { add: number }>
+}
+
+/** "A, B, C. What comes next?": the player finds the next letter of the alphabet. */
+export interface WhatNextLesson {
+  type: 'what-next'
+  /** The letters a level can ask for, written together like "HIJKLMNOP". Never the first one, A: nothing comes before it. */
+  levels: Array<{ letters: string }>
+}
+
+export type Lesson =
+  | FindLetterLesson
+  | FindNumberLesson
+  | CountEggsLesson
+  | FindKeyLesson
+  | TypeItLesson
+  | HowManyLesson
+  | WhatNextLesson
 
 /** How many questions make up one round. */
 export const ROUND_SIZE = 3
@@ -54,6 +78,8 @@ export interface PickQuestion {
   others: Array<string | number>
   /** A big letter shown beside the tiles to match, when the tiles do not give the answer away. */
   prompt?: string
+  /** Small cards shown beside the tiles, followed by an empty card with a question mark: the letters so far. */
+  sequence?: string[]
   /** The clip that asks it, and the clip that says "yes!". */
   ask: string
   yes: string
@@ -89,4 +115,20 @@ export interface TypeQuestion {
   yes: string
 }
 
-export type Question = PickQuestion | EggQuestion | KeyQuestion | TypeQuestion
+/** One question with fish: he had some, ate or caught some, and the tiles ask how many he has now. */
+export interface FishQuestion {
+  kind: 'fish'
+  /** How many fish he starts with, and how many he eats (`ate`) or catches (`more`). */
+  start: number
+  change: 'ate' | 'more'
+  amount: number
+  /** How many he has at the end: the right tile. */
+  left: number
+  others: number[]
+  /** The clips that tell the story, and the one that says "yes!". */
+  had: string
+  happened: string
+  yes: string
+}
+
+export type Question = PickQuestion | EggQuestion | KeyQuestion | TypeQuestion | FishQuestion

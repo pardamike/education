@@ -2,6 +2,20 @@
   "name": "Spinosaurus",
   "sayIt": "SPY-nuh-SORE-us",
   "eats": "fish",
+  "lesson": {
+    "type": "how-many",
+    "levels": [
+      {
+        "takeAway": 5
+      },
+      {
+        "takeAway": 10
+      },
+      {
+        "add": 10
+      }
+    ]
+  },
   "voice": {
     "name": "bm_lewis",
     "speed": 0.9

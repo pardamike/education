@@ -116,6 +116,42 @@ function buildLines(id, dino) {
     for (const L of new Set(words.join("").toUpperCase())) lines.push([L, `${L}!`, 1]);
     if (numbers.length > 0) for (let d = 0; d <= 9; d++) lines.push([String(d), `${capital(NUMBERS[d])}!`, 1]);
   }
+  if (lesson.type === "how-many") {
+    // Every sum any level can make: what he had, what he ate or caught, and what he has in the end.
+    const had = new Set(), ate = new Set(), more = new Set(), now = new Set();
+    for (const level of lesson.levels) {
+      if (level.takeAway) {
+        for (const start of range(2, level.takeAway)) {
+          for (const eaten of range(1, start - 1)) [had.add(start), ate.add(eaten), now.add(start - eaten)];
+        }
+      } else {
+        for (const start of range(1, level.add - 1)) {
+          for (const caught of range(1, level.add - start)) [had.add(start), more.add(caught), now.add(start + caught)];
+        }
+      }
+    }
+    const sorted = (set) => [...set].sort((a, b) => a - b);
+    for (const n of sorted(had)) lines.push([`had-${n}`, `I had ${NUMBERS[n]} fish.`, 1]);
+    for (const n of sorted(ate)) lines.push([`ate-${n}`, `I ate ${NUMBERS[n]}.`, 1]);
+    for (const n of sorted(more)) lines.push([`more-${n}`, `Then I caught ${NUMBERS[n]} more.`, 1]);
+    lines.push(["now", "How many do I have now?", 1]);
+    for (const n of sorted(now)) lines.push([`yes-${n}`, `Yes! Now I have ${NUMBERS[n]} fish.`, 1]);
+    // Each number said while counting the fish that are left.
+    for (let n = 1; n <= Math.max(...now); n++) lines.push([String(n), `${capital(NUMBERS[n])}!`, 1]);
+  }
+  if (lesson.type === "what-next") {
+    // Every letter any level can ask for, with the letters before it (up to three) said by name.
+    const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+    const asked = [...new Set(lesson.levels.flatMap((level) => level.letters.split("")))].filter((L) => L !== "A").sort();
+    for (const L of asked) {
+      const at = alphabet.indexOf(L);
+      const before = alphabet.slice(Math.max(0, at - 3), at).join(", ");
+      lines.push(
+        [`ask-${L}`, `${before}. What comes next?`, 1],
+        [`yes-${L}`, `Yes! ${before}, ${L}.`, 1],
+      );
+    }
+  }
   if (lesson.type === "count-eggs") {
     // One clip for each number said while counting: 1.ogg says "One!", 2.ogg says "Two!", and so on.
     for (let n = 1; n <= numbers[numbers.length - 1]; n++) lines.push([String(n), `${capital(NUMBERS[n])}!`, 1]);

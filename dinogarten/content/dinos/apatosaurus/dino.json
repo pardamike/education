@@ -2,6 +2,20 @@
   "name": "Apatosaurus",
   "sayIt": "uh-PAT-uh-SORE-us",
   "eats": "plants",
+  "lesson": {
+    "type": "what-next",
+    "levels": [
+      {
+        "letters": "ABCDEFG"
+      },
+      {
+        "letters": "HIJKLMNOP"
+      },
+      {
+        "letters": "QRSTUVWXYZ"
+      }
+    ]
+  },
   "voice": {
     "name": "am_michael",
     "speed": 0.8

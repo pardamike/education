@@ -16,11 +16,14 @@ const STARS: Array<[number, number]> = [
 export function Tiles<Choice extends string | number>({
   right,
   others,
+  waiting = false,
   onWrong,
   onRight
 }: {
   right: Choice
   others: Choice[]
+  /** True while the dinosaur is still telling the question: the tiles are there but cannot be picked yet. */
+  waiting?: boolean
   /** A wrong tile was picked. `lastOne` is true when that leaves only the right tile. */
   onWrong: (lastOne: boolean) => void
   onRight: () => void
@@ -33,7 +36,7 @@ export function Tiles<Choice extends string | number>({
   const pointedOut = !found && tried.length >= others.length
 
   const pick = (choice: Choice): void => {
-    if (found) return
+    if (found || waiting) return
     if (choice === right) {
       setFound(true)
       onRight()
@@ -53,7 +56,7 @@ export function Tiles<Choice extends string | number>({
             key={choice}
             className={`tile tile-${place % 3} ${String(choice).length > 1 ? 'long' : ''} ${state}`}
             data-choice={choice}
-            disabled={!isRight && (tried.includes(choice) || found)}
+            disabled={waiting || (!isRight && (tried.includes(choice) || found))}
             onClick={() => pick(choice)}
           >
             {choice}
