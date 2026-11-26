@@ -2,7 +2,7 @@
 
 A free, offline dinosaur learning game for kindergarteners. You are a little T. rex. Walk around, meet other dinosaurs, and learn letters and numbers from them.
 
-**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet sixteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a toothy Mosasaurus and a gentle Plesiosaurus on the sea floor, and two flying reptiles overhead, under a skyline of volcanoes. Walk up to any land dinosaur and it introduces itself out loud. Two of them then give a lesson: the Triceratops asks for the letter T, and the Parasaurolophus has eggs to count. Each player has a name, a colour and saved stars. More lessons and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
+**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet sixteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a toothy Mosasaurus and a gentle Plesiosaurus on the sea floor, and two flying reptiles overhead, under a skyline of volcanoes. Walk up to any land dinosaur and it introduces itself out loud. Three of them then give a lesson: the Triceratops asks for letters, the Stegosaurus asks for numbers, and the Parasaurolophus has eggs to count. Each lesson has three levels that get harder. Each player has a name, a colour and saved stars. More lessons and installers are still to come. The planned cast is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Run it
 
@@ -15,9 +15,9 @@ pnpm dev        # opens the game and reloads as you edit
 
 The game opens by asking who is playing. A grown-up adds each player once: type a name and choose an egg. From then on a child picks their own egg, and the little T. rex comes out in that colour. The button in the top corner of the game goes back to change player.
 
-Click where you want the T. rex to go, or use the arrow keys.
+Click where you want the T. rex to go, or use the arrow keys. The letter keys are kept free for lessons that ask for typing.
 
-Walk up to a dinosaur and stop beside it. The camera swings round to show the two of them face to face, and the dinosaur says hello, says its name slowly, and says what it eats. If it has a lesson, that comes next. Walk away at any time to end the meeting.
+Walk up to a dinosaur and stop beside it. The camera swings round to show the two of them face to face, and the dinosaur says hello, says its name slowly, and says what it eats. If it has a lesson, that comes next. The next time you meet the same dinosaur, it just says hello again and gets on with the lesson. Walk away at any time to end the meeting.
 
 Other commands: `pnpm build` makes a production build in `out/`, `pnpm start` runs that build, and `pnpm typecheck` checks the TypeScript.
 
@@ -64,29 +64,48 @@ Everyone who plays on a computer, and the stars each has earned, is kept in one 
 
 Delete the file to start everyone afresh, or copy it to keep a backup. It is outside this folder, so players' names never end up in git.
 
-A player earns one star for each dinosaur whose lesson they finish. A lesson can be played again as often as they like; the star is kept.
+A player earns one star for each level of a dinosaur's lesson they finish, so a dinosaur with three levels can give three stars. Each dinosaur's stars are saved by its folder name, like `"triceratops": 2`. A round can be played again as often as they like; the stars are kept.
 
 ## Add a lesson
 
-A dinosaur gives a lesson when its `dino.json` has a `lesson`. There are two kinds so far.
+A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kind of game and a list of `levels` that get harder. Each visit is a round of three questions at the player's level for that dinosaur. There are three kinds so far.
 
 ```json
-"lesson": { "type": "find-letter", "letter": "T", "others": ["S", "O"] }
+"lesson": { "type": "find-letter", "levels": [ { "letters": "TSAPMD" }, { "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }, { "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "small": true } ] }
 ```
 
-`find-letter` shows the letter among the others on big tiles and asks for it. The Triceratops has this one.
+`find-letter` asks for one letter and shows it among two others on big tiles. Each question picks its letters from the level's `letters`. With `"small": true` the tiles show small letters, and a big capital beside them shows which one to match. The Triceratops has this one.
 
 ```json
-"lesson": { "type": "count-eggs", "count": 5, "others": [3, 8] }
+"lesson": { "type": "find-number", "levels": [ { "numbers": [0, 5] }, { "numbers": [6, 10] }, { "numbers": [11, 20] } ] }
 ```
 
-`count-eggs` shows a nest of that many eggs, up to 20. The player touches them one at a time, and the dinosaur counts along out loud. Then it asks for that number, shown among the others on big tiles. The Parasaurolophus has this one.
+`find-number` is the same with numbers. A level's `numbers` are `[from, to]`, both included. The Stegosaurus has this one.
 
-There is no way to fail either lesson: a wrong tile fades away with a "try again", and when only the right one is left the dinosaur points it out. A right answer earns a star, and both dinosaurs jump for joy.
+```json
+"lesson": { "type": "count-eggs", "levels": [ { "eggs": [1, 5] }, { "eggs": [6, 10] }, { "eggs": [11, 20] } ] }
+```
+
+`count-eggs` shows a nest with that many eggs, up to 20. The player touches them one at a time, and the dinosaur counts along out loud. Then it asks for that number, shown among two close ones on big tiles. The Parasaurolophus has this one.
+
+How a round goes:
+
+- The level is the number of stars the player has for that dinosaur, or the last level once they have them all.
+- Three dots near the lesson fill in as questions are answered. Every question in a round is about something different.
+- There is no way to fail: a wrong tile fades away with a "try again", and when only the right one is left the dinosaur points it out.
+- A right answer makes both dinosaurs jump for joy, and the dinosaur says "yes!" before the next question.
+- After the third question the dinosaur says "well done", and a big star and a big play button appear. Finishing a round earns a star. The play button starts the next round.
 
 After adding or changing a lesson, make its spoken lines (see [Voices](#voices)).
 
-Each kind of lesson is one file in `src/renderer/src/lessons/`. The player cannot read yet, so a lesson must work by listening and looking alone.
+To add a new kind of game:
+
+1. Add its shape to `src/renderer/src/lessons/types.ts`, and its question shape if it needs one.
+2. Make `lessons/<Game>.tsx` with a function that makes the questions for one level. If a question is a row of tiles to pick from, use `PickTile`; otherwise add a component that plays one question.
+3. Add a line for it in `makeQuestions` in `lessons/Round.tsx`, and a line to show a question that is not a `PickTile`.
+4. Add its clips to `buildLines` in `tools/voices/make.mjs`, and run `pnpm make`.
+
+The player cannot read yet, so a game must work by listening and looking alone.
 
 ## Voices
 

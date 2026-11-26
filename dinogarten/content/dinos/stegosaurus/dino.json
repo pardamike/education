@@ -2,6 +2,29 @@
   "name": "Stegosaurus",
   "sayIt": "STEG-uh-SORE-us",
   "eats": "plants",
+  "lesson": {
+    "type": "find-number",
+    "levels": [
+      {
+        "numbers": [
+          0,
+          5
+        ]
+      },
+      {
+        "numbers": [
+          6,
+          10
+        ]
+      },
+      {
+        "numbers": [
+          11,
+          20
+        ]
+      }
+    ]
+  },
   "voice": {
     "name": "af_nicole",
     "speed": 0.95

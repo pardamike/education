@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { MeetingCard } from './MeetingCard'
 import { Egg, PlayerPicker } from './PlayerPicker'
-import { COLOURS, loadPlayers, savePlayers, type Player } from './players'
+import { COLOURS, loadPlayers, savePlayers, totalStars, type Player } from './players'
 import { World, type Meeting } from './world/World'
 
 export function App() {
@@ -38,11 +38,11 @@ export function App() {
     savePlayers(changed)
   }
 
-  /** A right answer: both dinosaurs jump for joy, and the player keeps that dinosaur's star for good. */
-  const earnStar = (dinosaur: string): void => {
-    worldRef.current?.cheer()
-    if (!players || !playing || playing.stars.includes(dinosaur)) return
-    changePlayers(players.map((player) => (player === playing ? { ...player, stars: [...player.stars, dinosaur] } : player)))
+  /** A round was finished: the player keeps one more star for that dinosaur, up to one for each of its levels. */
+  const finishRound = (dinosaur: string, levels: number): void => {
+    if (!players || !playing) return
+    const stars = Math.min((playing.stars[dinosaur] ?? 0) + 1, levels)
+    changePlayers(players.map((player) => (player === playing ? { ...player, stars: { ...player.stars, [dinosaur]: stars } } : player)))
   }
 
   return (
@@ -53,15 +53,17 @@ export function App() {
         <MeetingCard
           key={meeting.visit}
           meeting={meeting}
-          earned={playing.stars.includes(meeting.id)}
-          onRight={() => earnStar(meeting.id)}
+          playerId={playing.id}
+          stars={playing.stars[meeting.id] ?? 0}
+          onCheer={() => worldRef.current?.cheer()}
+          onRoundDone={() => finishRound(meeting.id, meeting.lesson?.levels.length ?? 0)}
         />
       )}
       {playing && !meeting && (
         <button className="whoami" aria-label="Change player" onClick={() => setPlayingId(null)}>
           <Egg colour={playing.colour} />
           <span>{playing.name}</span>
-          {playing.stars.length > 0 && <span>⭐ {playing.stars.length}</span>}
+          {totalStars(playing) > 0 && <span>⭐ {totalStars(playing)}</span>}
         </button>
       )}
       {players && !playing && <PlayerPicker players={players} onPick={setPlayingId} onChange={changePlayers} />}

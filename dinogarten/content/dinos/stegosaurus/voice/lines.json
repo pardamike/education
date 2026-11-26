@@ -16,5 +16,281 @@
     "voice": "af_nicole",
     "speed": 0.95,
     "hash": "12b6a0a1ba4a"
+  },
+  "back": {
+    "text": "Hello again!",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "be2b8ef8de25"
+  },
+  "again": {
+    "text": "Try again!",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "f4861eda155c"
+  },
+  "show": {
+    "text": "Here it is!",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "4e935167eb1a"
+  },
+  "done": {
+    "text": "Well done! You did it!",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "144fc3394653"
+  },
+  "ask-0": {
+    "text": "Can you find the number zero?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "4a72e2102adc"
+  },
+  "yes-0": {
+    "text": "Yes! That is the number zero.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "5b3a7d1d8241"
+  },
+  "ask-1": {
+    "text": "Can you find the number one?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "9bd13f96d04a"
+  },
+  "yes-1": {
+    "text": "Yes! That is the number one.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "91008a47dc85"
+  },
+  "ask-2": {
+    "text": "Can you find the number two?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "b1738fc5c5dd"
+  },
+  "yes-2": {
+    "text": "Yes! That is the number two.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "b48a41fb5e8b"
+  },
+  "ask-3": {
+    "text": "Can you find the number three?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "cb2ddf28a623"
+  },
+  "yes-3": {
+    "text": "Yes! That is the number three.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "f1f6b527022a"
+  },
+  "ask-4": {
+    "text": "Can you find the number four?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "57a44183c5dc"
+  },
+  "yes-4": {
+    "text": "Yes! That is the number four.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "6af0beae4119"
+  },
+  "ask-5": {
+    "text": "Can you find the number five?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "964f1fead113"
+  },
+  "yes-5": {
+    "text": "Yes! That is the number five.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "71521dc65a99"
+  },
+  "ask-6": {
+    "text": "Can you find the number six?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "8530f53e3137"
+  },
+  "yes-6": {
+    "text": "Yes! That is the number six.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "6ef831ce9860"
+  },
+  "ask-7": {
+    "text": "Can you find the number seven?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "4815adfa8143"
+  },
+  "yes-7": {
+    "text": "Yes! That is the number seven.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "710ad25eb1a9"
+  },
+  "ask-8": {
+    "text": "Can you find the number eight?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "ce574971732e"
+  },
+  "yes-8": {
+    "text": "Yes! That is the number eight.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "b5f62f113c57"
+  },
+  "ask-9": {
+    "text": "Can you find the number nine?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "d6a75c69da19"
+  },
+  "yes-9": {
+    "text": "Yes! That is the number nine.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "fd0acae9eb82"
+  },
+  "ask-10": {
+    "text": "Can you find the number ten?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "c6e3a15ccb79"
+  },
+  "yes-10": {
+    "text": "Yes! That is the number ten.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "ec54acf65166"
+  },
+  "ask-11": {
+    "text": "Can you find the number eleven?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "e8e6d8adeb55"
+  },
+  "yes-11": {
+    "text": "Yes! That is the number eleven.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "70fd676d67d7"
+  },
+  "ask-12": {
+    "text": "Can you find the number twelve?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "006c649aff1c"
+  },
+  "yes-12": {
+    "text": "Yes! That is the number twelve.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "dd820285a31b"
+  },
+  "ask-13": {
+    "text": "Can you find the number thirteen?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "810d851a5ead"
+  },
+  "yes-13": {
+    "text": "Yes! That is the number thirteen.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "33471eb5b7c9"
+  },
+  "ask-14": {
+    "text": "Can you find the number fourteen?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "2c4a6979421b"
+  },
+  "yes-14": {
+    "text": "Yes! That is the number fourteen.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "a764f0edc7c2"
+  },
+  "ask-15": {
+    "text": "Can you find the number fifteen?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "5f5b0fe40d14"
+  },
+  "yes-15": {
+    "text": "Yes! That is the number fifteen.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "6593fce41e3f"
+  },
+  "ask-16": {
+    "text": "Can you find the number sixteen?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "533665cd13f7"
+  },
+  "yes-16": {
+    "text": "Yes! That is the number sixteen.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "d4f9c291cff0"
+  },
+  "ask-17": {
+    "text": "Can you find the number seventeen?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "4a21b0d3bcdb"
+  },
+  "yes-17": {
+    "text": "Yes! That is the number seventeen.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "6c1b29de9b71"
+  },
+  "ask-18": {
+    "text": "Can you find the number eighteen?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "af16ccae5450"
+  },
+  "yes-18": {
+    "text": "Yes! That is the number eighteen.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "ef39c9b35042"
+  },
+  "ask-19": {
+    "text": "Can you find the number nineteen?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "f375dc57af0c"
+  },
+  "yes-19": {
+    "text": "Yes! That is the number nineteen.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "a322d2b83db8"
+  },
+  "ask-20": {
+    "text": "Can you find the number twenty?",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "ef676fec09e8"
+  },
+  "yes-20": {
+    "text": "Yes! That is the number twenty.",
+    "voice": "af_nicole",
+    "speed": 0.95,
+    "hash": "17b4bfdf044f"
   }
 }

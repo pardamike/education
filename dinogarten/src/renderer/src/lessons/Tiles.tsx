@@ -1,16 +1,8 @@
 import { useState } from 'react'
+import { shuffled } from './random'
 
-// A row of big tiles to choose from, one of them right. Both lessons end with one.
+// A row of big tiles to choose from, one of them right. Every game uses them.
 // There is no way to fail: a wrong tile fades away, and once only the right one is left it glows.
-
-function shuffled<T>(items: T[]): T[] {
-  const result = [...items]
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[result[i], result[j]] = [result[j]!, result[i]!]
-  }
-  return result
-}
 
 /** Where the stars fly to when the right tile is found: [across, up], in tile widths. */
 const STARS: Array<[number, number]> = [
@@ -59,7 +51,7 @@ export function Tiles<Choice extends string | number>({
         return (
           <button
             key={choice}
-            className={`tile tile-${place % 3} ${state}`}
+            className={`tile tile-${place % 3} ${String(choice).length > 1 ? 'long' : ''} ${state}`}
             data-choice={choice}
             disabled={!isRight && (tried.includes(choice) || found)}
             onClick={() => pick(choice)}

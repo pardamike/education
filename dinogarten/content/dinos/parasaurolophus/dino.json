@@ -4,10 +4,25 @@
   "eats": "plants",
   "lesson": {
     "type": "count-eggs",
-    "count": 5,
-    "others": [
-      3,
-      8
+    "levels": [
+      {
+        "eggs": [
+          1,
+          5
+        ]
+      },
+      {
+        "eggs": [
+          6,
+          10
+        ]
+      },
+      {
+        "eggs": [
+          11,
+          20
+        ]
+      }
     ]
   },
   "voice": {

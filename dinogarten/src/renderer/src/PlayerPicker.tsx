@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react'
-import { COLOURS, type ColourName, type Player } from './players'
+import { COLOURS, totalStars, type ColourName, type Player } from './players'
 
 // The first thing on screen: "Who is playing?". Each player is an egg in their own colour with
 // their name under it, so a child who cannot read yet can still find himself. A grown-up adds
@@ -33,7 +33,7 @@ export function PlayerPicker({
   const [removing, setRemoving] = useState<string | null>(null)
 
   const add = (): void => {
-    const player: Player = { id: Date.now().toString(36), name: name.trim(), colour, stars: [] }
+    const player: Player = { id: Date.now().toString(36), name: name.trim(), colour, stars: {} }
     if (!player.name) return
     onChange([...players, player])
     onPick(player.id)
@@ -119,7 +119,7 @@ export function PlayerPicker({
               <button className="play" data-player={player.name} onClick={() => onPick(player.id)}>
                 <Egg colour={player.colour} />
                 <span className="player-name">{player.name}</span>
-                <span className="player-stars">{player.stars.length > 0 ? `⭐ ${player.stars.length}` : ' '}</span>
+                <span className="player-stars">{totalStars(player) > 0 ? `⭐ ${totalStars(player)}` : ' '}</span>
               </button>
               <button className="remove" aria-label={`Remove ${player.name}`} onClick={() => setRemoving(player.id)}>
                 ✕

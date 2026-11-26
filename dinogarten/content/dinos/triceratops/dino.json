@@ -4,10 +4,17 @@
   "eats": "plants",
   "lesson": {
     "type": "find-letter",
-    "letter": "T",
-    "others": [
-      "S",
-      "O"
+    "levels": [
+      {
+        "letters": "TSAPMD"
+      },
+      {
+        "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      },
+      {
+        "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "small": true
+      }
     ]
   },
   "voice": {

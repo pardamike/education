@@ -38,10 +38,18 @@ Each one tells the player three things about itself before its lesson: its name,
 
 ## Lessons
 
-| Dinosaur | Lesson | Status |
-| --- | --- | --- |
-| Triceratops | Find the letter T, shown among S and O | In the game |
-| Parasaurolophus | Count five eggs, then find the number 5, shown among 3 and 8 | In the game |
+| Game | Teacher | What the player does | Levels | Status |
+| --- | --- | --- | --- | --- |
+| Find the letter | Triceratops | Hears a letter and taps it among two others | T S A P M D, then all 26, then small letters matched to a big capital | In the game |
+| Find the number | Stegosaurus | Hears a number and taps it among two others | 0 to 5, 6 to 10, 11 to 20 | In the game |
+| Count the eggs | Parasaurolophus | Taps the eggs one by one to count them, then finds that number | 1 to 5 eggs, 6 to 10, 11 to 20 | In the game |
+| What comes next? | Apatosaurus | Finds the letter that comes next | A to G, H to P, Q to Z | Planned |
+| Find the key | Velociraptor | Presses the letter on the real keyboard | A few letters, all letters, numbers | Planned |
+| Type it | Dilophosaurus | Types a whole word under its picture | Three-letter words such as cat and dog, then numbers like 12 and 20 | Planned |
+| How many now? | Spinosaurus | Hears "I had 5 fish. I ate 3." and says how many are left | Take away within 5, within 10, then adding | Planned |
+| First sounds | Allosaurus | Picks the letter a pictured word starts with | s a t p i n m d, then g o c k, then sounding out | Planned |
+
+Each game has three levels, and each visit is a round of three questions. The number ranges follow the US Common Core kindergarten standards and the sound order follows the UK "Letters and Sounds" programme: [Common Core kindergarten maths](https://ospi.k12.wa.us/sites/default/files/2022-12/mathstandards_kindergarten.pdf), [Letters and Sounds](https://assets.publishing.service.gov.uk/media/5a7aa7b6e5274a34770e630c/Letters_and_Sounds_-_DFES-00281-2007.pdf).
 
 Every other land dinosaur introduces itself (its name, how to say it, what it eats) but has no lesson yet. The swimmers and the fliers do not introduce themselves yet: meetings only happen on land.
 

@@ -29,6 +29,96 @@
     "speed": 1.05,
     "hash": "94e3458d1240"
   },
+  "6": {
+    "text": "Six!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "49ccbec343a1"
+  },
+  "7": {
+    "text": "Seven!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "17c6269eba3a"
+  },
+  "8": {
+    "text": "Eight!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "623549fc6693"
+  },
+  "9": {
+    "text": "Nine!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "81ea25717909"
+  },
+  "10": {
+    "text": "Ten!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "98ed7f6d3146"
+  },
+  "11": {
+    "text": "Eleven!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "cdc55dd8bd0d"
+  },
+  "12": {
+    "text": "Twelve!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "167ad8412aef"
+  },
+  "13": {
+    "text": "Thirteen!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "5524cd8ea745"
+  },
+  "14": {
+    "text": "Fourteen!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "4e4321452490"
+  },
+  "15": {
+    "text": "Fifteen!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "e9e2bb85c1a2"
+  },
+  "16": {
+    "text": "Sixteen!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "38d8169326c0"
+  },
+  "17": {
+    "text": "Seventeen!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "f6a784148034"
+  },
+  "18": {
+    "text": "Eighteen!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "1e9d02cbc874"
+  },
+  "19": {
+    "text": "Nineteen!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "9eb622ff27d9"
+  },
+  "20": {
+    "text": "Twenty!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "038c332cc629"
+  },
   "hello": {
     "text": "Hello! I am a Parasaurolophus.",
     "ipa": "pˌæɹəsɔːɹˈɑːləfəs",
@@ -49,34 +139,274 @@
     "speed": 1.05,
     "hash": "03c25fbaa160"
   },
+  "back": {
+    "text": "Hello again!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "e491f018e60d"
+  },
+  "again": {
+    "text": "Try again!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "a4cd4a875972"
+  },
+  "show": {
+    "text": "Here it is!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "89e3ef752eb6"
+  },
+  "done": {
+    "text": "Well done! You did it!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "6214c55df81b"
+  },
   "ask": {
     "text": "Can you count my eggs? Tap them, one by one.",
     "voice": "af_bella",
     "speed": 1.05,
     "hash": "ca11299e1ceb"
   },
-  "find": {
+  "find-1": {
+    "text": "One egg! Can you find the number one?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "94a92bcacb53"
+  },
+  "yes-1": {
+    "text": "Yes! That is the number one. I have one egg!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "ebd090307933"
+  },
+  "find-2": {
+    "text": "Two eggs! Can you find the number two?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "22e061f63198"
+  },
+  "yes-2": {
+    "text": "Yes! That is the number two. I have two eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "0bbea625f121"
+  },
+  "find-3": {
+    "text": "Three eggs! Can you find the number three?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "9a6afcf7283c"
+  },
+  "yes-3": {
+    "text": "Yes! That is the number three. I have three eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "592520818918"
+  },
+  "find-4": {
+    "text": "Four eggs! Can you find the number four?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "cb38390a4169"
+  },
+  "yes-4": {
+    "text": "Yes! That is the number four. I have four eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "7f8b5c4bbba2"
+  },
+  "find-5": {
     "text": "Five eggs! Can you find the number five?",
     "voice": "af_bella",
     "speed": 1.05,
     "hash": "8d32eef9bc01"
   },
-  "again": {
-    "text": "Try again! Find the number five.",
-    "voice": "af_bella",
-    "speed": 1.05,
-    "hash": "b11c6409c72e"
-  },
-  "show": {
-    "text": "Here it is. This is the number five.",
-    "voice": "af_bella",
-    "speed": 1.05,
-    "hash": "5facf3dd6b5e"
-  },
-  "yes": {
+  "yes-5": {
     "text": "Yes! That is the number five. I have five eggs!",
     "voice": "af_bella",
     "speed": 1.05,
     "hash": "0bf69676188c"
+  },
+  "find-6": {
+    "text": "Six eggs! Can you find the number six?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "bbfffc48862c"
+  },
+  "yes-6": {
+    "text": "Yes! That is the number six. I have six eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "17539673aa00"
+  },
+  "find-7": {
+    "text": "Seven eggs! Can you find the number seven?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "6e3f90256a14"
+  },
+  "yes-7": {
+    "text": "Yes! That is the number seven. I have seven eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "1b9cdecf8e5f"
+  },
+  "find-8": {
+    "text": "Eight eggs! Can you find the number eight?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "de994c11ea18"
+  },
+  "yes-8": {
+    "text": "Yes! That is the number eight. I have eight eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "10218c3f1736"
+  },
+  "find-9": {
+    "text": "Nine eggs! Can you find the number nine?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "3f4ee09f7ceb"
+  },
+  "yes-9": {
+    "text": "Yes! That is the number nine. I have nine eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "50489c970551"
+  },
+  "find-10": {
+    "text": "Ten eggs! Can you find the number ten?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "2f9db2e02caf"
+  },
+  "yes-10": {
+    "text": "Yes! That is the number ten. I have ten eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "1b04c5c65a7d"
+  },
+  "find-11": {
+    "text": "Eleven eggs! Can you find the number eleven?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "c5707770204b"
+  },
+  "yes-11": {
+    "text": "Yes! That is the number eleven. I have eleven eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "c183a6ca468d"
+  },
+  "find-12": {
+    "text": "Twelve eggs! Can you find the number twelve?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "e44484165c47"
+  },
+  "yes-12": {
+    "text": "Yes! That is the number twelve. I have twelve eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "81e2c30b3e59"
+  },
+  "find-13": {
+    "text": "Thirteen eggs! Can you find the number thirteen?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "ea26469210cd"
+  },
+  "yes-13": {
+    "text": "Yes! That is the number thirteen. I have thirteen eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "4fd4b9f457d0"
+  },
+  "find-14": {
+    "text": "Fourteen eggs! Can you find the number fourteen?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "9368533cc1f8"
+  },
+  "yes-14": {
+    "text": "Yes! That is the number fourteen. I have fourteen eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "78c9665b2174"
+  },
+  "find-15": {
+    "text": "Fifteen eggs! Can you find the number fifteen?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "6f64a9ad25f0"
+  },
+  "yes-15": {
+    "text": "Yes! That is the number fifteen. I have fifteen eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "aa75b0d6b81b"
+  },
+  "find-16": {
+    "text": "Sixteen eggs! Can you find the number sixteen?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "b7d09ac85179"
+  },
+  "yes-16": {
+    "text": "Yes! That is the number sixteen. I have sixteen eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "2cf77b4a9a74"
+  },
+  "find-17": {
+    "text": "Seventeen eggs! Can you find the number seventeen?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "c3a293b2baf0"
+  },
+  "yes-17": {
+    "text": "Yes! That is the number seventeen. I have seventeen eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "2e3e554242f7"
+  },
+  "find-18": {
+    "text": "Eighteen eggs! Can you find the number eighteen?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "8cc4036a288a"
+  },
+  "yes-18": {
+    "text": "Yes! That is the number eighteen. I have eighteen eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "74a68467490d"
+  },
+  "find-19": {
+    "text": "Nineteen eggs! Can you find the number nineteen?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "f8d664785474"
+  },
+  "yes-19": {
+    "text": "Yes! That is the number nineteen. I have nineteen eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "fabee0e6b6cd"
+  },
+  "find-20": {
+    "text": "Twenty eggs! Can you find the number twenty?",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "2dc7a1abad64"
+  },
+  "yes-20": {
+    "text": "Yes! That is the number twenty. I have twenty eggs!",
+    "voice": "af_bella",
+    "speed": 1.05,
+    "hash": "4ccfab03a8a7"
   }
 }

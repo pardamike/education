@@ -30,6 +30,11 @@ const NUMBERS = [
   "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty",
 ];
 
+// Every whole number from `from` to `to`, both included.
+function range(from, to) {
+  return Array.from({ length: to - from + 1 }, (_, i) => from + i);
+}
+
 function capital(word) {
   return word[0].toUpperCase() + word.slice(1);
 }
@@ -48,28 +53,46 @@ function buildLines(id, dino) {
     ["name", `${name}.`, NAME_CLIP_SPEED, ipa],
     ["eats", `I eat ${dino.eats}.`, 1],
   ];
-  if (dino.lesson?.type === "find-letter") {
-    const L = dino.lesson.letter;
-    lines.push(
-      ["ask", `Can you find the letter ${L}?`, 1],
-      ["again", `Try again! Find the letter ${L}.`, 1],
-      ["show", `Here it is. This is the letter ${L}.`, 1],
-      ["yes", `Yes! That is the letter ${L}. ${L} is for ${name}!`, 1, ipa],
-    );
+  const lesson = dino.lesson;
+  if (!lesson) return lines;
+  lines.push(
+    ["back", "Hello again!", 1],
+    ["again", "Try again!", 1],
+    ["show", "Here it is!", 1],
+    ["done", "Well done! You did it!", 1],
+  );
+  // Everything a level can ask for, so every question has its clips.
+  const letters = [...new Set(lesson.levels.flatMap((level) => (level.letters ?? "").split("")))].sort();
+  const numbers = [...new Set(lesson.levels.flatMap((level) => range(...(level.numbers ?? level.eggs ?? [1, 0]))))].sort((a, b) => a - b);
+  if (lesson.type === "find-letter") {
+    for (const L of letters) {
+      // The letter the dinosaur's name starts with also says so.
+      const isFirst = name[0].toUpperCase() === L;
+      lines.push(
+        [`ask-${L}`, `Can you find the letter ${L}?`, 1],
+        [`yes-${L}`, `Yes! That is the letter ${L}.${isFirst ? ` ${L} is for ${name}!` : ""}`, 1, isFirst ? ipa : undefined],
+      );
+    }
   }
-  if (dino.lesson?.type === "count-eggs") {
-    const count = dino.lesson.count;
-    const word = NUMBERS[count];
-    const eggs = count === 1 ? "egg" : "eggs";
+  if (lesson.type === "find-number") {
+    for (const n of numbers) {
+      lines.push(
+        [`ask-${n}`, `Can you find the number ${NUMBERS[n]}?`, 1],
+        [`yes-${n}`, `Yes! That is the number ${NUMBERS[n]}.`, 1],
+      );
+    }
+  }
+  if (lesson.type === "count-eggs") {
     // One clip for each number said while counting: 1.ogg says "One!", 2.ogg says "Two!", and so on.
-    for (let n = 1; n <= count; n++) lines.push([String(n), `${capital(NUMBERS[n])}!`, 1]);
-    lines.push(
-      ["ask", "Can you count my eggs? Tap them, one by one.", 1],
-      ["find", `${capital(word)} ${eggs}! Can you find the number ${word}?`, 1],
-      ["again", `Try again! Find the number ${word}.`, 1],
-      ["show", `Here it is. This is the number ${word}.`, 1],
-      ["yes", `Yes! That is the number ${word}. I have ${word} ${eggs}!`, 1],
-    );
+    for (let n = 1; n <= numbers[numbers.length - 1]; n++) lines.push([String(n), `${capital(NUMBERS[n])}!`, 1]);
+    lines.push(["ask", "Can you count my eggs? Tap them, one by one.", 1]);
+    for (const n of numbers) {
+      const eggs = n === 1 ? "egg" : "eggs";
+      lines.push(
+        [`find-${n}`, `${capital(NUMBERS[n])} ${eggs}! Can you find the number ${NUMBERS[n]}?`, 1],
+        [`yes-${n}`, `Yes! That is the number ${NUMBERS[n]}. I have ${NUMBERS[n]} ${eggs}!`, 1],
+      );
+    }
   }
   return lines;
 }

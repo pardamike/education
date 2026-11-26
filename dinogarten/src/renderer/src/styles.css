@@ -100,11 +100,16 @@ body,
   transition: transform 0.12s;
 }
 
-.again:hover {
+.again:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.again:hover:not(:disabled) {
   transform: scale(1.08);
 }
 
-.again:active {
+.again:active:not(:disabled) {
   transform: translateY(0.5vh);
 }
 
@@ -122,6 +127,23 @@ body,
   transition:
     transform 0.12s,
     opacity 0.3s;
+  animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+/* Two digits: a smaller number, so both fit on the tile. */
+.tile.long {
+  font-size: 11vh;
+}
+
+/* The big capital to match the small letters on the tiles. */
+.prompt {
+  min-width: 14vh;
+  font-size: 17vh;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  color: #3b3b4d;
+  text-shadow: 0 0.8vh 0 rgb(255 255 255 / 0.9);
   animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
 }
 
@@ -176,7 +198,73 @@ body,
 }
 
 .earned {
-  font-size: 0.7em;
+  font-size: 0.5em;
+  white-space: nowrap;
+}
+
+/* A level not finished yet: its star waits in grey. */
+.unearned {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+/* ---- A round: the dots that fill in above the questions, and the star and button at the end ---- */
+
+.lesson {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6vh;
+}
+
+.dots {
+  display: flex;
+  gap: 1.6vh;
+}
+
+.dot {
+  width: 2.6vh;
+  height: 2.6vh;
+  border: 0.5vh solid #fff;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.5);
+  box-shadow: 0 0.4vh 0 rgb(0 0 0 / 0.15);
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+
+.dot.filled {
+  background: #ffc933;
+  transform: scale(1.25);
+}
+
+.big-star {
+  font-size: 15vh;
+  line-height: 1;
+  animation: bounce 0.9s 0.1s both;
+}
+
+.play-again {
+  width: 18vh;
+  height: 18vh;
+  padding: 0 0 0 1.4vh;
+  border: none;
+  border-radius: 50%;
+  background: #5ecb6b;
+  box-shadow: 0 1.2vh 0 #3fae52;
+  font-size: 9vh;
+  color: #fff;
+  transition: transform 0.12s;
+  animation: pop-in 0.45s 0.3s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.play-again:hover {
+  transform: scale(1.08);
+}
+
+.play-again:active {
+  transform: translateY(0.6vh);
 }
 
 @keyframes pop-in {
@@ -266,17 +354,15 @@ body,
 
 /* The eggs sit in a bowl of mud and leaves. Its rim crosses them halfway up. */
 .nest {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(var(--columns), var(--egg));
   align-content: center;
   justify-content: center;
   gap: 1.8vh;
-  max-width: 76vh;
   padding: 1.5vh 3.5vh 2.6vh;
   border-radius: 5vh 5vh 9vh 9vh;
   background: linear-gradient(to bottom, transparent 46%, #b0834f 46%, #8d6438);
   transition:
-    max-width 0.4s,
     gap 0.4s,
     padding 0.4s;
 }
@@ -295,6 +381,11 @@ body,
   animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
 }
 
+/* Two-digit numbers need a little less room. */
+.nest .egg.long {
+  font-size: calc(var(--egg) * 0.5);
+}
+
 .nest .egg:hover:not(:disabled) {
   transform: translateY(-0.8vh) scale(1.06);
 }
@@ -309,9 +400,7 @@ body,
 
 /* All counted: the nest shrinks to one side to make room for the number tiles. */
 .nest.tucked {
-  --egg: 6.4vh;
   gap: 0.9vh;
-  max-width: 24vh;
   padding: 1vh 1.6vh 1.6vh;
 }
 

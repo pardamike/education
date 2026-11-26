@@ -499,8 +499,8 @@ export class World {
 
   /** Works out which way the player wants to go this frame: keys win over a clicked spot. */
   private wantedStep(position: THREE.Vector3, maxStep: number): { x: number; z: number; length: number } | null {
-    const keyX = Number(this.isDown('ArrowRight', 'KeyD')) - Number(this.isDown('ArrowLeft', 'KeyA'))
-    const keyZ = Number(this.isDown('ArrowDown', 'KeyS')) - Number(this.isDown('ArrowUp', 'KeyW'))
+    const keyX = Number(this.isDown('ArrowRight')) - Number(this.isDown('ArrowLeft'))
+    const keyZ = Number(this.isDown('ArrowDown')) - Number(this.isDown('ArrowUp'))
     if (keyX !== 0 || keyZ !== 0) {
       this.stopWalking()
       const length = Math.hypot(keyX, keyZ)

@@ -17,28 +17,340 @@
     "speed": 0.95,
     "hash": "c758ba4b5c7a"
   },
-  "ask": {
+  "back": {
+    "text": "Hello again!",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "387af5f78f85"
+  },
+  "again": {
+    "text": "Try again!",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "890b0afccf34"
+  },
+  "show": {
+    "text": "Here it is!",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "a8a7499eb271"
+  },
+  "done": {
+    "text": "Well done! You did it!",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "20518e72356c"
+  },
+  "ask-A": {
+    "text": "Can you find the letter A?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "a3e2fc7212be"
+  },
+  "yes-A": {
+    "text": "Yes! That is the letter A.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "4aa526f7b620"
+  },
+  "ask-B": {
+    "text": "Can you find the letter B?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "7b03ffc50e62"
+  },
+  "yes-B": {
+    "text": "Yes! That is the letter B.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "cf2199d27358"
+  },
+  "ask-C": {
+    "text": "Can you find the letter C?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "73be9adeba4b"
+  },
+  "yes-C": {
+    "text": "Yes! That is the letter C.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "460ba70726f5"
+  },
+  "ask-D": {
+    "text": "Can you find the letter D?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "a13d7c012022"
+  },
+  "yes-D": {
+    "text": "Yes! That is the letter D.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "758d7a181130"
+  },
+  "ask-E": {
+    "text": "Can you find the letter E?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "ecfdfed3342c"
+  },
+  "yes-E": {
+    "text": "Yes! That is the letter E.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "a7f2205da7c2"
+  },
+  "ask-F": {
+    "text": "Can you find the letter F?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "0379d9951a64"
+  },
+  "yes-F": {
+    "text": "Yes! That is the letter F.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "f68cdcfc3095"
+  },
+  "ask-G": {
+    "text": "Can you find the letter G?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "ac35afffed07"
+  },
+  "yes-G": {
+    "text": "Yes! That is the letter G.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "69aa69be69dc"
+  },
+  "ask-H": {
+    "text": "Can you find the letter H?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "b08c97409082"
+  },
+  "yes-H": {
+    "text": "Yes! That is the letter H.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "e9b0aed5c28a"
+  },
+  "ask-I": {
+    "text": "Can you find the letter I?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "d030296db89b"
+  },
+  "yes-I": {
+    "text": "Yes! That is the letter I.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "fd46ac1b9ab7"
+  },
+  "ask-J": {
+    "text": "Can you find the letter J?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "a2acfffcc659"
+  },
+  "yes-J": {
+    "text": "Yes! That is the letter J.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "0d0bad3025b8"
+  },
+  "ask-K": {
+    "text": "Can you find the letter K?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "c55a223ef412"
+  },
+  "yes-K": {
+    "text": "Yes! That is the letter K.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "415ef97253ba"
+  },
+  "ask-L": {
+    "text": "Can you find the letter L?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "e5c10c7c7bcb"
+  },
+  "yes-L": {
+    "text": "Yes! That is the letter L.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "333bc6c02b3c"
+  },
+  "ask-M": {
+    "text": "Can you find the letter M?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "1dad1ee09334"
+  },
+  "yes-M": {
+    "text": "Yes! That is the letter M.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "9de9c78862dd"
+  },
+  "ask-N": {
+    "text": "Can you find the letter N?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "cb33cda01e27"
+  },
+  "yes-N": {
+    "text": "Yes! That is the letter N.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "89e9e5ffa47d"
+  },
+  "ask-O": {
+    "text": "Can you find the letter O?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "e5b92fe17e9c"
+  },
+  "yes-O": {
+    "text": "Yes! That is the letter O.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "2ae8cab6dcc1"
+  },
+  "ask-P": {
+    "text": "Can you find the letter P?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "c9e2a032f19b"
+  },
+  "yes-P": {
+    "text": "Yes! That is the letter P.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "b818d2e9feb9"
+  },
+  "ask-Q": {
+    "text": "Can you find the letter Q?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "919ac4d1833d"
+  },
+  "yes-Q": {
+    "text": "Yes! That is the letter Q.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "d1f594b1d305"
+  },
+  "ask-R": {
+    "text": "Can you find the letter R?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "299f45fa899b"
+  },
+  "yes-R": {
+    "text": "Yes! That is the letter R.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "5eb827ac733b"
+  },
+  "ask-S": {
+    "text": "Can you find the letter S?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "9806dfd476f0"
+  },
+  "yes-S": {
+    "text": "Yes! That is the letter S.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "2e3a24f3a666"
+  },
+  "ask-T": {
     "text": "Can you find the letter T?",
     "voice": "af_heart",
     "speed": 0.95,
     "hash": "f35441a88aba"
   },
-  "again": {
-    "text": "Try again! Find the letter T.",
-    "voice": "af_heart",
-    "speed": 0.95,
-    "hash": "9be72810e204"
-  },
-  "show": {
-    "text": "Here it is. This is the letter T.",
-    "voice": "af_heart",
-    "speed": 0.95,
-    "hash": "522ed4c05e3b"
-  },
-  "yes": {
+  "yes-T": {
     "text": "Yes! That is the letter T. T is for Triceratops!",
     "voice": "af_heart",
     "speed": 0.95,
     "hash": "979e722338db"
+  },
+  "ask-U": {
+    "text": "Can you find the letter U?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "860251b078c0"
+  },
+  "yes-U": {
+    "text": "Yes! That is the letter U.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "6e8d36875104"
+  },
+  "ask-V": {
+    "text": "Can you find the letter V?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "707e7bb8a875"
+  },
+  "yes-V": {
+    "text": "Yes! That is the letter V.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "9e2eb3002474"
+  },
+  "ask-W": {
+    "text": "Can you find the letter W?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "46489d681181"
+  },
+  "yes-W": {
+    "text": "Yes! That is the letter W.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "b5376a4b2c2f"
+  },
+  "ask-X": {
+    "text": "Can you find the letter X?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "e2fa6b2c4f9b"
+  },
+  "yes-X": {
+    "text": "Yes! That is the letter X.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "c82608a0b81a"
+  },
+  "ask-Y": {
+    "text": "Can you find the letter Y?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "1b3b041345a7"
+  },
+  "yes-Y": {
+    "text": "Yes! That is the letter Y.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "42d579c9fde1"
+  },
+  "ask-Z": {
+    "text": "Can you find the letter Z?",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "67b2d457d83f"
+  },
+  "yes-Z": {
+    "text": "Yes! That is the letter Z.",
+    "voice": "af_heart",
+    "speed": 0.95,
+    "hash": "7a2aeed7c911"
   }
 }
