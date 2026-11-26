@@ -33,6 +33,7 @@ voice and speed did not change, so it finishes in a fraction of a second.
 | `ask-D`, `yes-D`, ... | `what-next`: one pair for each letter any level can ask, never A. "A, B, C. What comes next?" and "Yes! A, B, C, D." (the letters just before it, up to three) |
 | `ask`, `find-5`, `yes-5`, ... | `count-eggs`: "Can you count my eggs? Tap them, one by one.", then for each count any level can use, "Five eggs! Can you find the number five?" and "Yes! That is the number five. I have five eggs!" |
 | `ask-cat`, `yes-cat`, `ask-12`, `yes-12`, ... | `type-it`: a pair for each word and each number any level can ask. "Let's write cat. C, A, T." and "Yes! C, A, T. That spells cat!", or "Let's write twelve. One, two." and "Yes! One, two. That makes twelve!" |
+| `ask-sun`, `yes-sun`, ... | `first-sound`: a pair for each word any level can ask. "Sun. What letter does sun start with?" and "Yes! Sun starts with the letter S." |
 | `A`, `B`, ..., `0`, `1`, ..., `9` | `type-it`: the name of each letter used by any word ("A!") and of each digit ("Seven!"), said as the key is typed |
 
 `{name}` and `{eats}` come from `dino.json`. The lines live in `buildLines` in `make.mjs`.

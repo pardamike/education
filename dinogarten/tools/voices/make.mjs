@@ -152,6 +152,16 @@ function buildLines(id, dino) {
       );
     }
   }
+  if (lesson.type === "first-sound") {
+    // Every word any level can ask about. The letter is said by name, as in "the letter S".
+    const words = [...new Set(lesson.levels.flatMap((level) => level.words))];
+    for (const word of words) {
+      lines.push(
+        [`ask-${word}`, `${capital(word)}. What letter does ${word} start with?`, 1],
+        [`yes-${word}`, `Yes! ${capital(word)} starts with the letter ${word[0].toUpperCase()}.`, 1],
+      );
+    }
+  }
   if (lesson.type === "count-eggs") {
     // One clip for each number said while counting: 1.ogg says "One!", 2.ogg says "Two!", and so on.
     for (let n = 1; n <= numbers[numbers.length - 1]; n++) lines.push([String(n), `${capital(NUMBERS[n])}!`, 1]);

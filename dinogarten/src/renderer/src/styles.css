@@ -661,6 +661,27 @@ body,
   font-size: 3.2vh;
 }
 
+/* First sounds: the picture of the word, on a card beside the tiles. It has no writing, which would give the answer away. */
+.word-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 22vh;
+  height: 22vh;
+  border: 1.1vh solid #ffc933;
+  border-radius: 4.5vh;
+  background: #fff;
+  box-shadow: 0 1.3vh 0 rgb(0 0 0 / 0.16);
+  animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.word-picture {
+  display: block;
+  width: 15vh;
+  height: 15vh;
+}
+
 /* The letters before the one he is asked for, and an empty card for it. */
 .sequence {
   display: flex;

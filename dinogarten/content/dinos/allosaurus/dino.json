@@ -2,6 +2,51 @@
   "name": "Allosaurus",
   "sayIt": "AL-uh-SORE-us",
   "eats": "meat",
+  "lesson": {
+    "type": "first-sound",
+    "levels": [
+      {
+        "words": [
+          "sun",
+          "sock",
+          "ant",
+          "apple",
+          "tent",
+          "tiger",
+          "pig",
+          "pizza",
+          "nest",
+          "nose",
+          "moon",
+          "mouse",
+          "dog",
+          "duck"
+        ]
+      },
+      {
+        "words": [
+          "goat",
+          "octopus",
+          "cat",
+          "cow",
+          "key",
+          "kite",
+          "egg",
+          "elephant",
+          "umbrella",
+          "rabbit",
+          "hat",
+          "hen",
+          "bed",
+          "bus",
+          "fox",
+          "fish",
+          "lion",
+          "leaf"
+        ]
+      }
+    ]
+  },
   "voice": {
     "name": "bm_george",
     "speed": 1

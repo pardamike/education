@@ -2,7 +2,7 @@
 
 A free, offline dinosaur learning game for kindergarteners. You are a little T. rex. Walk around, meet other dinosaurs, and learn letters and numbers from them.
 
-**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet sixteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a toothy Mosasaurus and a gentle Plesiosaurus on the sea floor, and two flying reptiles overhead, under a skyline of volcanoes. Walk up to any land dinosaur and it introduces itself out loud. Some of them then give a lesson: finding letters and numbers, counting eggs, finding keys on the real keyboard, typing short words, counting fish that are eaten or caught, and finding the next letter of the alphabet. Each lesson has three levels that get harder. Each player has a name, a colour and saved stars. More lessons and installers are still to come. The cast, and who teaches what, is in [DINOSAURS.md](DINOSAURS.md).
+**Status:** early. You can walk around a fern meadow, down a beach and into a deep underwater world, and meet sixteen other kinds of animal, including a towering Brachiosaurus, a flock of Microraptors, a cranky old Spinosaurus in his rocky inlet, a toothy Mosasaurus and a gentle Plesiosaurus on the sea floor, and two flying reptiles overhead, under a skyline of volcanoes. Walk up to any land dinosaur and it introduces itself out loud. Some of them then give a lesson: finding letters and numbers, counting eggs, finding keys on the real keyboard, typing short words, counting fish that are eaten or caught, finding the next letter of the alphabet, and finding the letter a pictured word starts with. Most lessons have three levels that get harder; the newest has two so far. Each player has a name, a colour and saved stars. More lessons and installers are still to come. The cast, and who teaches what, is in [DINOSAURS.md](DINOSAURS.md).
 
 ## Run it
 
@@ -68,7 +68,7 @@ A player earns one star for each level of a dinosaur's lesson they finish, so a 
 
 ## Add a lesson
 
-A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kind of game and a list of `levels` that get harder. Each visit is a round of three questions at the player's level for that dinosaur. There are seven kinds so far.
+A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kind of game and a list of `levels` that get harder. Each visit is a round of three questions at the player's level for that dinosaur. There are eight kinds so far.
 
 ```json
 "lesson": { "type": "find-letter", "levels": [ { "letters": "TSAPMD" }, { "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }, { "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "small": true } ] }
@@ -111,6 +111,12 @@ A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kin
 ```
 
 `what-next` shows the letters just before a letter (up to three, from the whole alphabet, so H shows E F G) on small cards, then an empty card with a question mark. The dinosaur says them, for example "A, B, C. What comes next?", and the player finds the next letter among two others from the same level. It never asks for A. The Apatosaurus has this one.
+
+```json
+"lesson": { "type": "first-sound", "levels": [ { "words": ["sun", "sock", "ant", "apple"] }, { "words": ["goat", "cat", "key", "egg"] } ] }
+```
+
+`first-sound` shows the picture of a word on a card, with no writing, beside three letter tiles. The dinosaur says the word and asks "What letter does sun start with?", and the player finds that letter. The tiles are the word's first letter and two other first letters from the same level's `words`. C and K are never offered together, because they make the same sound, and a letter is never offered twice. The three words in a round have different first letters where the level has enough of them. Each word needs a picture at `content/pictures/<word>.svg`. The Allosaurus has this one, with two levels so far.
 
 How a round goes:
 

@@ -16,5 +16,413 @@
     "voice": "bm_george",
     "speed": 1,
     "hash": "1949b250045b"
+  },
+  "back": {
+    "text": "Hello again!",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "779dca06ec87"
+  },
+  "again": {
+    "text": "Try again!",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "c5d8f8357155"
+  },
+  "show": {
+    "text": "Here it is!",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "4a76eddfea04"
+  },
+  "done": {
+    "text": "Well done! You did it!",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "3b7aa541129b"
+  },
+  "ask-sun": {
+    "text": "Sun. What letter does sun start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "b4694ab08bf6"
+  },
+  "yes-sun": {
+    "text": "Yes! Sun starts with the letter S.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "0b4dda49266c"
+  },
+  "ask-sock": {
+    "text": "Sock. What letter does sock start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "2aaa2c300b38"
+  },
+  "yes-sock": {
+    "text": "Yes! Sock starts with the letter S.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "24a70c00356f"
+  },
+  "ask-ant": {
+    "text": "Ant. What letter does ant start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "11c423028e5e"
+  },
+  "yes-ant": {
+    "text": "Yes! Ant starts with the letter A.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "3ab0a3f37d60"
+  },
+  "ask-apple": {
+    "text": "Apple. What letter does apple start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "39d49fef0092"
+  },
+  "yes-apple": {
+    "text": "Yes! Apple starts with the letter A.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "0dd7b6ef27d4"
+  },
+  "ask-tent": {
+    "text": "Tent. What letter does tent start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "af477cc712e0"
+  },
+  "yes-tent": {
+    "text": "Yes! Tent starts with the letter T.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "2f3abe7e3e2b"
+  },
+  "ask-tiger": {
+    "text": "Tiger. What letter does tiger start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "5ad31207dd2e"
+  },
+  "yes-tiger": {
+    "text": "Yes! Tiger starts with the letter T.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "a329782543c9"
+  },
+  "ask-pig": {
+    "text": "Pig. What letter does pig start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "67ecfd214306"
+  },
+  "yes-pig": {
+    "text": "Yes! Pig starts with the letter P.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "12a7270eb39b"
+  },
+  "ask-pizza": {
+    "text": "Pizza. What letter does pizza start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "0d151b931537"
+  },
+  "yes-pizza": {
+    "text": "Yes! Pizza starts with the letter P.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "7aa0abdb79be"
+  },
+  "ask-nest": {
+    "text": "Nest. What letter does nest start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "ede6e37037b2"
+  },
+  "yes-nest": {
+    "text": "Yes! Nest starts with the letter N.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "05b9b51d774e"
+  },
+  "ask-nose": {
+    "text": "Nose. What letter does nose start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "d0f86f5608f8"
+  },
+  "yes-nose": {
+    "text": "Yes! Nose starts with the letter N.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "b25c19aff2a7"
+  },
+  "ask-moon": {
+    "text": "Moon. What letter does moon start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "2ccd76dc4909"
+  },
+  "yes-moon": {
+    "text": "Yes! Moon starts with the letter M.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "3dd3142c1790"
+  },
+  "ask-mouse": {
+    "text": "Mouse. What letter does mouse start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "124481f653de"
+  },
+  "yes-mouse": {
+    "text": "Yes! Mouse starts with the letter M.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "80a404ccfb2b"
+  },
+  "ask-dog": {
+    "text": "Dog. What letter does dog start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "ad9a74330675"
+  },
+  "yes-dog": {
+    "text": "Yes! Dog starts with the letter D.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "1d634e260ec8"
+  },
+  "ask-duck": {
+    "text": "Duck. What letter does duck start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "75b6cb8dc1f0"
+  },
+  "yes-duck": {
+    "text": "Yes! Duck starts with the letter D.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "45853fcfd066"
+  },
+  "ask-goat": {
+    "text": "Goat. What letter does goat start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "b67e7db2047d"
+  },
+  "yes-goat": {
+    "text": "Yes! Goat starts with the letter G.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "6a2c49c40793"
+  },
+  "ask-octopus": {
+    "text": "Octopus. What letter does octopus start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "a4e1716704c8"
+  },
+  "yes-octopus": {
+    "text": "Yes! Octopus starts with the letter O.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "01b41c7de9de"
+  },
+  "ask-cat": {
+    "text": "Cat. What letter does cat start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "d310a0e378c5"
+  },
+  "yes-cat": {
+    "text": "Yes! Cat starts with the letter C.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "099c2c2d3a47"
+  },
+  "ask-cow": {
+    "text": "Cow. What letter does cow start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "df8a93b5dad0"
+  },
+  "yes-cow": {
+    "text": "Yes! Cow starts with the letter C.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "2756344a15b6"
+  },
+  "ask-key": {
+    "text": "Key. What letter does key start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "173e8f83f05f"
+  },
+  "yes-key": {
+    "text": "Yes! Key starts with the letter K.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "59398597023e"
+  },
+  "ask-kite": {
+    "text": "Kite. What letter does kite start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "4dd0222c3ca8"
+  },
+  "yes-kite": {
+    "text": "Yes! Kite starts with the letter K.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "8181499e0a45"
+  },
+  "ask-egg": {
+    "text": "Egg. What letter does egg start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "6536d51f3ddf"
+  },
+  "yes-egg": {
+    "text": "Yes! Egg starts with the letter E.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "13f5b59afc54"
+  },
+  "ask-elephant": {
+    "text": "Elephant. What letter does elephant start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "862bc01f76ae"
+  },
+  "yes-elephant": {
+    "text": "Yes! Elephant starts with the letter E.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "f95a09e5deb7"
+  },
+  "ask-umbrella": {
+    "text": "Umbrella. What letter does umbrella start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "8c3e7de154fb"
+  },
+  "yes-umbrella": {
+    "text": "Yes! Umbrella starts with the letter U.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "8cf6328066f0"
+  },
+  "ask-rabbit": {
+    "text": "Rabbit. What letter does rabbit start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "89e2dc01c7a7"
+  },
+  "yes-rabbit": {
+    "text": "Yes! Rabbit starts with the letter R.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "eb43a1ec18f9"
+  },
+  "ask-hat": {
+    "text": "Hat. What letter does hat start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "e94c6771925a"
+  },
+  "yes-hat": {
+    "text": "Yes! Hat starts with the letter H.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "dd57f6d60d4a"
+  },
+  "ask-hen": {
+    "text": "Hen. What letter does hen start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "8ddd9d7325bf"
+  },
+  "yes-hen": {
+    "text": "Yes! Hen starts with the letter H.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "2e8ea5d92217"
+  },
+  "ask-bed": {
+    "text": "Bed. What letter does bed start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "d23fa918e75c"
+  },
+  "yes-bed": {
+    "text": "Yes! Bed starts with the letter B.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "9e02c218a2a3"
+  },
+  "ask-bus": {
+    "text": "Bus. What letter does bus start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "4a76a58f683c"
+  },
+  "yes-bus": {
+    "text": "Yes! Bus starts with the letter B.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "3f499bd162e4"
+  },
+  "ask-fox": {
+    "text": "Fox. What letter does fox start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "ae77f7863167"
+  },
+  "yes-fox": {
+    "text": "Yes! Fox starts with the letter F.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "790a428ad9d1"
+  },
+  "ask-fish": {
+    "text": "Fish. What letter does fish start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "71420450005a"
+  },
+  "yes-fish": {
+    "text": "Yes! Fish starts with the letter F.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "93518a9e7e3f"
+  },
+  "ask-lion": {
+    "text": "Lion. What letter does lion start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "df7e56e50b6e"
+  },
+  "yes-lion": {
+    "text": "Yes! Lion starts with the letter L.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "5203c890509b"
+  },
+  "ask-leaf": {
+    "text": "Leaf. What letter does leaf start with?",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "506bd89f8d7b"
+  },
+  "yes-leaf": {
+    "text": "Yes! Leaf starts with the letter L.",
+    "voice": "bm_george",
+    "speed": 1,
+    "hash": "2a5408577783"
   }
 }

@@ -36,7 +36,7 @@ The dinosaurs' voices are computer speech, made with [Kokoro-82M](https://huggin
 
 ## Word pictures
 
-The pictures on the cards of the Type it lesson are [Twemoji](https://github.com/jdecked/twemoji) graphics, maintained by Jason Sofonia and Justine De Caires (originally by Twitter), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Thank you! They are used unchanged, one file for each word, in `content/pictures/`. The fish in the How many now? lesson is one too:
+The pictures on the cards of the Type it and First sounds lessons are [Twemoji](https://github.com/jdecked/twemoji) graphics, maintained by Jason Sofonia and Justine De Caires (originally by Twitter), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Thank you! They are used unchanged, one file for each word, in `content/pictures/`. The fish in the How many now? lesson is one too:
 
 | Word | Twemoji file |
 | --- | --- |
@@ -57,6 +57,26 @@ The pictures on the cards of the Type it lesson are [Twemoji](https://github.com
 | `van.svg` | `assets/svg/1f690.svg` |
 | `bus.svg` | `assets/svg/1f68c.svg` |
 | `fish.svg` | `assets/svg/1f41f.svg` |
+| `sock.svg` | `assets/svg/1f9e6.svg` |
+| `apple.svg` | `assets/svg/1f34e.svg` |
+| `tent.svg` | `assets/svg/26fa.svg` |
+| `tiger.svg` | `assets/svg/1f42f.svg` |
+| `pizza.svg` | `assets/svg/1f355.svg` |
+| `nest.svg` | `assets/svg/1faba.svg` |
+| `nose.svg` | `assets/svg/1f443.svg` |
+| `moon.svg` | `assets/svg/1f319.svg` |
+| `mouse.svg` | `assets/svg/1f42d.svg` |
+| `duck.svg` | `assets/svg/1f986.svg` |
+| `goat.svg` | `assets/svg/1f410.svg` |
+| `octopus.svg` | `assets/svg/1f419.svg` |
+| `cow.svg` | `assets/svg/1f404.svg` |
+| `key.svg` | `assets/svg/1f511.svg` |
+| `kite.svg` | `assets/svg/1fa81.svg` |
+| `elephant.svg` | `assets/svg/1f418.svg` |
+| `umbrella.svg` | `assets/svg/2602.svg` |
+| `rabbit.svg` | `assets/svg/1f430.svg` |
+| `lion.svg` | `assets/svg/1f981.svg` |
+| `leaf.svg` | `assets/svg/1f343.svg` |
 
 ## Sea reptiles
 

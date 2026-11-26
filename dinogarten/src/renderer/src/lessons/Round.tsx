@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { hush, say } from '../voice'
 import { CountEggs, countEggsQuestions } from './CountEggs'
 import { FindKey, findKeyQuestions } from './FindKey'
+import { firstSoundQuestions } from './FirstSound'
 import { findLetterQuestions } from './FindLetter'
 import { findNumberQuestions } from './FindNumber'
 import { HowMany, howManyQuestions } from './HowMany'
@@ -33,6 +34,8 @@ function makeQuestions(lesson: Lesson, level: number): Question[] {
       return howManyQuestions(lesson.levels[level]!)
     case 'what-next':
       return whatNextQuestions(lesson.levels[level]!)
+    case 'first-sound':
+      return firstSoundQuestions(lesson.levels[level]!)
   }
 }
 

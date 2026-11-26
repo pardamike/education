@@ -58,6 +58,13 @@ export interface WhatNextLesson {
   levels: Array<{ letters: string }>
 }
 
+/** "What letter does sun start with?": the player sees a picture and finds the first letter of its word. */
+export interface FirstSoundLesson {
+  type: 'first-sound'
+  /** The words a level can ask about, each needing content/pictures/<word>.svg. The first letters of the words are the tiles. */
+  levels: Array<{ words: string[] }>
+}
+
 export type Lesson =
   | FindLetterLesson
   | FindNumberLesson
@@ -66,6 +73,7 @@ export type Lesson =
   | TypeItLesson
   | HowManyLesson
   | WhatNextLesson
+  | FirstSoundLesson
 
 /** How many questions make up one round. */
 export const ROUND_SIZE = 3
@@ -80,6 +88,8 @@ export interface PickQuestion {
   prompt?: string
   /** Small cards shown beside the tiles, followed by an empty card with a question mark: the letters so far. */
   sequence?: string[]
+  /** A word whose picture is shown on a card beside the tiles. The word itself is never written. */
+  picture?: string
   /** The clip that asks it, and the clip that says "yes!". */
   ask: string
   yes: string

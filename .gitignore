@@ -2,3 +2,6 @@ node_modules/
 out/
 dist/
 .DS_Store
+
+# Throwaway listening-test clips for single letter sounds: never committed
+dinogarten/tools/voices/samples/
