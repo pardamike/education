@@ -44,7 +44,7 @@ Each one tells the player three things about itself before its lesson: its name,
 | Find the number | Stegosaurus | Hears a number and taps it among two others | 0 to 5, 6 to 10, 11 to 20 | In the game |
 | Count the eggs | Parasaurolophus | Taps the eggs one by one to count them, then finds that number | 1 to 5 eggs, 6 to 10, 11 to 20 | In the game |
 | What comes next? | Apatosaurus | Finds the letter that comes next | A to G, H to P, Q to Z | Planned |
-| Find the key | Velociraptor | Presses the letter on the real keyboard | A few letters, all letters, numbers | Planned |
+| Find the key | Velociraptor | Hears a letter or number and presses it on the real keyboard, shown as a picture of one. A wrong key is named and asked again, and the right key glows after two | S A T P I N M D, then all 26 letters, then 0 to 9 | In the game |
 | Type it | Dilophosaurus | Types a whole word under its picture | Three-letter words such as cat and dog, then numbers like 12 and 20 | Planned |
 | How many now? | Spinosaurus | Hears "I had 5 fish. I ate 3." and says how many are left | Take away within 5, within 10, then adding | Planned |
 | First sounds | Allosaurus | Picks the letter a pictured word starts with | s a t p i n m d, then g o c k, then sounding out | Planned |

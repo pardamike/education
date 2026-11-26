@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { hush, say } from '../voice'
 import { CountEggs, countEggsQuestions } from './CountEggs'
+import { FindKey, findKeyQuestions } from './FindKey'
 import { findLetterQuestions } from './FindLetter'
 import { findNumberQuestions } from './FindNumber'
 import { PickTile } from './PickTile'
@@ -21,6 +22,8 @@ function makeQuestions(lesson: Lesson, level: number): Question[] {
       return findNumberQuestions(lesson.levels[level]!)
     case 'count-eggs':
       return countEggsQuestions(lesson.levels[level]!)
+    case 'find-key':
+      return findKeyQuestions(lesson.levels[level]!)
   }
 }
 
@@ -102,6 +105,8 @@ export function Round({
         </div>
       ) : question.kind === 'eggs' ? (
         <CountEggs key={current} dinosaur={dinosaur} question={question} locked={celebrating} onRight={() => void right(question)} />
+      ) : question.kind === 'key' ? (
+        <FindKey key={current} dinosaur={dinosaur} question={question} locked={celebrating} onRight={() => void right(question)} />
       ) : (
         <PickTile key={current} dinosaur={dinosaur} question={question} locked={celebrating} onRight={() => void right(question)} />
       )}

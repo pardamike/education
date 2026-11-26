@@ -16,5 +16,677 @@
     "voice": "am_puck",
     "speed": 1.1,
     "hash": "c1d1987750a9"
+  },
+  "back": {
+    "text": "Hello again!",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "5ed7c7dcbd6d"
+  },
+  "again": {
+    "text": "Try again!",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "d618524027fb"
+  },
+  "show": {
+    "text": "Here it is!",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "28bc5bd6db99"
+  },
+  "done": {
+    "text": "Well done! You did it!",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "f18730f0235d"
+  },
+  "ask-S": {
+    "text": "Can you press the letter S?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "3b9bc2e361dd"
+  },
+  "yes-S": {
+    "text": "Yes! That is the letter S.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "292d07eff9da"
+  },
+  "ask-A": {
+    "text": "Can you press the letter A?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "17ae2eac35a5"
+  },
+  "yes-A": {
+    "text": "Yes! That is the letter A.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "269c3a5244da"
+  },
+  "ask-T": {
+    "text": "Can you press the letter T?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "01f5e954e3f2"
+  },
+  "yes-T": {
+    "text": "Yes! That is the letter T.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "da1ea8a39268"
+  },
+  "ask-P": {
+    "text": "Can you press the letter P?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "390f5ab1600f"
+  },
+  "yes-P": {
+    "text": "Yes! That is the letter P.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "1ac06549448f"
+  },
+  "ask-I": {
+    "text": "Can you press the letter I?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "cf53522db7e2"
+  },
+  "yes-I": {
+    "text": "Yes! That is the letter I.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "1969dade7dc5"
+  },
+  "ask-N": {
+    "text": "Can you press the letter N?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "1d4ecf2d5bc6"
+  },
+  "yes-N": {
+    "text": "Yes! That is the letter N.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c37b2aeb51c5"
+  },
+  "ask-M": {
+    "text": "Can you press the letter M?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "7b105fb48680"
+  },
+  "yes-M": {
+    "text": "Yes! That is the letter M.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "acd04d2b1d8b"
+  },
+  "ask-D": {
+    "text": "Can you press the letter D?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c02ab613ff99"
+  },
+  "yes-D": {
+    "text": "Yes! That is the letter D.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "5fc731565727"
+  },
+  "ask-B": {
+    "text": "Can you press the letter B?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "18cf9deeb5be"
+  },
+  "yes-B": {
+    "text": "Yes! That is the letter B.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "ddbae4290978"
+  },
+  "ask-C": {
+    "text": "Can you press the letter C?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "7d7f5439cac9"
+  },
+  "yes-C": {
+    "text": "Yes! That is the letter C.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "d341ea88ed7f"
+  },
+  "ask-E": {
+    "text": "Can you press the letter E?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "10791af00f2e"
+  },
+  "yes-E": {
+    "text": "Yes! That is the letter E.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "8b7b0fe4014d"
+  },
+  "ask-F": {
+    "text": "Can you press the letter F?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "45a0a0f3ba89"
+  },
+  "yes-F": {
+    "text": "Yes! That is the letter F.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "86de27b3ae54"
+  },
+  "ask-G": {
+    "text": "Can you press the letter G?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "6de99ebfd529"
+  },
+  "yes-G": {
+    "text": "Yes! That is the letter G.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "9e00a117e1c9"
+  },
+  "ask-H": {
+    "text": "Can you press the letter H?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "010f4bbcb5bd"
+  },
+  "yes-H": {
+    "text": "Yes! That is the letter H.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "a286f2f208ac"
+  },
+  "ask-J": {
+    "text": "Can you press the letter J?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "cac734121fff"
+  },
+  "yes-J": {
+    "text": "Yes! That is the letter J.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "10ab09646691"
+  },
+  "ask-K": {
+    "text": "Can you press the letter K?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "04409f14a576"
+  },
+  "yes-K": {
+    "text": "Yes! That is the letter K.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "845f543bc303"
+  },
+  "ask-L": {
+    "text": "Can you press the letter L?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c65e4c80ff1b"
+  },
+  "yes-L": {
+    "text": "Yes! That is the letter L.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "8ab3c2606627"
+  },
+  "ask-O": {
+    "text": "Can you press the letter O?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c3cac843feef"
+  },
+  "yes-O": {
+    "text": "Yes! That is the letter O.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "d339b1f5b0d1"
+  },
+  "ask-Q": {
+    "text": "Can you press the letter Q?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "3e1bd9b7c606"
+  },
+  "yes-Q": {
+    "text": "Yes! That is the letter Q.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "eb2a617e2fe3"
+  },
+  "ask-R": {
+    "text": "Can you press the letter R?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "290542fc6e0d"
+  },
+  "yes-R": {
+    "text": "Yes! That is the letter R.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "ab04559c4dda"
+  },
+  "ask-U": {
+    "text": "Can you press the letter U?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "64281a9c3577"
+  },
+  "yes-U": {
+    "text": "Yes! That is the letter U.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "bee65d204c42"
+  },
+  "ask-V": {
+    "text": "Can you press the letter V?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c96cde4572a0"
+  },
+  "yes-V": {
+    "text": "Yes! That is the letter V.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "afd6c258d35c"
+  },
+  "ask-W": {
+    "text": "Can you press the letter W?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "92cd960fbc40"
+  },
+  "yes-W": {
+    "text": "Yes! That is the letter W.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "ba56be5a2896"
+  },
+  "ask-X": {
+    "text": "Can you press the letter X?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "706c24e860d2"
+  },
+  "yes-X": {
+    "text": "Yes! That is the letter X.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "d3dba8ade205"
+  },
+  "ask-Y": {
+    "text": "Can you press the letter Y?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c3ea5c24f304"
+  },
+  "yes-Y": {
+    "text": "Yes! That is the letter Y.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c7ecebcfe6c4"
+  },
+  "ask-Z": {
+    "text": "Can you press the letter Z?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "464169257c69"
+  },
+  "yes-Z": {
+    "text": "Yes! That is the letter Z.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c325fd6369f6"
+  },
+  "ask-0": {
+    "text": "Can you press the number zero?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "679e345549ea"
+  },
+  "yes-0": {
+    "text": "Yes! That is the number zero.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "a692c7325656"
+  },
+  "ask-1": {
+    "text": "Can you press the number one?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "3de10f098bae"
+  },
+  "yes-1": {
+    "text": "Yes! That is the number one.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "b6b7c9f8b006"
+  },
+  "ask-2": {
+    "text": "Can you press the number two?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "d2546a8dab56"
+  },
+  "yes-2": {
+    "text": "Yes! That is the number two.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "fce31dca5b11"
+  },
+  "ask-3": {
+    "text": "Can you press the number three?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "0ebf3e74f8c5"
+  },
+  "yes-3": {
+    "text": "Yes! That is the number three.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "adebfa360864"
+  },
+  "ask-4": {
+    "text": "Can you press the number four?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "a169279cdd5a"
+  },
+  "yes-4": {
+    "text": "Yes! That is the number four.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "0dae326f5a4e"
+  },
+  "ask-5": {
+    "text": "Can you press the number five?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "31f7f733ec47"
+  },
+  "yes-5": {
+    "text": "Yes! That is the number five.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c304d6afaaf6"
+  },
+  "ask-6": {
+    "text": "Can you press the number six?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "ee1cd616f999"
+  },
+  "yes-6": {
+    "text": "Yes! That is the number six.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "77b208bdb907"
+  },
+  "ask-7": {
+    "text": "Can you press the number seven?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "0e3e0a8d9b02"
+  },
+  "yes-7": {
+    "text": "Yes! That is the number seven.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "88a64cc3328c"
+  },
+  "ask-8": {
+    "text": "Can you press the number eight?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "68b8187d827f"
+  },
+  "yes-8": {
+    "text": "Yes! That is the number eight.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "8c00017db2fd"
+  },
+  "ask-9": {
+    "text": "Can you press the number nine?",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "4c045cb9bfac"
+  },
+  "yes-9": {
+    "text": "Yes! That is the number nine.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "4d5a9a518bd7"
+  },
+  "is-A": {
+    "text": "That is the letter A.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "744760b3bc8e"
+  },
+  "is-B": {
+    "text": "That is the letter B.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "aaf432b20f1c"
+  },
+  "is-C": {
+    "text": "That is the letter C.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "8098b02973b9"
+  },
+  "is-D": {
+    "text": "That is the letter D.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "449315431447"
+  },
+  "is-E": {
+    "text": "That is the letter E.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "6e0be8285a49"
+  },
+  "is-F": {
+    "text": "That is the letter F.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "9cdc004105b7"
+  },
+  "is-G": {
+    "text": "That is the letter G.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "798faecec513"
+  },
+  "is-H": {
+    "text": "That is the letter H.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "4717af74c71d"
+  },
+  "is-I": {
+    "text": "That is the letter I.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "2a873195f7e2"
+  },
+  "is-J": {
+    "text": "That is the letter J.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "ad1596ba00aa"
+  },
+  "is-K": {
+    "text": "That is the letter K.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "91a2743ca4b9"
+  },
+  "is-L": {
+    "text": "That is the letter L.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "70d729904c19"
+  },
+  "is-M": {
+    "text": "That is the letter M.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "9f9cff822dc7"
+  },
+  "is-N": {
+    "text": "That is the letter N.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "2f06476ca4cd"
+  },
+  "is-O": {
+    "text": "That is the letter O.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "ff09322c7628"
+  },
+  "is-P": {
+    "text": "That is the letter P.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "6eebcad78c0a"
+  },
+  "is-Q": {
+    "text": "That is the letter Q.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "da22332670a7"
+  },
+  "is-R": {
+    "text": "That is the letter R.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "633a305ccc7b"
+  },
+  "is-S": {
+    "text": "That is the letter S.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "26f45b962c93"
+  },
+  "is-T": {
+    "text": "That is the letter T.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "5a7085ee7a4b"
+  },
+  "is-U": {
+    "text": "That is the letter U.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "13301860985f"
+  },
+  "is-V": {
+    "text": "That is the letter V.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "cf0e635bf7c1"
+  },
+  "is-W": {
+    "text": "That is the letter W.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "19f15e841d89"
+  },
+  "is-X": {
+    "text": "That is the letter X.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "f8e715e244cb"
+  },
+  "is-Y": {
+    "text": "That is the letter Y.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c9ab071de314"
+  },
+  "is-Z": {
+    "text": "That is the letter Z.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "c1565abd78c0"
+  },
+  "is-0": {
+    "text": "That is the number zero.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "5adf34cac6d5"
+  },
+  "is-1": {
+    "text": "That is the number one.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "5d7bc4fed131"
+  },
+  "is-2": {
+    "text": "That is the number two.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "16a063758f20"
+  },
+  "is-3": {
+    "text": "That is the number three.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "6cdaaff3b304"
+  },
+  "is-4": {
+    "text": "That is the number four.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "3477b2023a9d"
+  },
+  "is-5": {
+    "text": "That is the number five.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "8d71d63b317e"
+  },
+  "is-6": {
+    "text": "That is the number six.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "f3f5e61afa8b"
+  },
+  "is-7": {
+    "text": "That is the number seven.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "9a1cad0578ba"
+  },
+  "is-8": {
+    "text": "That is the number eight.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "48a2a6e88481"
+  },
+  "is-9": {
+    "text": "That is the number nine.",
+    "voice": "am_puck",
+    "speed": 1.1,
+    "hash": "93f23dc44c8a"
   }
 }

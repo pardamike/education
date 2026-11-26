@@ -267,6 +267,111 @@ body,
   transform: translateY(0.6vh);
 }
 
+/* ---- Find the key: a card for what to press, and a picture of the keyboard ---- */
+
+.key-card {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.6vh;
+  min-width: 19vh;
+  box-sizing: border-box;
+  padding: 2vh 2vh 2.4vh;
+  border: 1.1vh solid #3d9be9;
+  border-radius: 4.5vh;
+  background: #fff;
+  box-shadow: 0 1.3vh 0 rgb(0 0 0 / 0.16);
+  color: #3d9be9;
+  font-size: 12vh;
+  font-weight: 800;
+  line-height: 1;
+  animation: pop-in 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+/* The small letter beside the capital, the way it is printed in books. */
+.key-small {
+  font-size: 0.8em;
+}
+
+.keyboard {
+  --key: 7.6vh;
+  --key-gap: 0.8vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--key-gap);
+  padding: 1.2vh;
+  border-radius: 3vh;
+  background: rgb(255 255 255 / 0.55);
+  box-shadow: 0 1vh 0 rgb(0 0 0 / 0.12);
+  animation: pop-in 0.45s 0.1s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.key-row {
+  display: flex;
+  gap: var(--key-gap);
+}
+
+.key {
+  position: relative;
+  width: var(--key);
+  height: var(--key);
+  padding: 0;
+  border: none;
+  border-radius: 1.6vh;
+  background: #fff;
+  box-shadow: 0 0.7vh 0 rgb(0 0 0 / 0.2);
+  color: #3b3b4d;
+  font-size: 3.6vh;
+  font-weight: 800;
+  transition:
+    transform 0.12s,
+    background 0.12s;
+}
+
+.key:hover {
+  transform: translateY(-0.4vh);
+}
+
+/* Whatever is pressed lights up for a moment, right or wrong. */
+.key.lit {
+  background: #ffe27a;
+  transform: translateY(0.5vh);
+  box-shadow: 0 0.2vh 0 rgb(0 0 0 / 0.2);
+}
+
+/* A wrong key: a soft purple and a little shake, nothing harsh. */
+.key.key-wrong {
+  background: #d9c8f5;
+  animation: shake 0.45s both;
+}
+
+.key.key-glow {
+  animation: glow 0.8s ease-in-out infinite alternate;
+}
+
+.key.key-right {
+  background: #5ecb6b;
+  color: #fff;
+  animation: bounce 0.7s both;
+}
+
+/* Stars off a key are smaller than off a tile. */
+.key-star {
+  font-size: 3.4vh;
+  animation-name: fly-key;
+}
+
+@keyframes fly-key {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  to {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--across) * 7vh), calc(-50% + var(--up) * 7vh)) scale(1.3) rotate(40deg);
+  }
+}
+
 @keyframes pop-in {
   from {
     opacity: 0;

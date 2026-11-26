@@ -2,6 +2,20 @@
   "name": "Velociraptor",
   "sayIt": "veh-LOSS-ih-RAP-tor",
   "eats": "meat",
+  "lesson": {
+    "type": "find-key",
+    "levels": [
+      {
+        "keys": "SATPINMD"
+      },
+      {
+        "keys": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      },
+      {
+        "keys": "0123456789"
+      }
+    ]
+  },
   "voice": {
     "name": "am_puck",
     "speed": 1.1

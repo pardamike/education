@@ -68,7 +68,7 @@ A player earns one star for each level of a dinosaur's lesson they finish, so a 
 
 ## Add a lesson
 
-A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kind of game and a list of `levels` that get harder. Each visit is a round of three questions at the player's level for that dinosaur. There are three kinds so far.
+A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kind of game and a list of `levels` that get harder. Each visit is a round of three questions at the player's level for that dinosaur. There are four kinds so far.
 
 ```json
 "lesson": { "type": "find-letter", "levels": [ { "letters": "TSAPMD" }, { "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }, { "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "small": true } ] }
@@ -88,11 +88,17 @@ A dinosaur gives a lesson when its `dino.json` has a `lesson`. A lesson is a kin
 
 `count-eggs` shows a nest with that many eggs, up to 20. The player touches them one at a time, and the dinosaur counts along out loud. Then it asks for that number, shown among two close ones on big tiles. The Parasaurolophus has this one.
 
+```json
+"lesson": { "type": "find-key", "levels": [ { "keys": "SATPINMD" }, { "keys": "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }, { "keys": "0123456789" } ] }
+```
+
+`find-key` asks for one letter or number from the level's `keys`. A big card shows it, above a picture of a keyboard, and the player presses that key on the real keyboard (clicking the picture works too). A wrong key shakes, and the dinosaur says which key it was and asks again. After two wrong keys the right one glows. The Velociraptor has this one.
+
 How a round goes:
 
 - The level is the number of stars the player has for that dinosaur, or the last level once they have them all.
 - Three dots near the lesson fill in as questions are answered. Every question in a round is about something different.
-- There is no way to fail: a wrong tile fades away with a "try again", and when only the right one is left the dinosaur points it out.
+- There is no way to fail: a wrong tile fades away with a "try again", and when only the right one is left the dinosaur points it out. (With keys, a wrong key says which key it was, and the right one glows after two.)
 - A right answer makes both dinosaurs jump for joy, and the dinosaur says "yes!" before the next question.
 - After the third question the dinosaur says "well done", and a big star and a big play button appear. Finishing a round earns a star. The play button starts the next round.
 

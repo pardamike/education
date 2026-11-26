@@ -27,7 +27,14 @@ export interface CountEggsLesson {
   levels: Array<{ eggs: [number, number] }>
 }
 
-export type Lesson = FindLetterLesson | FindNumberLesson | CountEggsLesson
+/** "Can you press the letter T?": the player finds that key on the real keyboard. */
+export interface FindKeyLesson {
+  type: 'find-key'
+  /** Each level asks for keys from `keys`: letters and digits, written together like "SATPINMD". */
+  levels: Array<{ keys: string }>
+}
+
+export type Lesson = FindLetterLesson | FindNumberLesson | CountEggsLesson | FindKeyLesson
 
 /** How many questions make up one round. */
 export const ROUND_SIZE = 3
@@ -53,4 +60,14 @@ export interface EggQuestion {
   yes: string
 }
 
-export type Question = PickQuestion | EggQuestion
+/** One question about the keyboard: press this key. */
+export interface KeyQuestion {
+  kind: 'key'
+  /** The key to press: a capital letter or a digit. */
+  key: string
+  /** The clip that asks it, and the clip that says "yes!". */
+  ask: string
+  yes: string
+}
+
+export type Question = PickQuestion | EggQuestion | KeyQuestion

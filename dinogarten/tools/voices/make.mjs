@@ -82,6 +82,19 @@ function buildLines(id, dino) {
       );
     }
   }
+  if (lesson.type === "find-key") {
+    // Every key any level can ask for, as letters and digits.
+    const keys = [...new Set(lesson.levels.flatMap((level) => level.keys.split("")))];
+    const what = (key) => (/\d/.test(key) ? `number ${NUMBERS[Number(key)]}` : `letter ${key}`);
+    for (const key of keys) {
+      lines.push(
+        [`ask-${key}`, `Can you press the ${what(key)}?`, 1],
+        [`yes-${key}`, `Yes! That is the ${what(key)}.`, 1],
+      );
+    }
+    // Any key can be pressed by mistake, so the dinosaur can name all of them.
+    for (const key of [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"]) lines.push([`is-${key}`, `That is the ${what(key)}.`, 1]);
+  }
   if (lesson.type === "count-eggs") {
     // One clip for each number said while counting: 1.ogg says "One!", 2.ogg says "Two!", and so on.
     for (let n = 1; n <= numbers[numbers.length - 1]; n++) lines.push([String(n), `${capital(NUMBERS[n])}!`, 1]);
